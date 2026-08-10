@@ -22,7 +22,7 @@
 
   mount.outerHTML =
     '<footer id="footer" class="bg-surface-deep border-t border-nebula/12">' +
-      '<div class="section-padding pb-0">' +
+      '<div class="section-padding pb-0 footer-journey-cta">' +
         '<div class="max-w-7xl mx-auto">' +
           '<div class="glass-card p-6 sm:p-8 lg:p-12 flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 mb-12 sm:mb-16 text-center lg:text-left">' +
             '<div class="w-full lg:w-auto">' +

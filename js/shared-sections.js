@@ -64,20 +64,67 @@
       .join('');
   }
 
-  function renderCareerEcosystemCard(card) {
+  function ecosystemCardTitle(title) {
+    return String(title || '').replace(/\s*:\s*$/, '');
+  }
+
+  function renderCareerEcosystemCard(card, index) {
     var icon = ECOSYSTEM_ICONS[card.icon] || ECOSYSTEM_ICONS.compass;
+    var title = ecosystemCardTitle(card.title);
+
+    return (
+      '<button type="button" class="career-ecosystem-card" data-ecosystem-card="' + index + '" aria-haspopup="dialog">' +
+        '<span class="career-ecosystem-card-icon audience-icon audience-icon-sm">' + icon + '</span>' +
+        '<span class="career-ecosystem-card-title">' + escapeHtml(title) + '</span>' +
+        '<span class="career-ecosystem-card-num" aria-hidden="true">' + escapeHtml(String(card.num)) + '</span>' +
+      '</button>'
+    );
+  }
+
+  function openCareerEcosystemModal(card) {
+    var overlay = document.getElementById('content-modal');
+    var titleEl = document.getElementById('content-modal-title');
+    var bodyEl = document.getElementById('content-modal-body');
+    if (!overlay || !titleEl || !bodyEl || !card) return;
+
+    var icon = ECOSYSTEM_ICONS[card.icon] || ECOSYSTEM_ICONS.compass;
+    var title = ecosystemCardTitle(card.title);
     var body = card.segments
       ? renderFeatureSegments(card.segments)
       : escapeHtml(card.text || '');
 
-    return (
-      '<article class="service-feature-card">' +
-        '<div class="service-feature-icon-wrap audience-icon audience-icon-md">' + icon + '</div>' +
-        '<div class="service-feature-num" aria-hidden="true">' + card.num + '</div>' +
-        '<h3 class="service-feature-title">' + escapeHtml(card.title) + '</h3>' +
-        '<p class="service-feature-text">' + body + '</p>' +
-      '</article>'
-    );
+    titleEl.textContent = title;
+    bodyEl.innerHTML =
+      '<div class="career-ecosystem-modal">' +
+        '<div class="career-ecosystem-modal-top">' +
+          '<div class="career-ecosystem-modal-icon audience-icon audience-icon-md">' + icon + '</div>' +
+          '<span class="career-ecosystem-modal-num">' + escapeHtml(String(card.num)) + '</span>' +
+        '</div>' +
+        '<p class="career-ecosystem-modal-text">' + body + '</p>' +
+      '</div>';
+
+    overlay.classList.remove('hidden');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function bindCareerEcosystemSection(root) {
+    var section = (root || document).querySelector('#career-ecosystem');
+    if (!section || section.dataset.bound === '1') return;
+    section.dataset.bound = '1';
+
+    var cards =
+      (window.ARIVUU_AUDIENCE_SERVICES &&
+        window.ARIVUU_AUDIENCE_SERVICES.careerEcosystemSection &&
+        window.ARIVUU_AUDIENCE_SERVICES.careerEcosystemSection.cards) ||
+      [];
+
+    section.querySelectorAll('[data-ecosystem-card]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var index = parseInt(btn.getAttribute('data-ecosystem-card'), 10);
+        if (!isNaN(index) && cards[index]) openCareerEcosystemModal(cards[index]);
+      });
+    });
   }
 
   function renderCareerEcosystemSection() {
@@ -97,7 +144,7 @@
             '</h2>' +
             '<p class="career-ecosystem-intro">' + escapeHtml(section.intro) + '</p>' +
           '</div>' +
-          '<div class="service-features-grid">' + cards + '</div>' +
+          '<div class="career-ecosystem-grid">' + cards + '</div>' +
         '</div>' +
       '</section>'
     );
@@ -118,6 +165,7 @@
     if (ecoMount && !ecoMount.dataset.mounted) {
       ecoMount.innerHTML = renderCareerEcosystemSection();
       ecoMount.dataset.mounted = '1';
+      bindCareerEcosystemSection(ecoMount);
     }
   }
 
@@ -136,9 +184,11 @@
     );
   }
 
-  function renderFAQSection() {
+  function renderFAQSection(options) {
     var data = window.ARIVUU_FAQ;
     if (!data) return '';
+    options = options || {};
+    var showJourneyCta = options.showJourneyCta === true;
 
     var items = (data.items || [])
       .map(function (item, index) {
@@ -180,6 +230,21 @@
       .join('');
 
     var eyebrow = data.eyebrow ? escapeHtml(data.eyebrow) : 'FAQ';
+    var site = window.ARIVUU_SITE || {};
+    var brand = site.name || 'Arivuu';
+    var statsStudents = (site.stats && site.stats.students) || '55,000+';
+    var journeyCta = showJourneyCta
+      ? '<div class="faq-journey-cta glass-card">' +
+          '<div class="faq-journey-cta-copy">' +
+            '<h3 class="faq-journey-cta-title">Ready to Start Your Journey?</h3>' +
+            '<p class="faq-journey-cta-text">Join ' + escapeHtml(statsStudents) + ' students who have found clarity with ' + escapeHtml(brand) + '.</p>' +
+          '</div>' +
+          '<div class="faq-journey-cta-actions">' +
+            '<a href="#/contact" class="btn-outline btn-outline-neutral btn-outline-lg w-full sm:w-auto text-center">Book demo</a>' +
+            '<button type="button" data-open-contact data-contact-title="Get in touch" data-contact-subject="General enquiry" class="w-full sm:w-auto text-center px-8 py-4 rounded-full bg-nebula text-white text-sm font-medium hover:bg-nebula/80 transition-all duration-300 shadow-accent-lg hover:shadow-accent-xl">Get in touch</button>' +
+          '</div>' +
+        '</div>'
+      : '';
 
     return (
       '<section id="faq" class="faq-section section-padding bg-void" aria-labelledby="faq-title">' +
@@ -202,6 +267,7 @@
                   '<a href="#/contact" class="faq-aside-link">Talk to Arivuu</a>' +
                 '</div>' +
               '</div>' +
+              journeyCta +
             '</div>' +
             '<div class="faq-list">' + items + '</div>' +
           '</div>' +
@@ -325,7 +391,7 @@
 
   function mountFAQ(target) {
     if (!target || target.dataset.mounted === '1') return;
-    target.innerHTML = renderFAQSection();
+    target.innerHTML = renderFAQSection({ showJourneyCta: true });
     target.dataset.mounted = '1';
     bindFAQ();
   }
@@ -410,6 +476,7 @@
 
   window.Arivuu.renderFeatureBar = renderFeatureBar;
   window.Arivuu.renderCareerEcosystemSection = renderCareerEcosystemSection;
+  window.Arivuu.bindCareerEcosystemSection = bindCareerEcosystemSection;
   window.Arivuu.renderFAQSection = renderFAQSection;
   window.Arivuu.renderTestimonialsSection = renderTestimonialsSection;
   window.Arivuu.bindFAQ = bindFAQ;

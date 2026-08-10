@@ -9,8 +9,14 @@
 
   function escapeHtml(str) {
     var div = document.createElement('div');
-    div.textContent = str;
+    div.textContent = str == null ? '' : String(str);
     return div.innerHTML;
+  }
+
+  function formatBlogInlineMarkdown(str) {
+    return escapeHtml(str)
+      .replace(/\*\*(.+?)\*\*/g, '<strong class="text-stardust font-semibold">$1</strong>')
+      .replace(/(^|[^*])\*([^*\n]+?)\*(?!\*)/g, '$1<strong class="blog-inline-bold-sm">$2</strong>');
   }
 
   function formatDate(dateStr) {
@@ -381,7 +387,7 @@
     if (!root) return;
 
     var paragraphs = post.content.split('\n\n').map(function (p) {
-      return '<p>' + escapeHtml(p) + '</p>';
+      return '<p>' + formatBlogInlineMarkdown(p) + '</p>';
     }).join('');
 
     root.innerHTML =

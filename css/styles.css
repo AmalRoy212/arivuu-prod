@@ -301,6 +301,20 @@
   cursor: pointer;
 }
 
+.pill-button-solid,
+.glass-card .pill-button {
+  background: rgb(var(--nebula));
+  border-color: rgb(var(--nebula));
+  color: #fff;
+}
+
+.pill-button-solid:hover,
+.glass-card .pill-button:hover {
+  background: rgb(var(--nebula-dark));
+  border-color: rgb(var(--nebula-dark));
+  color: #fff;
+}
+
 .pill-button-sm {
   padding: 0.5rem 1rem;
 }
@@ -1967,6 +1981,17 @@
   color: rgb(var(--muted-text));
 }
 
+.article-content strong {
+  color: rgb(var(--stardust));
+  font-weight: 600;
+}
+
+.article-content .blog-inline-bold-sm {
+  font-weight: 500;
+  font-size: 0.95em;
+  color: rgb(var(--stardust));
+}
+
 .article-cta {
   margin-top: 2.5rem;
 }
@@ -2042,6 +2067,13 @@
   box-shadow:
     0 2px 6px rgb(var(--nebula) / 0.11),
     0 4px 10px rgb(var(--biolume) / 0.08);
+}
+
+.audience-copy-justify {
+  text-align: justify;
+  text-align-last: left;
+  hyphens: auto;
+  -webkit-hyphens: auto;
 }
 
 .audience-icon-md {
@@ -3555,6 +3587,155 @@
   }
 }
 
+.career-ecosystem-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 640px) {
+  .career-ecosystem-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+.career-ecosystem-card {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  text-align: left;
+  padding: 0.875rem 1rem;
+  border-radius: 0.875rem;
+  background: rgb(186 230 253 / 0.45);
+  border: 1px solid rgb(125 211 252 / 0.5);
+  box-shadow: 0 4px 14px rgb(15 23 42 / 0.06);
+  cursor: pointer;
+  transition:
+    background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.career-ecosystem-card:hover {
+  background: rgb(186 230 253 / 0.7);
+  border-color: rgb(var(--nebula) / 0.45);
+  box-shadow: 0 8px 20px rgb(15 23 42 / 0.1);
+  transform: translateY(-2px);
+}
+
+.career-ecosystem-card:focus-visible {
+  outline: 2px solid rgb(var(--nebula) / 0.55);
+  outline-offset: 2px;
+}
+
+.career-ecosystem-card-icon {
+  flex-shrink: 0;
+}
+
+.career-ecosystem-card-icon .service-feature-icon {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.career-ecosystem-card-title {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: rgb(var(--stardust));
+}
+
+.career-ecosystem-card-num {
+  flex-shrink: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  color: rgb(var(--nebula) / 0.35);
+}
+
+.career-ecosystem-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.career-ecosystem-modal-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.career-ecosystem-modal-num {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+  color: rgb(var(--nebula) / 0.3);
+}
+
+.career-ecosystem-modal-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: rgb(var(--muted-text));
+}
+
+.career-ecosystem-modal-text strong {
+  font-weight: 600;
+  color: rgb(var(--stardust));
+}
+
+body[data-page="home"] .footer-journey-cta {
+  display: none;
+}
+
+.faq-journey-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  padding: 1.25rem 1.375rem;
+  border-radius: 1rem;
+  text-align: left;
+}
+
+.faq-journey-cta-title {
+  margin: 0 0 0.4rem;
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgb(var(--stardust));
+  line-height: 1.3;
+}
+
+.faq-journey-cta-text {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: rgb(var(--muted-text));
+}
+
+.faq-journey-cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+@media (min-width: 480px) {
+  .faq-journey-cta-actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
 .service-feature-title {
   font-family: var(--font-display, "Space Grotesk", sans-serif);
   font-size: 0.875rem;
@@ -4290,6 +4471,52 @@
   color: rgb(var(--stardust) / 0.82);
 }
 
+.service-why-arivuu-features--boxes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  max-width: none;
+  line-height: 1.3;
+}
+
+.service-why-arivuu-features-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 0.625rem;
+}
+
+@media (min-width: 1024px) {
+  .service-why-arivuu-features--boxes {
+    gap: 0.625rem;
+  }
+
+  .service-why-arivuu-features-row {
+    flex-wrap: nowrap;
+  }
+}
+
+.service-why-arivuu-feature {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  background: rgb(var(--nebula));
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .service-why-arivuu-feature {
+    font-size: 0.8125rem;
+    padding: 0.4375rem 0.875rem;
+  }
+}
+
 .service-why-arivuu-sep {
   color: rgb(var(--stardust) / 0.35);
 }
@@ -4607,6 +4834,71 @@
   box-sizing: border-box;
 }
 
+#ace-journey .flip-card-face.glass-card {
+  overflow: hidden;
+  background: linear-gradient(
+    105deg,
+    rgb(var(--nebula) / 0.14) 0%,
+    rgb(var(--nebula) / 0.05) 22%,
+    rgb(255 255 255 / 0.94) 48%
+  );
+  border: 1.5px solid rgb(var(--nebula) / 0.35);
+}
+
+#ace-journey .flip-card--accent-biolume .flip-card-face.glass-card {
+  background: linear-gradient(
+    105deg,
+    rgb(var(--biolume) / 0.14) 0%,
+    rgb(var(--biolume) / 0.05) 22%,
+    rgb(255 255 255 / 0.94) 48%
+  );
+  border: 1.5px solid rgb(var(--biolume) / 0.35);
+}
+
+#ace-journey .flip-card-icon-wrap.audience-icon {
+  width: 4rem;
+  height: 4rem;
+}
+
+#ace-journey .flip-card-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+#ace-journey .flip-card-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.25rem;
+  padding: 0.55rem 1.15rem;
+  border-radius: 9999px;
+  background: rgb(var(--nebula));
+  border: 1px solid rgb(var(--nebula));
+  color: #fff;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+#ace-journey .flip-card--accent-biolume .flip-card-title {
+  background: rgb(var(--biolume));
+  border-color: rgb(var(--biolume));
+}
+
+#ace-journey .flip-card-hint {
+  margin-top: 0.75rem;
+  font-size: 0.75rem;
+  color: rgb(var(--muted-text));
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  padding: 0;
+  display: block;
+  font-weight: 400;
+  line-height: inherit;
+}
+
 .flip-card-back {
   transform: rotateY(180deg);
   justify-content: flex-start;
@@ -4851,7 +5143,48 @@
   .pdf-sample-layout {
     grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
     gap: 2rem;
-    align-items: start;
+    align-items: stretch;
+  }
+
+  .pdf-sample-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .pdf-sample-tabs {
+    flex: 1;
+    height: 100%;
+  }
+
+  .pdf-sample-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .pdf-sample-showcase {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .pdf-sample-browser {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .pdf-sample-preview-wrap {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .pdf-sample-preview {
+    height: 100%;
+    min-height: 28rem;
   }
 }
 
@@ -5080,10 +5413,51 @@
   background: #fff;
 }
 
+/* Mobile: nested PDF iframe scroll is unreliable — scroll the modal body instead */
+@media (max-width: 767px) {
+  .pdf-preview-modal {
+    padding: 0.5rem;
+    align-items: stretch;
+  }
+
+  .pdf-preview-panel {
+    width: 100%;
+    height: 92dvh;
+    max-height: 92dvh;
+  }
+
+  .pdf-preview-header,
+  .pdf-preview-footnote {
+    flex-shrink: 0;
+  }
+
+  .pdf-preview-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+    touch-action: pan-y;
+  }
+
+  .pdf-preview-shield {
+    display: none;
+  }
+
+  .pdf-preview-frame {
+    /* Tall enough for sample reports (~25 pages); parent body scrolls */
+    width: 100%;
+    height: 14000px;
+    min-height: 14000px;
+    touch-action: pan-y;
+  }
+}
+
 .pdf-sample-actions {
   display: flex;
-  justify-content: flex-end;
-  margin-top: 1rem;
+  justify-content: center;
+  margin-top: 1.75rem;
 }
 
 /* FAQ section */

@@ -91,10 +91,10 @@
                   '</button>' +
                 '</div>' +
               '</div>' +
-              '<div class="pdf-sample-actions">' +
-                '<button type="button" id="pdf-sample-download" class="pill-button" data-pdf-download="' + escapeHtml(defaultSample.pdf) + '" data-pdf-label="' + escapeHtml(defaultSample.label) + '">Download sample PDF</button>' +
-              '</div>' +
             '</div>' +
+          '</div>' +
+          '<div class="pdf-sample-actions">' +
+            '<button type="button" id="pdf-sample-download" class="pill-button pill-button-solid" data-pdf-download="' + escapeHtml(defaultSample.pdf) + '" data-pdf-label="' + escapeHtml(defaultSample.label) + '">Download sample PDF</button>' +
           '</div>' +
         '</div>' +
       '</section>'

@@ -1,9 +1,9 @@
 window.ARIVUU_AUDIENCE_SERVICES = {
   defaultAudience: 'school',
   careerEcosystemSection: {
-    heading: 'The Complete Career Ecosystem For Schools',
+    heading: 'What You Gain from Arivuu\u2019s Career Test',
     intro:
-      'When your school joins Arivuu, you unlock a structured, technology enabled career guidance ecosystem. Our platform empowers students with clarity, parents with confidence, and schools with a reputation for future ready education.',
+      'Arivuu\u2019s scientifically validated test doesn\u2019t just measure \u2014 it guides students toward clarity, confidence, and future success.',
     cards: [
       {
         num: 1,
@@ -36,12 +36,12 @@ window.ARIVUU_AUDIENCE_SERVICES = {
       },
       {
         num: 4,
-        title: 'Work Nature :',
-        icon: 'briefcase',
+        title: 'Scholarship Details :',
+        icon: 'award',
         segments: [
-          { text: 'Students learn the ' },
-          { text: 'nature of work,', bold: true },
-          { text: ' typical environments, and responsibilities, making choices more realistic.' }
+          { text: 'With the Arivuu platform, students and parents can easily access ' },
+          { text: 'scholarship details.', bold: true },
+          { text: ' The system highlights opportunities that reduce financial barriers and make higher education more achievable.' }
         ]
       },
       {
@@ -77,7 +77,7 @@ window.ARIVUU_AUDIENCE_SERVICES = {
       {
         num: 8,
         title: 'Skills & Competencies :',
-        icon: 'award',
+        icon: 'briefcase',
         segments: [
           { text: 'Students discover the ' },
           { text: 'skills, qualifications, and certifications', bold: true },
@@ -108,7 +108,7 @@ window.ARIVUU_AUDIENCE_SERVICES = {
       imageLeft: true,
       points: [
         'Industry leading assessmemt with .79% on guarantee',
-        '32 page repeot + based on Swot',
+        'Career Assessment – with a 25+ page of psychometric evaluation',
         'Relaible',
         'Separate dashboard for everyone'
       ]
@@ -370,9 +370,9 @@ window.ARIVUU_AUDIENCE_SERVICES = {
               },
               {
                 segments: [
-                  { text: 'Comprehensive 32 page', bold: true },
-                  { text: ' reports with ' },
-                  { text: 'SWOT analysis', bold: true }
+                  { text: 'Career Assessment – with ' },
+                  { text: 'a 25+ page of psychometric', bold: true },
+                  { text: ' evaluation' }
                 ]
               },
               {

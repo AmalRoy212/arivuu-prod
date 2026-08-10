@@ -63,8 +63,8 @@ window.ARIVUU_STUDENT_GUIDE = {
         id: 'class-8-10',
         label: 'For Students in Class 8th – 10th',
         description: 'Early-stage psychometric insights, stream awareness, and exploratory career clusters for middle and secondary school students.',
-        pdf: 'pdfs/report_8th_to9th_or_10th.pdf',
-        preview: 'pdfs/report_8th_to9th_or_10th.pdf'
+        pdf: 'pdfs/report_8th_to_10th.pdf',
+        preview: 'pdfs/report_8th_to_10th.pdf'
       },
       {
         id: 'class-11-12',

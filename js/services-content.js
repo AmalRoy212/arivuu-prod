@@ -233,14 +233,15 @@
   function renderAceFlipCard(card) {
     var icon = ICONS[card.icon] || ICONS.compass;
     var items = (card.items || []).map(renderAceFlipCardItem).join('');
+    var accentClass = card.letter === 'C' ? ' flip-card--accent-biolume' : '';
 
     return (
-      '<article class="flip-card">' +
+      '<article class="flip-card' + accentClass + '">' +
         '<div class="flip-card-inner">' +
           '<div class="flip-card-face flip-card-front glass-card">' +
-            '<div class="flip-card-icon-wrap audience-icon audience-icon-md">' + icon + '</div>' +
+            '<div class="flip-card-icon-wrap audience-icon">' + icon + '</div>' +
             '<h3 class="flip-card-title">' + escapeHtml(card.letter) + ' – ' + escapeHtml(card.title) + '</h3>' +
-            '<p class="flip-card-hint">Hover to learn more</p>' +
+            '<span class="flip-card-hint">Hover to learn more</span>' +
           '</div>' +
           '<div class="flip-card-face flip-card-back glass-card">' +
             '<ul class="flip-card-list">' + items + '</ul>' +
@@ -1253,7 +1254,7 @@
     } else {
       teardownAceParallax();
     }
-    if (page === 'home' || page === 'student') {
+    if (page === 'home' || page === 'student' || page === 'institution') {
       mountSharedAceCards();
     }
   };
