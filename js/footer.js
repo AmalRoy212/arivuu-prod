@@ -22,7 +22,7 @@
 
   mount.outerHTML =
     '<footer id="footer" class="bg-surface-deep border-t border-nebula/12">' +
-      '<div class="section-padding pb-0">' +
+      '<div class="section-padding pb-0 footer-journey-cta">' +
         '<div class="max-w-7xl mx-auto">' +
           '<div class="glass-card p-6 sm:p-8 lg:p-12 flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 mb-12 sm:mb-16 text-center lg:text-left">' +
             '<div class="w-full lg:w-auto">' +
@@ -80,7 +80,8 @@
             '<ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2.5">' +
               '<li><a href="#/" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Home</a></li>' +
               '<li><a href="#/about" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">About Us</a></li>' +
-              '<li><a href="' + sectionLink('workshops') + '" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Services</a></li>' +
+              '<li><a href="#/?scroll=workshops" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Services</a></li>' +
+              '<li><a href="#/workshops" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Seminar</a></li>' +
               '<li><a href="#/student/guide" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">For Students</a></li>' +
               '<li><a href="#/institution/guide" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">For Schools</a></li>' +
               '<li><a href="' + sectionLink('career-library') + '" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Career Library</a></li>' +

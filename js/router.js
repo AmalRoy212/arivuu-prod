@@ -14,7 +14,8 @@
     '/institution': { page: 'institution', file: 'pages/institution.html' },
     '/institution/guide': { page: 'service', file: 'pages/service.html', defaultQuery: 'audience=school' },
     '/blog': { page: 'blog', file: 'pages/blog.html' },
-    '/blog-post': { page: 'blog-post', file: 'pages/blog-post.html' }
+    '/blog-post': { page: 'blog-post', file: 'pages/blog-post.html' },
+    '/workshops': { page: 'workshops', file: 'pages/workshops.html' }
   };
 
   var homeTemplate = null;
@@ -31,6 +32,15 @@
   function resolveRoute(path, params) {
     params = params || new URLSearchParams();
     var audience = params.get('audience');
+
+    if (path === '/institution') {
+      return {
+        path: '/institution/guide',
+        params: new URLSearchParams(),
+        route: ROUTES['/institution/guide'],
+        redirect: true
+      };
+    }
 
     if (path === '/service' && (!audience || audience === 'school')) {
       return {

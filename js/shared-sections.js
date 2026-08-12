@@ -64,8 +64,26 @@
       .join('');
   }
 
-  function renderCareerEcosystemCard(card) {
+  function ecosystemCardTitle(title) {
+    return String(title || '').replace(/\s*:\s*$/, '');
+  }
+
+  function renderCareerEcosystemCard(card, index) {
     var icon = ECOSYSTEM_ICONS[card.icon] || ECOSYSTEM_ICONS.compass;
+    var title = ecosystemCardTitle(card.title);
+
+    return (
+      '<button type="button" class="career-ecosystem-card" data-ecosystem-card="' + index + '" aria-haspopup="dialog">' +
+        '<span class="career-ecosystem-card-icon audience-icon audience-icon-sm">' + icon + '</span>' +
+        '<span class="career-ecosystem-card-title">' + escapeHtml(title) + '</span>' +
+        '<span class="career-ecosystem-card-num" aria-hidden="true">' + escapeHtml(String(card.num)) + '</span>' +
+      '</button>'
+    );
+  }
+
+  function renderCareerEcosystemFullCard(card) {
+    var icon = ECOSYSTEM_ICONS[card.icon] || ECOSYSTEM_ICONS.compass;
+    var title = ecosystemCardTitle(card.title);
     var body = card.segments
       ? renderFeatureSegments(card.segments)
       : escapeHtml(card.text || '');
@@ -73,22 +91,76 @@
     return (
       '<article class="service-feature-card">' +
         '<div class="service-feature-icon-wrap audience-icon audience-icon-md">' + icon + '</div>' +
-        '<div class="service-feature-num" aria-hidden="true">' + card.num + '</div>' +
-        '<h3 class="service-feature-title">' + escapeHtml(card.title) + '</h3>' +
+        '<div class="service-feature-num" aria-hidden="true">' + escapeHtml(String(card.num)) + '</div>' +
+        '<h3 class="service-feature-title">' + escapeHtml(title) + '</h3>' +
         '<p class="service-feature-text">' + body + '</p>' +
       '</article>'
     );
   }
 
-  function renderCareerEcosystemSection() {
+  function openCareerEcosystemModal(card) {
+    var overlay = document.getElementById('content-modal');
+    var titleEl = document.getElementById('content-modal-title');
+    var bodyEl = document.getElementById('content-modal-body');
+    if (!overlay || !titleEl || !bodyEl || !card) return;
+
+    var icon = ECOSYSTEM_ICONS[card.icon] || ECOSYSTEM_ICONS.compass;
+    var title = ecosystemCardTitle(card.title);
+    var body = card.segments
+      ? renderFeatureSegments(card.segments)
+      : escapeHtml(card.text || '');
+
+    titleEl.textContent = title;
+    bodyEl.innerHTML =
+      '<div class="career-ecosystem-modal">' +
+        '<div class="career-ecosystem-modal-top">' +
+          '<div class="career-ecosystem-modal-icon audience-icon audience-icon-md">' + icon + '</div>' +
+          '<span class="career-ecosystem-modal-num">' + escapeHtml(String(card.num)) + '</span>' +
+        '</div>' +
+        '<p class="career-ecosystem-modal-text">' + body + '</p>' +
+      '</div>';
+
+    overlay.classList.remove('hidden');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function bindCareerEcosystemSection() {
+    if (document.documentElement.dataset.ecosystemClickBound === '1') return;
+    document.documentElement.dataset.ecosystemClickBound = '1';
+
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-ecosystem-card]');
+      if (!btn) return;
+
+      var section = btn.closest('#career-ecosystem');
+      if (!section || section.getAttribute('data-ecosystem-variant') === 'full') return;
+
+      var cards =
+        (window.ARIVUU_AUDIENCE_SERVICES &&
+          window.ARIVUU_AUDIENCE_SERVICES.careerEcosystemSection &&
+          window.ARIVUU_AUDIENCE_SERVICES.careerEcosystemSection.cards) ||
+        [];
+      var index = parseInt(btn.getAttribute('data-ecosystem-card'), 10);
+      if (!isNaN(index) && cards[index]) openCareerEcosystemModal(cards[index]);
+    });
+  }
+
+  function renderCareerEcosystemSection(options) {
+    options = options || {};
     var audienceData = window.ARIVUU_AUDIENCE_SERVICES;
     var section = audienceData && audienceData.careerEcosystemSection;
     if (!section || !section.cards || !section.cards.length) return '';
 
-    var cards = section.cards.map(renderCareerEcosystemCard).join('');
+    var useFullCards = options.variant === 'full';
+    var cards = useFullCards
+      ? section.cards.map(renderCareerEcosystemFullCard).join('')
+      : section.cards.map(renderCareerEcosystemCard).join('');
+    var gridClass = useFullCards ? 'service-features-grid' : 'career-ecosystem-grid';
 
     return (
-      '<section id="career-ecosystem" class="service-section career-ecosystem-section bg-void" aria-labelledby="career-ecosystem-title">' +
+      '<section id="career-ecosystem" class="service-section career-ecosystem-section bg-void" aria-labelledby="career-ecosystem-title"' +
+        (useFullCards ? ' data-ecosystem-variant="full"' : '') + '>' +
         '<div class="career-ecosystem-glow" aria-hidden="true"></div>' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 relative">' +
           '<div class="career-ecosystem-header">' +
@@ -97,7 +169,7 @@
             '</h2>' +
             '<p class="career-ecosystem-intro">' + escapeHtml(section.intro) + '</p>' +
           '</div>' +
-          '<div class="service-features-grid">' + cards + '</div>' +
+          '<div class="' + gridClass + '">' + cards + '</div>' +
         '</div>' +
       '</section>'
     );
@@ -115,9 +187,12 @@
     }
 
     var ecoMount = document.getElementById('career-ecosystem-mount');
-    if (ecoMount && !ecoMount.dataset.mounted) {
-      ecoMount.innerHTML = renderCareerEcosystemSection();
-      ecoMount.dataset.mounted = '1';
+    if (ecoMount) {
+      if (!ecoMount.dataset.mounted || !ecoMount.querySelector('#career-ecosystem')) {
+        ecoMount.innerHTML = renderCareerEcosystemSection();
+        ecoMount.dataset.mounted = '1';
+      }
+      bindCareerEcosystemSection();
     }
   }
 
@@ -136,9 +211,11 @@
     );
   }
 
-  function renderFAQSection() {
+  function renderFAQSection(options) {
     var data = window.ARIVUU_FAQ;
     if (!data) return '';
+    options = options || {};
+    var showJourneyCta = options.showJourneyCta === true;
 
     var items = (data.items || [])
       .map(function (item, index) {
@@ -180,6 +257,21 @@
       .join('');
 
     var eyebrow = data.eyebrow ? escapeHtml(data.eyebrow) : 'FAQ';
+    var site = window.ARIVUU_SITE || {};
+    var brand = site.name || 'Arivuu';
+    var statsStudents = (site.stats && site.stats.students) || '55,000+';
+    var journeyCta = showJourneyCta
+      ? '<div class="faq-journey-cta glass-card">' +
+          '<div class="faq-journey-cta-copy">' +
+            '<h3 class="faq-journey-cta-title">Ready to Start Your Journey?</h3>' +
+            '<p class="faq-journey-cta-text">Join ' + escapeHtml(statsStudents) + ' students who have found clarity with ' + escapeHtml(brand) + '.</p>' +
+          '</div>' +
+          '<div class="faq-journey-cta-actions">' +
+            '<a href="#/contact" class="btn-outline btn-outline-neutral btn-outline-lg w-full sm:w-auto text-center">Book demo</a>' +
+            '<button type="button" data-open-contact data-contact-title="Get in touch" data-contact-subject="General enquiry" class="w-full sm:w-auto text-center px-8 py-4 rounded-full bg-nebula text-white text-sm font-medium hover:bg-nebula/80 transition-all duration-300 shadow-accent-lg hover:shadow-accent-xl">Get in touch</button>' +
+          '</div>' +
+        '</div>'
+      : '';
 
     return (
       '<section id="faq" class="faq-section section-padding bg-void" aria-labelledby="faq-title">' +
@@ -202,6 +294,7 @@
                   '<a href="#/contact" class="faq-aside-link">Talk to Arivuu</a>' +
                 '</div>' +
               '</div>' +
+              journeyCta +
             '</div>' +
             '<div class="faq-list">' + items + '</div>' +
           '</div>' +
@@ -216,7 +309,7 @@
         '<div class="max-w-7xl mx-auto w-full">' +
           '<div class="min-w-0">' +
             '<div class="text-center mb-6 sm:mb-8">' +
-              '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">Student Success Stories</span>' +
+              '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">Success Stories</span>' +
               '<h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-stardust mt-4 leading-tight">What Our <span class="gradient-text">Students Say</span></h2>' +
             '</div>' +
             '<div class="relative min-w-0 px-9 sm:px-6 md:px-8 lg:px-0">' +
@@ -325,7 +418,7 @@
 
   function mountFAQ(target) {
     if (!target || target.dataset.mounted === '1') return;
-    target.innerHTML = renderFAQSection();
+    target.innerHTML = renderFAQSection({ showJourneyCta: true });
     target.dataset.mounted = '1';
     bindFAQ();
   }
@@ -410,6 +503,7 @@
 
   window.Arivuu.renderFeatureBar = renderFeatureBar;
   window.Arivuu.renderCareerEcosystemSection = renderCareerEcosystemSection;
+  window.Arivuu.bindCareerEcosystemSection = bindCareerEcosystemSection;
   window.Arivuu.renderFAQSection = renderFAQSection;
   window.Arivuu.renderTestimonialsSection = renderTestimonialsSection;
   window.Arivuu.bindFAQ = bindFAQ;

@@ -84,7 +84,7 @@
   <div id="site-navbar"></div>
 
   <div id="app-outlet">
-  <main>
+  <main class="">
     <!-- HERO -->
     <section id="hero" class="hero-has-video relative min-h-screen w-full overflow-hidden flex items-center bg-void">
       <div class="hero-video-bg" aria-hidden="true">
@@ -110,15 +110,15 @@
           <div class="hero-copy flex flex-col gap-6">
             <span class="hero-animate text-biolume text-xs font-medium tracking-[0.2em] uppercase font-body">Arivuu – Clarity. Confidence. Career.</span>
             <h1 class="hero-animate delay-1 font-display text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-medium text-stardust leading-[1.1] tracking-tight" style="text-shadow:var(--hero-headline-shadow);">
-              Trusted career guidance for schools, students, and parents across <span class="gradient-text">India.</span>
+              Arivuu – <span class="gradient-text">India's</span> trusted career guidance platform and solution for schools, students, and parents.
             </h1>
-            <p class="hero-animate delay-2 text-muted-text text-base sm:text-lg max-w-md leading-relaxed">
+            <p class="hero-animate delay-2 text-biolume text-base sm:text-lg max-w-md leading-relaxed">
               Empowering every learner to discover, decide, and design their future.
             </p>
             <div class="hero-animate delay-3 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 mt-2">
-              <button type="button" data-open-contact data-contact-title="Get in touch" data-contact-subject="General enquiry" class="w-full sm:w-auto text-center px-6 py-3 rounded-full bg-nebula text-white text-sm font-medium hover:bg-nebula/80 transition-all duration-300 shadow-accent-md hover:shadow-accent-lg">Get in touch</button>
+              <button type="button" data-open-contact data-contact-title="Begin Journey" data-contact-subject="General enquiry" class="w-full sm:w-auto text-center px-6 py-3 rounded-full bg-nebula text-white text-sm font-medium hover:bg-nebula/80 transition-all duration-300 shadow-accent-md hover:shadow-accent-lg">Begin Journey</button>
               <a href="https://growthpath.arivuu.com/global-career-library/" target="_blank" rel="noopener noreferrer" class="btn-outline btn-outline-neutral w-full sm:w-auto justify-center flex items-center gap-2 text-sm">
-                Begin Journey
+                Explore 3000+ Careers
                 <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>
             </div>
@@ -189,16 +189,37 @@
               </div>
             </div>
           </div>
-          <div class="hero-stats hero-animate delay-4 pt-8 border-t border-nebula/15 lg:col-span-2 w-full">
-            <p class="text-biolume text-xs font-medium tracking-[0.15em] uppercase mb-2">Trusted Across India</p>
-            <p class="text-muted-text text-sm sm:text-base leading-relaxed mb-6">Arivuu is trusted nationwide by schools, students, parents, and educators.</p>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6 lg:gap-8 w-full">
-              <div class="flex flex-col min-w-0"><span class="text-xl sm:text-2xl md:text-3xl font-display font-semibold text-stardust">320+</span><span class="text-xs text-muted-text mt-1">Schools partnered</span></div>
-              <div class="flex flex-col min-w-0"><span class="text-xl sm:text-2xl md:text-3xl font-display font-semibold text-stardust">55K+</span><span class="text-xs text-muted-text mt-1">Students guided</span></div>
-              <div class="flex flex-col min-w-0"><span class="text-xl sm:text-2xl md:text-3xl font-display font-semibold text-stardust">40K+</span><span class="text-xs text-muted-text mt-1">Parents supported</span></div>
-              <div class="flex flex-col min-w-0"><span class="text-xl sm:text-2xl md:text-3xl font-display font-semibold text-stardust">200+</span><span class="text-xs text-muted-text mt-1">Educators empowered</span></div>
-              <div class="flex flex-col min-w-0"><span class="text-xl sm:text-2xl md:text-3xl font-display font-semibold text-stardust">98%</span><span class="text-xs text-muted-text mt-1">Success Rate</span></div>
-            </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUSTED ACROSS INDIA -->
+    <section id="stats-bar" class="section-padding bg-surface-deep border-y border-nebula/10" aria-label="Trusted Across India">
+      <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-10 reveal">
+          <p class="text-biolume text-xs font-medium tracking-[0.15em] uppercase mb-2">Trusted Across India</p>
+          <p class="text-muted-text text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">Arivuu is trusted nationwide by schools, students, parents, and educators.</p>
+        </div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 sm:gap-8 w-full reveal">
+          <div class="flex flex-col items-center text-center min-w-0">
+            <span class="text-2xl sm:text-3xl md:text-4xl font-display font-semibold text-stardust" data-counter="320" data-suffix="+">0+</span>
+            <span class="text-xs text-muted-text mt-2">Schools partnered</span>
+          </div>
+          <div class="flex flex-col items-center text-center min-w-0">
+            <span class="text-2xl sm:text-3xl md:text-4xl font-display font-semibold text-stardust" data-counter="55" data-suffix="K+">0K+</span>
+            <span class="text-xs text-muted-text mt-2">Students guided</span>
+          </div>
+          <div class="flex flex-col items-center text-center min-w-0">
+            <span class="text-2xl sm:text-3xl md:text-4xl font-display font-semibold text-stardust" data-counter="40" data-suffix="K+">0K+</span>
+            <span class="text-xs text-muted-text mt-2">Parents supported</span>
+          </div>
+          <div class="flex flex-col items-center text-center min-w-0">
+            <span class="text-2xl sm:text-3xl md:text-4xl font-display font-semibold text-stardust" data-counter="200" data-suffix="+">0+</span>
+            <span class="text-xs text-muted-text mt-2">Educators empowered</span>
+          </div>
+          <div class="flex flex-col items-center text-center min-w-0 col-span-2 sm:col-span-1">
+            <span class="text-2xl sm:text-3xl md:text-4xl font-display font-semibold text-stardust" data-counter="98" data-suffix="%">0%</span>
+            <span class="text-xs text-muted-text mt-2">Success Rate</span>
           </div>
         </div>
       </div>
@@ -215,13 +236,37 @@
           <h3 class="font-display text-lg sm:text-xl font-medium text-stardust mb-3">Why career counselling matters</h3>
           <p class="text-muted-text text-sm sm:text-base leading-relaxed">Without guidance, students risk wrong choices and wasted years. With Arivuu, students gain clarity, confidence, and a structured career roadmap ensuring every decision from Class 8 to 12 leads to success, not confusion.</p>
         </div>
+
+        <div class="service-why-arivuu reveal mb-14">
+          <h3 class="service-why-arivuu-heading">Why Arivuu for Career Counselling?</h3>
+          <p class="service-why-arivuu-desc">
+            Arivuu is one of India's most trusted and advanced career guidance platforms, helping students make informed academic and career decisions with confidence. Powered by a <strong class="text-stardust font-semibold">scientifically validated psychometric engine with 93% accuracy</strong>, Arivuu delivers personalised career insights backed by expert counsellors and technology-enabled tools.
+          </p>
+          <div class="service-why-arivuu-features service-why-arivuu-features--boxes" role="list">
+            <div class="service-why-arivuu-features-row">
+              <span class="service-why-arivuu-feature" role="listitem">Smart Career Insights</span>
+              <span class="service-why-arivuu-feature" role="listitem">1:1 Student &amp; Parent Sessions</span>
+              <span class="service-why-arivuu-feature" role="listitem">3,000+ Careers, 160+ Paths, 20 Clusters</span>
+              <span class="service-why-arivuu-feature" role="listitem">93% Accurate Assessments</span>
+            </div>
+            <div class="service-why-arivuu-features-row">
+              <span class="service-why-arivuu-feature" role="listitem">Scholarship Guidance</span>
+              <span class="service-why-arivuu-feature" role="listitem">Personalised Dashboard &amp; Roadmap</span>
+              <span class="service-why-arivuu-feature" role="listitem">Continuous Guidance Grades 8–12</span>
+            </div>
+          </div>
+        </div>
+
         <div class="grid md:grid-cols-2 gap-6 max-w-4xl mx-auto">
           <div class="glass-card glass-card-hover p-8 flex flex-col gap-5 reveal">
             <div class="audience-icon">
               <svg class="icon-2xl audience-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             </div>
             <h3 class="font-display text-xl font-medium text-stardust uppercase">Are you a student ?</h3>
-            <p class="text-muted-text text-sm leading-relaxed flex-1"><span class="text-biolume block">From confusion to clarity with Arivuu.</span><span class="block mt-2">Confused about your future? Arivuu helps you find direction. With expert guidance, explore 3,000+ occupations, 160+ career paths, and 20 career clusters — all matched to your strengths through psychometric assessments (93% accuracy) and personalised counselling.</span></p>
+            <p class="text-muted-text text-sm leading-relaxed flex-1">
+              <span class="text-biolume block">From confusion to clarity with Arivuu.</span>
+              <span class="audience-copy-justify block mt-2">Confused about your future? Arivuu helps you find direction. With expert guidance, explore 3,000+ occupations, 160+ career paths, and 20 career clusters — all matched to your strengths through psychometric assessments (93% accuracy) and personalised counselling.</span>
+            </p>
             <a href="#/student" class="pill-button text-center text-sm mt-2 w-full">Explore Student Page</a>
           </div>
           <div class="glass-card glass-card-hover p-8 flex flex-col gap-5 reveal">
@@ -229,8 +274,11 @@
               <svg class="icon-2xl audience-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 22h18"/><path d="M6 18V9l6-4 6 4v9"/><path d="M10 18V13h4v5"/><path d="M10 9h4"/></svg>
             </div>
             <h3 class="font-display text-xl font-medium text-stardust uppercase">Are you a school or institute?</h3>
-            <p class="text-muted-text text-sm leading-relaxed flex-1"><span class="text-biolume block">From software to support with Arivuu.</span><span class="block mt-2">Career counselling is no longer optional — it is the key to futureready education. Aligned with NEP 2020, Arivuu blends AI precision with human expertise to strengthen your school's ecosystem. Students gain clarity by exploring 3,000+ careers, 160+ paths, and 20 clusters — matched to their strengths through 93% accurate psychometric assessments and personalised counselling.</span></p>
-            <a href="#/institution" class="pill-button text-center text-sm mt-2 w-full">Partner With Arivuu</a>
+            <p class="text-muted-text text-sm leading-relaxed flex-1">
+              <span class="text-biolume block">From software to support with Arivuu.</span>
+              <span class="audience-copy-justify block mt-2">Career counselling is no longer optional — it is the key to future ready education. Aligned with NEP 2020, Arivuu blends AI precision with human expertise to strengthen your school's ecosystem. Students gain clarity by exploring 3,000+ careers, 160+ paths, and 20 clusters — matched to their strengths through 93% accurate psychometric assessments and personalised counselling.</span>
+            </p>
+            <a href="#/institution/guide" class="pill-button text-center text-sm mt-2 w-full">Partner With Arivuu</a>
           </div>
           <!-- Educator card — hidden for now; remove `hidden` and restore md:grid-cols-3 on the grid to show -->
           <div class="hidden glass-card glass-card-hover p-8 flex flex-col gap-5 reveal">
@@ -246,43 +294,46 @@
     </section>
 
     <!-- JOURNEY PROCESS -->
-    <section id="journey" class="section-padding bg-surface-deep relative overflow-hidden">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-20 reveal">
+    <section id="journey" class="py-12 sm:py-16 lg:py-20 px-4 sm:px-6 lg:px-16 bg-surface-deep relative overflow-hidden">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-10 sm:mb-12 reveal">
           <span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">Our Process</span>
           <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-stardust mt-4">From Confusion to <span class="gradient-text">Clarity</span><br />in 3 Easy Steps</h2>
         </div>
         <div class="relative">
-          <div class="timeline-line timeline-gradient hidden lg:block absolute top-16 left-[16.67%] right-[16.67%] h-[2px]"></div>
-          <div class="grid md:grid-cols-3 gap-12 lg:gap-8 items-stretch">
+          <div class="timeline-line timeline-gradient hidden lg:block absolute top-12 left-[16.67%] right-[16.67%] h-[2px]"></div>
+          <div class="grid md:grid-cols-3 gap-8 lg:gap-6 items-stretch">
             <div class="relative flex flex-col items-center text-center reveal h-full">
-              <div class="relative z-10 mb-6">
-                <div class="w-16 h-16 rounded-full bg-surface-deep border-2 border-nebula flex items-center justify-center shadow-accent-md">
-                  <svg class="icon-2xl text-nebula" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              <div class="relative z-10 mb-4">
+                <div class="w-12 h-12 rounded-full bg-surface-deep border-2 border-nebula flex items-center justify-center shadow-accent-sm">
+                  <svg class="w-5 h-5 text-nebula" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                 </div>
-                <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-biolume flex items-center justify-center"><span class="text-[10px] font-bold text-white">01</span></div>
+                <div class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-biolume flex items-center justify-center"><span class="text-[9px] font-bold text-white">01</span></div>
               </div>
-              <h3 class="font-display text-xl font-medium text-stardust max-w-xs mx-auto">Book a 15 minute Pre Counselling Session (Free demo)</h3>
+              <h3 class="font-display text-sm sm:text-base font-medium text-stardust max-w-[14rem] mx-auto leading-snug">Book a 15 minute Pre Counselling Session (Free demo)</h3>
             </div>
             <div class="relative flex flex-col items-center text-center reveal h-full">
-              <div class="relative z-10 mb-6">
-                <div class="w-16 h-16 rounded-full bg-surface-deep border-2 border-nebula flex items-center justify-center shadow-accent-md">
-                  <svg class="icon-2xl text-nebula" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
+              <div class="relative z-10 mb-4">
+                <div class="w-12 h-12 rounded-full bg-surface-deep border-2 border-nebula flex items-center justify-center shadow-accent-sm">
+                  <svg class="w-5 h-5 text-nebula" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/></svg>
                 </div>
-                <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-biolume flex items-center justify-center"><span class="text-[10px] font-bold text-white">02</span></div>
+                <div class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-biolume flex items-center justify-center"><span class="text-[9px] font-bold text-white">02</span></div>
               </div>
-              <h3 class="font-display text-xl font-medium text-stardust max-w-xs mx-auto">Take our Career Assessment – with a 32 page SWOT analysis and psychometric evaluation</h3>
+              <h3 class="font-display text-sm sm:text-base font-medium text-stardust max-w-[14rem] mx-auto leading-snug">Take our Career Assessment – with a 25+ page of psychometric evaluation</h3>
             </div>
             <div class="relative flex flex-col items-center text-center reveal h-full">
-              <div class="relative z-10 mb-6">
-                <div class="w-16 h-16 rounded-full bg-surface-deep border-2 border-nebula flex items-center justify-center shadow-accent-md">
-                  <svg class="icon-2xl text-nebula" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
+              <div class="relative z-10 mb-4">
+                <div class="w-12 h-12 rounded-full bg-surface-deep border-2 border-nebula flex items-center justify-center shadow-accent-sm">
+                  <svg class="w-5 h-5 text-nebula" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>
                 </div>
-                <div class="absolute -top-2 -right-2 w-6 h-6 rounded-full bg-biolume flex items-center justify-center"><span class="text-[10px] font-bold text-white">03</span></div>
+                <div class="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-biolume flex items-center justify-center"><span class="text-[9px] font-bold text-white">03</span></div>
               </div>
-              <h3 class="font-display text-xl font-medium text-stardust max-w-xs mx-auto">Connect with our Counsellor – receive a 15 year career roadmap, salary projections, and growth insights</h3>
+              <h3 class="font-display text-sm sm:text-base font-medium text-stardust max-w-[14rem] mx-auto leading-snug">Connect with our Counsellor – receive a 15 year career roadmap, salary projections, and growth insights</h3>
             </div>
           </div>
+        </div>
+        <div class="flex justify-center mt-10 sm:mt-12 reveal">
+          <button type="button" data-open-contact data-contact-title="Let's Start" data-contact-subject="Career counselling enquiry" class="px-8 py-3 rounded-full bg-nebula text-white text-sm font-medium hover:bg-nebula/80 transition-all duration-300 shadow-accent-md hover:shadow-accent-lg">Let's Start</button>
         </div>
       </div>
     </section>
@@ -292,7 +343,7 @@
       <div class="max-w-7xl mx-auto w-full">
         <div class="min-w-0 reveal">
           <div class="text-center mb-6 sm:mb-8">
-            <span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">Student Success Stories</span>
+            <span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">Success Stories</span>
             <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-stardust mt-4 leading-tight">What Our <span class="gradient-text">Community Says</span></h2>
           </div>
           <div class="relative min-w-0 px-9 sm:px-6 md:px-8 lg:px-0">
@@ -450,7 +501,7 @@
         <div id="career-library-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 reveal"></div>
         <div class="text-center mt-10 reveal">
           <a href="https://growthpath.arivuu.com/global-career-library/" class="btn-premium">
-            <span>Explore all careers</span>
+            <span>Explore 3000+ Careers</span>
             <span class="btn-premium-stars" aria-hidden="true">
               <svg class="btn-premium-star btn-premium-star-main" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path fill="currentColor" d="M11.04 19.32Q12 21.51 12 24q0-2.49.93-4.68.96-2.19 2.58-3.81t3.81-2.55Q21.51 12 24 12q-2.49 0-4.68-.93a12.3 12.3 0 0 1-3.81-2.58 12.3 12.3 0 0 1-2.58-3.81Q12 2.49 12 0q0 2.49-.96 4.68-.93 2.19-2.55 3.81a12.3 12.3 0 0 1-3.81 2.58Q2.49 12 0 12q2.49 0 4.68.96 2.19.93 3.81 2.55t2.55 3.81"/>
@@ -486,77 +537,7 @@
     </section>
 
     <!-- WORKSHOPS -->
-    <section id="workshops" class="section-padding bg-surface-deep relative overflow-x-clip">
-      <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-14 reveal">
-          <span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">Events &amp; Seminars</span>
-          <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-stardust mt-4">Workshops &amp; <span class="gradient-text">Seminars</span></h2>
-          <p class="text-muted-text text-sm mt-4 max-w-xl mx-auto">Interactive sessions designed for schools, teachers, parents, and students to explore career possibilities and build confidence.</p>
-        </div>
-        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="glass-card glass-card-hover p-6 reveal group">
-            <div class="flex items-start justify-between mb-4">
-              <div class="audience-icon audience-icon-md">
-                <svg class="icon-xl audience-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              </div>
-              <span class="text-[10px] font-medium px-2 py-1 rounded-full bg-nebula/10 text-nebula">Students</span>
-            </div>
-            <h3 class="font-display text-base font-medium text-stardust mb-2 group-hover:text-biolume transition-colors duration-300">Career Guidance Workshop</h3>
-            <p class="text-muted-text text-xs leading-relaxed">Hands-on sessions exploring 155+ curated career paths with activities, industry speakers, and guided self-reflection.</p>
-          </div>
-          <div class="glass-card glass-card-hover p-6 reveal group">
-            <div class="flex items-start justify-between mb-4">
-              <div class="audience-icon audience-icon-md">
-                <svg class="icon-xl audience-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
-              </div>
-              <span class="text-[10px] font-medium px-2 py-1 rounded-full bg-biolume/10 text-biolume">Educators</span>
-            </div>
-            <h3 class="font-display text-base font-medium text-stardust mb-2 group-hover:text-biolume transition-colors duration-300">Teachers' Training Workshop</h3>
-            <p class="text-muted-text text-xs leading-relaxed">Equip teachers with the tools and knowledge to guide students effectively through their career discovery journey.</p>
-          </div>
-          <div class="glass-card glass-card-hover p-6 reveal group">
-            <div class="flex items-start justify-between mb-4">
-              <div class="audience-icon audience-icon-md">
-                <svg class="icon-xl audience-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 16s-1.5-2-4-2-4 2-4 2M9 9h.01M15 9h.01"/></svg>
-              </div>
-              <span class="text-[10px] font-medium px-2 py-1 rounded-full bg-nebula/10 text-nebula">Students</span>
-            </div>
-            <h3 class="font-display text-base font-medium text-stardust mb-2 group-hover:text-biolume transition-colors duration-300">Exam Phobia Workshop</h3>
-            <p class="text-muted-text text-xs leading-relaxed">Science-backed techniques to overcome exam anxiety, build confidence, and develop effective study strategies.</p>
-          </div>
-          <div class="glass-card glass-card-hover p-6 reveal group">
-            <div class="flex items-start justify-between mb-4">
-              <div class="audience-icon audience-icon-md">
-                <svg class="icon-xl audience-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
-              </div>
-              <span class="text-[10px] font-medium px-2 py-1 rounded-full bg-biolume/10 text-biolume">Parents</span>
-            </div>
-            <h3 class="font-display text-base font-medium text-stardust mb-2 group-hover:text-biolume transition-colors duration-300">Career Guidance Seminar</h3>
-            <p class="text-muted-text text-xs leading-relaxed">Help parents understand the new-age career landscape and support their children in making informed decisions.</p>
-          </div>
-          <div class="glass-card glass-card-hover p-6 reveal group">
-            <div class="flex items-start justify-between mb-4">
-              <div class="audience-icon audience-icon-md">
-                <svg class="icon-xl audience-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/></svg>
-              </div>
-              <span class="text-[10px] font-medium px-2 py-1 rounded-full bg-nebula/10 text-nebula">Students</span>
-            </div>
-            <h3 class="font-display text-base font-medium text-stardust mb-2 group-hover:text-biolume transition-colors duration-300">Mind Mapping Workshop</h3>
-            <p class="text-muted-text text-xs leading-relaxed">Creative visualization techniques to organize thoughts, set goals, and create actionable career roadmaps.</p>
-          </div>
-          <div class="glass-card glass-card-hover p-6 reveal group">
-            <div class="flex items-start justify-between mb-4">
-              <div class="audience-icon audience-icon-md">
-                <svg class="icon-xl audience-icon-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M5 8.5c0 4.5 3.5 8 7 8s7-3.5 7-8"/><path d="M12 2v2M4.93 4.93l1.41 1.41M19.07 4.93l-1.41 1.41M2 8.5h2M20 8.5h2M5.5 16.5 8 19M18.5 16.5 16 19"/></svg>
-              </div>
-              <span class="text-[10px] font-medium px-2 py-1 rounded-full bg-biolume/10 text-biolume">Everyone</span>
-            </div>
-            <h3 class="font-display text-base font-medium text-stardust mb-2 group-hover:text-biolume transition-colors duration-300">Success Celebration</h3>
-            <p class="text-muted-text text-xs leading-relaxed">Annual gathering celebrating student achievements, sharing success stories, and building our community.</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <div id="workshops-mount"></div>
 
     <div id="pdf-sample-mount"></div>
     <div id="career-ecosystem-mount"></div>
@@ -608,9 +589,11 @@
   <script src="data/faq.js"></script>
   <script src="data/student-guide.js"></script>
   <script src="data/testimonials.js"></script>
+  <script src="data/workshops.js"></script>
   <script src="js/shared-sections.js"></script>
   <script src="js/student-testimonials.js"></script>
   <script src="js/student-guide.js"></script>
+  <script src="js/workshops.js"></script>
   <script src="js/app.js"></script>
   <script src="js/navbar.js"></script>
   <script src="js/footer.js"></script>

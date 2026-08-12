@@ -6,8 +6,8 @@ window.ARIVUU_STUDENT_TESTIMONIALS = {
       subtitle: 'Real stories from students and parents who found clarity with Arivuu.'
     },
     schools: {
-      eyebrow: 'School Success Stories',
-      titleHtml: 'What Our <span class="gradient-text">Partner Schools Say</span>',
+      eyebrow: 'Partner Schools',
+      titleHtml: '<span class="gradient-text">School Success Stories</span>',
       subtitle: 'Real stories from schools and educators who integrated Arivuu into their career guidance ecosystem.'
     }
   },

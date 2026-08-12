@@ -5,7 +5,8 @@
 
   var SERVICE_LINKS = [
     { href: '#/student/guide', label: 'Students', matchPages: ['student', 'student-guide'] },
-    { href: '#/institution/guide', label: 'Institutions', matchPages: ['institution', 'service', 'services'] }
+    { href: '#/institution/guide', label: 'Institutions', matchPages: ['institution', 'service', 'services'] },
+    { href: '#/workshops', label: 'Seminar', matchPages: ['workshops'] }
   ];
 
   function getAudienceFromHash() {
@@ -16,7 +17,7 @@
   }
 
   function isServicesSectionActive(page) {
-    return page === 'services' || page === 'service' || page === 'student' || page === 'student-guide' || page === 'institution';
+    return page === 'services' || page === 'service' || page === 'student' || page === 'student-guide' || page === 'institution' || page === 'workshops';
   }
 
   function isServiceLinkActive(link, page) {
@@ -150,7 +151,7 @@
               renderDesktopLinks(page, isHome) +
             '</div>' +
             '<div class="flex items-center gap-2 sm:gap-3">' +
-              '<a href="#/contact" class="pill-button pill-button-sm text-xs hidden sm:inline-flex">Begin Journey</a>' +
+              '<a href="#/contact" class="pill-button pill-button-sm text-xs hidden sm:inline-flex">Get In Touch</a>' +
               '<button type="button" id="nav-toggle" class="nav-toggle lg:hidden" aria-expanded="false" aria-controls="nav-mobile-menu" aria-label="Open menu">' +
                 '<svg class="nav-toggle-icon nav-toggle-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>' +
                 '<svg class="nav-toggle-icon nav-toggle-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>' +
@@ -162,7 +163,7 @@
       '<div id="nav-mobile-menu" class="nav-mobile-menu lg:hidden" hidden>' +
         '<div class="nav-mobile-menu-inner">' +
           renderMobileLinks(page, isHome) +
-          '<a href="#/contact" class="nav-mobile-cta">Begin Journey</a>' +
+          '<a href="#/contact" class="nav-mobile-cta">Get In Touch</a>' +
         '</div>' +
       '</div>';
 

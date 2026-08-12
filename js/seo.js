@@ -90,6 +90,12 @@
         'Contact Arivuu at arivuu.com for career counselling, school partnerships, workshops or counsellor network enquiries. ' +
         'Serving students, parents and teachers across India.',
       keywords: 'contact Arivuu, contact career counsellor India, book career counselling, school career guidance enquiry, Arivuu phone number'
+    },
+    '/workshops': {
+      title: 'Workshops & Seminars | Arivuu Career Guidance Events',
+      description:
+        'Explore Arivuu workshops and seminars for students, parents and educators — career guidance, teacher training, exam anxiety and more.',
+      keywords: 'Arivuu workshops, career guidance seminar, teacher training workshop, exam phobia workshop, school career seminar India'
     }
   };
 
@@ -104,7 +110,8 @@
     '/institution/guide': 'School Partnership',
     '/blog': 'Blog',
     '/blog-post': 'Article',
-    '/contact': 'Contact'
+    '/contact': 'Contact',
+    '/workshops': 'Workshops & Seminars'
   };
 
   function env() {

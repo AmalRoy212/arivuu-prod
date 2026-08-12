@@ -233,14 +233,15 @@
   function renderAceFlipCard(card) {
     var icon = ICONS[card.icon] || ICONS.compass;
     var items = (card.items || []).map(renderAceFlipCardItem).join('');
+    var accentClass = card.letter === 'C' ? ' flip-card--accent-biolume' : '';
 
     return (
-      '<article class="flip-card">' +
+      '<article class="flip-card' + accentClass + '">' +
         '<div class="flip-card-inner">' +
           '<div class="flip-card-face flip-card-front glass-card">' +
-            '<div class="flip-card-icon-wrap audience-icon audience-icon-md">' + icon + '</div>' +
+            '<div class="flip-card-icon-wrap audience-icon">' + icon + '</div>' +
             '<h3 class="flip-card-title">' + escapeHtml(card.letter) + ' – ' + escapeHtml(card.title) + '</h3>' +
-            '<p class="flip-card-hint">Hover to learn more</p>' +
+            '<span class="flip-card-hint">Hover to learn more</span>' +
           '</div>' +
           '<div class="flip-card-face flip-card-back glass-card">' +
             '<ul class="flip-card-list">' + items + '</ul>' +
@@ -272,7 +273,7 @@
     var eyebrow = section.eyebrow || 'Our Framework';
 
     return (
-      '<section id="ace-journey" class="section-padding-lg bg-surface-deep relative overflow-hidden" aria-labelledby="service-ace-journey-title">' +
+      '<section id="ace-journey" class="section-padding-lg ace-journey-section bg-surface-deep relative overflow-hidden" aria-labelledby="service-ace-journey-title">' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">' +
           '<div class="text-center mb-16">' +
             '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">' + escapeHtml(eyebrow) + '</span>' +
@@ -463,34 +464,73 @@
     return escapeHtml(section.description || '');
   }
 
+  function renderWhyArivuuFeatureBoxes(features) {
+    features = features || [];
+    if (!features.length) return '';
+
+    var mid = Math.ceil(features.length / 2);
+    var rows = [features.slice(0, mid), features.slice(mid)].filter(function (row) {
+      return row.length;
+    });
+
+    return (
+      '<div class="service-why-arivuu-features service-why-arivuu-features--boxes" role="list">' +
+        rows
+          .map(function (row) {
+            return (
+              '<div class="service-why-arivuu-features-row">' +
+                row
+                  .map(function (item) {
+                    return '<span class="service-why-arivuu-feature" role="listitem">' + escapeHtml(item) + '</span>';
+                  })
+                  .join('') +
+              '</div>'
+            );
+          })
+          .join('') +
+      '</div>'
+    );
+  }
+
   function renderWhyArivuuSection(section) {
     if (!section) return '';
-
-    var features = (section.features || []).map(function (item, index) {
-      var sep = index < section.features.length - 1
-        ? ' <span class="service-why-arivuu-sep" aria-hidden="true">|</span> '
-        : '';
-      return escapeHtml(item) + sep;
-    }).join('');
 
     var cta = section.cta || {};
 
     return (
-      '<div class="service-why-arivuu">' +
-        '<h3 class="service-why-arivuu-heading">' + escapeHtml(section.heading || 'Why Arivuu for Career Counselling?') + '</h3>' +
-        '<p class="service-why-arivuu-desc">' + renderWhyArivuuDescription(section) + '</p>' +
-        '<p class="service-why-arivuu-features">' + features + '</p>' +
-        (cta.label
-          ? '<div class="service-why-arivuu-cta">' +
-              '<button type="button" class="btn-premium btn-premium--biolume" data-open-contact ' +
-                'data-contact-title="' + escapeHtml(cta.modalTitle || cta.label) + '" ' +
-                'data-contact-subject="' + escapeHtml(cta.subject || 'School partnership') + '">' +
-                '<span>' + escapeHtml(cta.label) + '</span>' +
-              '</button>' +
-            '</div>'
-          : '') +
-      '</div>'
+      '<section class="service-section service-why-arivuu-section bg-void" aria-labelledby="service-why-arivuu-title">' +
+        '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">' +
+          '<div class="service-why-arivuu service-why-arivuu--standalone">' +
+            '<h2 id="service-why-arivuu-title" class="service-why-arivuu-heading">' +
+              escapeHtml(section.heading || 'Why Arivuu for Career Counselling?') +
+            '</h2>' +
+            '<p class="service-why-arivuu-desc">' + renderWhyArivuuDescription(section) + '</p>' +
+            (cta.label
+              ? '<div class="service-why-arivuu-cta">' +
+                  '<button type="button" class="btn-premium btn-premium--biolume" data-open-contact ' +
+                    'data-contact-title="' + escapeHtml(cta.modalTitle || cta.label) + '" ' +
+                    'data-contact-subject="' + escapeHtml(cta.subject || 'School partnership') + '">' +
+                    '<span>' + escapeHtml(cta.label) + '</span>' +
+                  '</button>' +
+                '</div>'
+              : '') +
+            renderWhyArivuuFeatureBoxes(section.features) +
+          '</div>' +
+        '</div>' +
+      '</section>'
     );
+  }
+
+  function renderSchoolWorkshopsIntro(meta) {
+    if (meta.introSegments && meta.introSegments.length) {
+      return meta.introSegments.map(function (part) {
+        if (part.bold) {
+          return '<strong class="text-stardust font-semibold">' + escapeHtml(part.text) + '</strong>';
+        }
+        return escapeHtml(part.text);
+      }).join('');
+    }
+    return escapeHtml(meta.intro || '');
   }
 
   function renderSchoolWorkshopsHeader(meta) {
@@ -502,10 +542,10 @@
     return (
       '<div class="service-workshops-header service-workshops-header--school">' +
         '<h2 id="service-workshops-title" class="service-workshops-title service-workshops-title--school">' +
-          escapeHtml(meta.eyebrow || 'For Students') +
+          escapeHtml(meta.eyebrow || 'Why Schools Partner with Arivuu') +
         '</h2>' +
         iconHtml +
-        '<p class="service-workshops-intro">' + escapeHtml(meta.intro || '') + '</p>' +
+        '<p class="service-workshops-intro">' + renderSchoolWorkshopsIntro(meta) + '</p>' +
       '</div>'
     );
   }
@@ -549,7 +589,6 @@
           headerHtml +
           (stats ? '<div class="service-workshops-stats">' + stats + '</div>' : '') +
           '<div class="service-workshops-grid">' + cards + '</div>' +
-          (audience.whyArivuuSection ? renderWhyArivuuSection(audience.whyArivuuSection) : '') +
           (meta.hideCta
             ? ''
             : '<div class="service-workshops-cta">' +
@@ -654,7 +693,7 @@
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-10 sm:py-16 relative">' +
           '<nav class="page-breadcrumbs mb-6" aria-label="Breadcrumb">' +
             '<a href="#/">Home</a><span>/</span>' +
-            '<a href="#/institution">Institutions</a><span>/</span>' +
+            '<a href="#/institution/guide">Institutions</a><span>/</span>' +
             '<span class="page-breadcrumbs-current">' + escapeHtml(breadcrumb) + '</span>' +
           '</nav>' +
           '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">' + escapeHtml(eyebrow) + '</span>' +
@@ -812,9 +851,9 @@
   }
 
   function renderContactSection(audience) {
-    if (audience.approachSection) {
+    if (audience.whyArivuuSection || audience.approachSection) {
       return (
-        renderApproachSection(audience.approachSection) +
+        (audience.whyArivuuSection ? renderWhyArivuuSection(audience.whyArivuuSection) : '') +
         (audience.ecosystemSection ? renderEcosystemSection(audience.ecosystemSection) : '')
       );
     }
@@ -880,6 +919,8 @@
       renderContactSection(audience) +
 
       renderAceSection(audience) +
+
+      (audience.id === 'school' ? '<div id="workshops-mount"></div>' : '') +
 
       renderWorkshopsSection(audience) +
 
@@ -1177,6 +1218,8 @@
     if (audience.id === 'school') {
       if (window.Arivuu.bindPdfSampleSection) window.Arivuu.bindPdfSampleSection();
       if (window.Arivuu.bindStudentTestimonials) window.Arivuu.bindStudentTestimonials('schools');
+      if (window.Arivuu.bindCareerEcosystemSection) window.Arivuu.bindCareerEcosystemSection(mount);
+      if (window.Arivuu.mountHomeWorkshops) window.Arivuu.mountHomeWorkshops();
     }
 
     if (window.Arivuu.lockPageScrollTop) window.Arivuu.lockPageScrollTop();
@@ -1253,7 +1296,7 @@
     } else {
       teardownAceParallax();
     }
-    if (page === 'home' || page === 'student') {
+    if (page === 'home' || page === 'institution') {
       mountSharedAceCards();
     }
   };
