@@ -1,11 +1,12 @@
 window.ARIVUU_STUDENT_GUIDE = {
   featureBar: [
     'Smart Career Insights',
-    '1:1 Sessions with Students and Parents',
+    '1:1 Student & Parent Sessions',
     '3,000+ Careers, 160+ Paths, 20 Clusters',
     '93% Accurate Assessments',
-    'Scholarship Information',
-    'Personalised Dashboard & Roadmap'
+    'Scholarship Guidance',
+    'Personalised Dashboard & Roadmap',
+    'Continuous Guidance Grades 8–12'
   ],
   cards: [
     {
@@ -28,7 +29,7 @@ window.ARIVUU_STUDENT_GUIDE = {
       segments: [
         { text: 'Explore ' },
         { text: '3,000+ career options, 160+ career paths, and 20 clusters', bold: true },
-        { text: ' — each with detailed role insights, opportunities, growth scope, and clear steps to pursue them. From emerging industries to traditional professions, Arivuu makes career discovery structured, personalised, and futureready. Students also gain access to ' },
+        { text: ' — each with detailed role insights, opportunities, growth scope, and clear steps to pursue them. From emerging industries to traditional professions, Arivuu makes career discovery structured, personalised, and future ready. Students also gain access to ' },
         { text: 'scholarship information.', bold: true },
         { text: ' ' },
         { text: 'plan their academic journey with confidence.', accent: true }

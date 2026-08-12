@@ -30,15 +30,16 @@
     return escapeHtml(card.description || '');
   }
 
-  function renderFlipCard(card) {
+  function renderFlipCard(card, index) {
     var icon = icons[card.icon] || icons.compass;
+    var accentClass = index === 1 ? ' flip-card--accent-biolume' : '';
     return (
-      '<article class="flip-card">' +
+      '<article class="flip-card' + accentClass + '">' +
         '<div class="flip-card-inner">' +
           '<div class="flip-card-face flip-card-front glass-card">' +
-            '<div class="flip-card-icon-wrap audience-icon audience-icon-md">' + icon + '</div>' +
+            '<div class="flip-card-icon-wrap audience-icon">' + icon + '</div>' +
             '<h3 class="flip-card-title">' + escapeHtml(card.title) + '</h3>' +
-            '<p class="flip-card-hint">Hover to learn more</p>' +
+            '<span class="flip-card-hint">Hover to learn more</span>' +
           '</div>' +
           '<div class="flip-card-face flip-card-back glass-card">' +
             '<p class="flip-card-description">' + renderFlipCardDescription(card) + '</p>' +
@@ -117,6 +118,52 @@
     );
   }
 
+  function renderWhyFeatureBoxes(items) {
+    items = items || [];
+    if (!items.length) return '';
+
+    var mid = Math.ceil(items.length / 2);
+    var rows = [items.slice(0, mid), items.slice(mid)].filter(function (row) {
+      return row.length;
+    });
+
+    return (
+      '<div class="service-why-arivuu-features service-why-arivuu-features--boxes student-guide-why-features" role="list">' +
+        rows
+          .map(function (row) {
+            return (
+              '<div class="service-why-arivuu-features-row">' +
+                row
+                  .map(function (item) {
+                    return '<span class="service-why-arivuu-feature" role="listitem">' + escapeHtml(item) + '</span>';
+                  })
+                  .join('') +
+              '</div>'
+            );
+          })
+          .join('') +
+      '</div>'
+    );
+  }
+
+  function renderWhyArivuuSection() {
+    return (
+      '<section class="section-padding bg-surface-deep">' +
+        '<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-16">' +
+          '<div class="service-why-arivuu student-guide-why-block">' +
+            '<h2 class="service-why-arivuu-heading">Why Arivuu for Career Counselling?</h2>' +
+            '<div class="student-guide-why service-why-arivuu-desc mt-0 space-y-5">' +
+              '<p><strong class="text-stardust font-semibold">Arivuu is a trusted and advanced career guidance platform designed to help students make confident academic and career decisions. Powered by our scientifically validated psychometric engine (93% accuracy and reliability) and technology-enabled insights, Arivuu ensures every student discovers their ideal career path with clarity.</strong></p>' +
+              '<p>What sets us apart is our <strong class="text-stardust font-semibold">blend of science and human expertise</strong>. Our counsellors sit with both students and parents for <strong class="text-stardust font-semibold">personalised one-on-one sessions</strong>, explaining each option clearly and building a roadmap that feels achievable. With access to <strong class="text-stardust font-semibold">scholarship information</strong>, students can plan their future not just with clarity, but also with financial confidence.</p>' +
+            '</div>' +
+            renderTakeTestButton() +
+            renderWhyFeatureBoxes(data.featureBar) +
+          '</div>' +
+        '</div>' +
+      '</section>'
+    );
+  }
+
   function renderStudentGuideSectionHeader() {
     var renderSchoolIcon = window.Arivuu.renderSchoolIcon;
     var iconHtml = renderSchoolIcon
@@ -154,29 +201,22 @@
         '</div>' +
       '</header>' +
 
-      '<section class="section-padding bg-void">' +
+      renderWhyArivuuSection() +
+
+      '<section id="student-guide-cards" class="section-padding bg-void">' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">' +
           renderStudentGuideSectionHeader() +
           '<div class="flip-card-grid">' + cards + '</div>' +
         '</div>' +
       '</section>' +
 
-      '<section class="section-padding bg-surface-deep">' +
-        '<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-16">' +
-          '<h2 class="font-display text-2xl sm:text-3xl lg:text-4xl font-semibold text-stardust text-center leading-tight">Why Arivuu for Career Counselling?</h2>' +
-          '<div class="student-guide-why mt-8 space-y-5 text-sm sm:text-base text-muted-text leading-relaxed">' +
-            '<p><strong class="text-stardust font-semibold">Arivuu is a trusted and advanced career guidance platform designed to help students make confident academic and career decisions. Powered by our scientifically validated psychometric engine (93% accuracy and reliability) and technology-enabled insights, Arivuu ensures every student discovers their ideal career path with clarity.</strong></p>' +
-            '<p>What sets us apart is our <strong class="text-stardust font-semibold">blend of science and human expertise</strong>. Our counsellors sit with both students and parents for <strong class="text-stardust font-semibold">personalised one-on-one sessions</strong>, explaining each option clearly and building a roadmap that feels achievable. With access to <strong class="text-stardust font-semibold">scholarship information</strong>, students can plan their future not just with clarity, but also with financial confidence.</p>' +
-          '</div>' +
-          renderTakeTestButton() +
-        '</div>' +
-      '</section>' +
-
-      (window.Arivuu.renderFeatureBar ? window.Arivuu.renderFeatureBar(data.featureBar) : '') +
+      '<div id="workshops-mount"></div>' +
 
       renderPdfSection(pdfMeta) +
 
-      (window.Arivuu.renderCareerEcosystemSection ? window.Arivuu.renderCareerEcosystemSection() : '') +
+      (window.Arivuu.renderCareerEcosystemSection
+        ? window.Arivuu.renderCareerEcosystemSection({ variant: 'full' })
+        : '') +
 
       (window.Arivuu.renderStudentTestimonialsSection ? window.Arivuu.renderStudentTestimonialsSection('students') : '') +
 
@@ -327,6 +367,7 @@
     if (window.Arivuu.bindFAQ) window.Arivuu.bindFAQ();
     bindPdfSamples();
     if (window.Arivuu.bindStudentTestimonials) window.Arivuu.bindStudentTestimonials('students');
+    if (window.Arivuu.mountHomeWorkshops) window.Arivuu.mountHomeWorkshops();
     finalizeStudentGuidePage(mount);
     bindFlipCards(mount);
 

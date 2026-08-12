@@ -81,6 +81,23 @@
     );
   }
 
+  function renderCareerEcosystemFullCard(card) {
+    var icon = ECOSYSTEM_ICONS[card.icon] || ECOSYSTEM_ICONS.compass;
+    var title = ecosystemCardTitle(card.title);
+    var body = card.segments
+      ? renderFeatureSegments(card.segments)
+      : escapeHtml(card.text || '');
+
+    return (
+      '<article class="service-feature-card">' +
+        '<div class="service-feature-icon-wrap audience-icon audience-icon-md">' + icon + '</div>' +
+        '<div class="service-feature-num" aria-hidden="true">' + escapeHtml(String(card.num)) + '</div>' +
+        '<h3 class="service-feature-title">' + escapeHtml(title) + '</h3>' +
+        '<p class="service-feature-text">' + body + '</p>' +
+      '</article>'
+    );
+  }
+
   function openCareerEcosystemModal(card) {
     var overlay = document.getElementById('content-modal');
     var titleEl = document.getElementById('content-modal-title');
@@ -108,34 +125,42 @@
     document.body.style.overflow = 'hidden';
   }
 
-  function bindCareerEcosystemSection(root) {
-    var section = (root || document).querySelector('#career-ecosystem');
-    if (!section || section.dataset.bound === '1') return;
-    section.dataset.bound = '1';
+  function bindCareerEcosystemSection() {
+    if (document.documentElement.dataset.ecosystemClickBound === '1') return;
+    document.documentElement.dataset.ecosystemClickBound = '1';
 
-    var cards =
-      (window.ARIVUU_AUDIENCE_SERVICES &&
-        window.ARIVUU_AUDIENCE_SERVICES.careerEcosystemSection &&
-        window.ARIVUU_AUDIENCE_SERVICES.careerEcosystemSection.cards) ||
-      [];
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-ecosystem-card]');
+      if (!btn) return;
 
-    section.querySelectorAll('[data-ecosystem-card]').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var index = parseInt(btn.getAttribute('data-ecosystem-card'), 10);
-        if (!isNaN(index) && cards[index]) openCareerEcosystemModal(cards[index]);
-      });
+      var section = btn.closest('#career-ecosystem');
+      if (!section || section.getAttribute('data-ecosystem-variant') === 'full') return;
+
+      var cards =
+        (window.ARIVUU_AUDIENCE_SERVICES &&
+          window.ARIVUU_AUDIENCE_SERVICES.careerEcosystemSection &&
+          window.ARIVUU_AUDIENCE_SERVICES.careerEcosystemSection.cards) ||
+        [];
+      var index = parseInt(btn.getAttribute('data-ecosystem-card'), 10);
+      if (!isNaN(index) && cards[index]) openCareerEcosystemModal(cards[index]);
     });
   }
 
-  function renderCareerEcosystemSection() {
+  function renderCareerEcosystemSection(options) {
+    options = options || {};
     var audienceData = window.ARIVUU_AUDIENCE_SERVICES;
     var section = audienceData && audienceData.careerEcosystemSection;
     if (!section || !section.cards || !section.cards.length) return '';
 
-    var cards = section.cards.map(renderCareerEcosystemCard).join('');
+    var useFullCards = options.variant === 'full';
+    var cards = useFullCards
+      ? section.cards.map(renderCareerEcosystemFullCard).join('')
+      : section.cards.map(renderCareerEcosystemCard).join('');
+    var gridClass = useFullCards ? 'service-features-grid' : 'career-ecosystem-grid';
 
     return (
-      '<section id="career-ecosystem" class="service-section career-ecosystem-section bg-void" aria-labelledby="career-ecosystem-title">' +
+      '<section id="career-ecosystem" class="service-section career-ecosystem-section bg-void" aria-labelledby="career-ecosystem-title"' +
+        (useFullCards ? ' data-ecosystem-variant="full"' : '') + '>' +
         '<div class="career-ecosystem-glow" aria-hidden="true"></div>' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 relative">' +
           '<div class="career-ecosystem-header">' +
@@ -144,7 +169,7 @@
             '</h2>' +
             '<p class="career-ecosystem-intro">' + escapeHtml(section.intro) + '</p>' +
           '</div>' +
-          '<div class="career-ecosystem-grid">' + cards + '</div>' +
+          '<div class="' + gridClass + '">' + cards + '</div>' +
         '</div>' +
       '</section>'
     );
@@ -162,10 +187,12 @@
     }
 
     var ecoMount = document.getElementById('career-ecosystem-mount');
-    if (ecoMount && !ecoMount.dataset.mounted) {
-      ecoMount.innerHTML = renderCareerEcosystemSection();
-      ecoMount.dataset.mounted = '1';
-      bindCareerEcosystemSection(ecoMount);
+    if (ecoMount) {
+      if (!ecoMount.dataset.mounted || !ecoMount.querySelector('#career-ecosystem')) {
+        ecoMount.innerHTML = renderCareerEcosystemSection();
+        ecoMount.dataset.mounted = '1';
+      }
+      bindCareerEcosystemSection();
     }
   }
 
@@ -282,7 +309,7 @@
         '<div class="max-w-7xl mx-auto w-full">' +
           '<div class="min-w-0">' +
             '<div class="text-center mb-6 sm:mb-8">' +
-              '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">Student Success Stories</span>' +
+              '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">Success Stories</span>' +
               '<h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-stardust mt-4 leading-tight">What Our <span class="gradient-text">Students Say</span></h2>' +
             '</div>' +
             '<div class="relative min-w-0 px-9 sm:px-6 md:px-8 lg:px-0">' +

@@ -603,6 +603,32 @@
   padding: clamp(4rem, 10vw, 11.25rem) clamp(1rem, 4vw, 4rem);
 }
 
+/* ACE section: drop oversized bottom gap after brochure CTA */
+#ace-journey.ace-journey-section {
+  padding-bottom: 2rem;
+}
+
+@media (min-width: 640px) {
+  #ace-journey.ace-journey-section {
+    padding-bottom: 2.5rem;
+  }
+}
+
+#ace-journey .service-ace-journey-actions {
+  margin-top: 1.75rem;
+}
+
+@media (min-width: 640px) {
+  #ace-journey .service-ace-journey-actions {
+    margin-top: 2rem;
+  }
+}
+
+/* Workshops block directly under ACE should not add another large top gap */
+#workshops-mount > #workshops.section-padding {
+  padding-top: clamp(2rem, 4vw, 3rem);
+}
+
 /* Page layout containers */
 .page-container,
 .max-w-7xl.mx-auto {
@@ -3696,6 +3722,16 @@ body[data-page="home"] .footer-journey-cta {
   display: none;
 }
 
+body[data-page="home"] #footer > .max-w-7xl {
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  body[data-page="home"] #footer > .max-w-7xl {
+    margin-top: 3rem;
+  }
+}
+
 .faq-journey-cta {
   display: flex;
   flex-direction: column;
@@ -4420,6 +4456,16 @@ body[data-page="home"] .footer-journey-cta {
   transition: color 0.25s ease;
 }
 
+.service-workshops-section--school .service-workshop-title {
+  font-size: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .service-workshops-section--school .service-workshop-title {
+    font-size: 1.3125rem;
+  }
+}
+
 .service-workshop-card--nebula:hover .service-workshop-title {
   color: rgb(var(--nebula-dark));
 }
@@ -4440,6 +4486,20 @@ body[data-page="home"] .footer-journey-cta {
   max-width: 48rem;
   margin: 3rem auto 0;
   text-align: center;
+}
+
+.service-why-arivuu--standalone {
+  margin-top: 0;
+  max-width: 56rem;
+}
+
+.service-why-arivuu--standalone .service-why-arivuu-cta {
+  margin-top: 1.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.service-why-arivuu--standalone .service-why-arivuu-features--boxes {
+  margin-top: 0;
 }
 
 .service-why-arivuu-heading {
@@ -4612,6 +4672,132 @@ body[data-page="home"] .footer-journey-cta {
 .service-workshops-cta-btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+/* Home / workshops page cards */
+.workshop-card-compact-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .workshop-card-compact-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .workshop-card-compact-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.workshop-card-compact {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.875rem 1rem;
+  min-height: 0;
+}
+
+.workshop-card-compact-icon {
+  flex-shrink: 0;
+}
+
+.workshop-card-compact-icon .audience-icon-svg,
+.workshop-card-compact-icon .icon-xl {
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+.workshop-card-compact-title {
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: rgb(var(--stardust));
+  margin: 0;
+  transition: color 0.25s ease;
+}
+
+.workshop-card-compact:hover .workshop-card-compact-title {
+  color: rgb(var(--biolume));
+}
+
+.workshop-view-all-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+@media (min-width: 640px) {
+  .workshop-view-all-wrap {
+    margin-top: 2.5rem;
+  }
+}
+
+.workshop-view-all-btn {
+  min-width: 9rem;
+  text-align: center;
+}
+
+.workshop-card-full-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .workshop-card-full-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .workshop-card-full-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.workshop-card-full {
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  height: 100%;
+}
+
+.workshop-card-full-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.workshop-card-full-title {
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: rgb(var(--stardust));
+  margin: 0 0 0.5rem;
+  transition: color 0.25s ease;
+}
+
+.workshop-card-full:hover .workshop-card-full-title {
+  color: rgb(var(--biolume));
+}
+
+.workshop-card-full-desc {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: rgb(var(--muted-text));
+  flex: 1;
 }
 
 /* Student landing page */
@@ -4834,7 +5020,8 @@ body[data-page="home"] .footer-journey-cta {
   box-sizing: border-box;
 }
 
-#ace-journey .flip-card-face.glass-card {
+#ace-journey .flip-card-face.glass-card,
+#student-guide-cards .flip-card-face.glass-card {
   overflow: hidden;
   background: linear-gradient(
     105deg,
@@ -4845,7 +5032,8 @@ body[data-page="home"] .footer-journey-cta {
   border: 1.5px solid rgb(var(--nebula) / 0.35);
 }
 
-#ace-journey .flip-card--accent-biolume .flip-card-face.glass-card {
+#ace-journey .flip-card--accent-biolume .flip-card-face.glass-card,
+#student-guide-cards .flip-card--accent-biolume .flip-card-face.glass-card {
   background: linear-gradient(
     105deg,
     rgb(var(--biolume) / 0.14) 0%,
@@ -4855,17 +5043,20 @@ body[data-page="home"] .footer-journey-cta {
   border: 1.5px solid rgb(var(--biolume) / 0.35);
 }
 
-#ace-journey .flip-card-icon-wrap.audience-icon {
+#ace-journey .flip-card-icon-wrap.audience-icon,
+#student-guide-cards .flip-card-icon-wrap.audience-icon {
   width: 4rem;
   height: 4rem;
 }
 
-#ace-journey .flip-card-icon {
+#ace-journey .flip-card-icon,
+#student-guide-cards .flip-card-icon {
   width: 2.25rem;
   height: 2.25rem;
 }
 
-#ace-journey .flip-card-title {
+#ace-journey .flip-card-title,
+#student-guide-cards .flip-card-title {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -4880,12 +5071,14 @@ body[data-page="home"] .footer-journey-cta {
   line-height: 1.3;
 }
 
-#ace-journey .flip-card--accent-biolume .flip-card-title {
+#ace-journey .flip-card--accent-biolume .flip-card-title,
+#student-guide-cards .flip-card--accent-biolume .flip-card-title {
   background: rgb(var(--biolume));
   border-color: rgb(var(--biolume));
 }
 
-#ace-journey .flip-card-hint {
+#ace-journey .flip-card-hint,
+#student-guide-cards .flip-card-hint {
   margin-top: 0.75rem;
   font-size: 0.75rem;
   color: rgb(var(--muted-text));
@@ -5045,7 +5238,22 @@ body[data-page="home"] .footer-journey-cta {
 .student-guide-cta-wrap {
   display: flex;
   justify-content: center;
-  margin-top: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1.25rem;
+}
+
+.student-guide-why-block {
+  margin-top: 0;
+}
+
+.student-guide-why-block .student-guide-why.service-why-arivuu-desc {
+  margin-top: 1.5rem;
+  max-width: none;
+  text-align: left;
+}
+
+.student-guide-why-features {
+  margin-top: 0;
 }
 
 .student-guide-why strong {

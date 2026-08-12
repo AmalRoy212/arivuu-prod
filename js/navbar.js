@@ -5,7 +5,8 @@
 
   var SERVICE_LINKS = [
     { href: '#/student/guide', label: 'Students', matchPages: ['student', 'student-guide'] },
-    { href: '#/institution/guide', label: 'Institutions', matchPages: ['institution', 'service', 'services'] }
+    { href: '#/institution/guide', label: 'Institutions', matchPages: ['institution', 'service', 'services'] },
+    { href: '#/workshops', label: 'Seminar', matchPages: ['workshops'] }
   ];
 
   function getAudienceFromHash() {
@@ -16,7 +17,7 @@
   }
 
   function isServicesSectionActive(page) {
-    return page === 'services' || page === 'service' || page === 'student' || page === 'student-guide' || page === 'institution';
+    return page === 'services' || page === 'service' || page === 'student' || page === 'student-guide' || page === 'institution' || page === 'workshops';
   }
 
   function isServiceLinkActive(link, page) {

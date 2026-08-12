@@ -276,6 +276,7 @@
   window.Arivuu.closeContactModal = closeContactModal;
   window.Arivuu.triggerFileDownload = triggerFileDownload;
   window.Arivuu.openFileInNewTab = openFileInNewTab;
+  window.Arivuu.bindContactForm = bindContactForm;
 
   function showServiceFormStatus(statusEl, text, type) {
     if (!statusEl) return;

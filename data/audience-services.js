@@ -442,8 +442,15 @@ window.ARIVUU_AUDIENCE_SERVICES = {
       },
       workshopsSection: {
         titleIcon: 'school',
-        eyebrow: 'For Students',
-        intro: 'From psychometric insights to personalised roadmaps, Arivuu helps students discover strengths, explore careers, and build confident futures — with full support for parents and schools.',
+        eyebrow: 'Why Schools Partner with Arivuu',
+        intro: 'Schools gain NEP-aligned dashboards, analytics, and scholarship insights that make career guidance structured and reliable. Students and parents receive clarity, confidence, and personalised support, strengthening the school’s reputation for future ready education.',
+        introSegments: [
+          { text: 'Schools gain ' },
+          { text: 'NEP-aligned dashboards, analytics, and scholarship insights', bold: true },
+          { text: ' that make career guidance structured and reliable. Students and parents receive ' },
+          { text: 'clarity, confidence, and personalised support,', bold: true },
+          { text: ' strengthening the school’s reputation for future ready education.' }
+        ],
         stats: [],
         hideCta: true
       },
@@ -518,7 +525,7 @@ window.ARIVUU_AUDIENCE_SERVICES = {
         segments: [
           { text: 'Arivuu is one of India\'s most trusted and advanced career guidance platforms, helping students make informed academic and career decisions with confidence. Powered by a ' },
           { text: 'scientifically validated psychometric engine with 93% accuracy', bold: true },
-          { text: ', Arivuu delivers personalised career insights backed by expert counsellors and technologyenabled tools.' }
+          { text: ', Arivuu delivers personalised career insights backed by expert counsellors and technology-enabled tools.' }
         ],
         features: [
           'Smart Career Insights',
