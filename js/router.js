@@ -76,6 +76,22 @@
     return resolveRoute(path, params);
   }
 
+  function homeUrl() {
+    return window.location.pathname + window.location.search;
+  }
+
+  function routeUrl(path, params) {
+    var query = params && params.toString() ? '?' + params.toString() : '';
+    if (path === '/' && !query) return homeUrl();
+    return '#' + path + query;
+  }
+
+  function currentRouteUrl() {
+    var hash = window.location.hash;
+    if (!hash || hash === '#' || hash === '#/') return homeUrl();
+    return hash;
+  }
+
   function cacheHome() {
     var outlet = document.getElementById('app-outlet');
     if (outlet && homeTemplate === null) homeTemplate = outlet.innerHTML;
@@ -139,12 +155,11 @@
       return navigate(resolved.path, resolved.params, true);
     }
 
-    var hash = resolved.path + (resolved.params.toString() ? '?' + resolved.params.toString() : '');
-    var nextHash = '#' + hash;
+    var nextUrl = routeUrl(resolved.path, resolved.params);
     if (replace) {
-      history.replaceState({ path: resolved.path, params: resolved.params.toString() }, '', nextHash);
-    } else if (window.location.hash !== nextHash) {
-      history.pushState({ path: resolved.path, params: resolved.params.toString() }, '', nextHash);
+      history.replaceState({ path: resolved.path, params: resolved.params.toString() }, '', nextUrl);
+    } else if (currentRouteUrl() !== nextUrl) {
+      history.pushState({ path: resolved.path, params: resolved.params.toString() }, '', nextUrl);
     }
     return render(resolved.path, resolved.params);
   }
@@ -152,7 +167,7 @@
   function render(path, params) {
     var resolved = resolveRoute(path, params || new URLSearchParams());
     if (resolved.redirect) {
-      history.replaceState({ path: resolved.path, params: resolved.params.toString() }, '', '#' + resolved.path);
+      history.replaceState({ path: resolved.path, params: resolved.params.toString() }, '', routeUrl(resolved.path, resolved.params));
       return render(resolved.path, resolved.params);
     }
 
@@ -281,15 +296,16 @@
     });
 
     var initial = parseRoute();
-    var initialHash = '#' + initial.path + (initial.params.toString() ? '?' + initial.params.toString() : '');
-    history.replaceState({ path: initial.path, params: initial.params.toString() }, '', initialHash);
+    history.replaceState({ path: initial.path, params: initial.params.toString() }, '', routeUrl(initial.path, initial.params));
     render(initial.path, initial.params);
   }
 
   window.Arivuu.navigate = navigate;
   window.Arivuu.parseRoute = parseRoute;
   window.Arivuu.link = function (path, query) {
-    return '#/' + path.replace(/^\//, '') + (query ? '?' + query : '');
+    var clean = String(path || '/').replace(/^\//, '');
+    if (!clean && !query) return './';
+    return '#/' + clean + (query ? '?' + query : '');
   };
 
   if (document.readyState === 'loading') {
