@@ -12,6 +12,7 @@ var env = {};
 var KNOWN_KEYS = [
   'PREVENT_INDEXING',
   'UNDER_CONSTRUCTION',
+  'DEV_MODE',
   'SITE_URL',
   'ARIVUU_BLOGS_GOOGLE_SHEET_ID',
   'ARIVUU_CAREERS_GOOGLE_SHEET_ID',
@@ -28,6 +29,20 @@ function parseValue(val) {
   return val;
 }
 
+function stripInlineComment(val) {
+  var inSingle = false;
+  var inDouble = false;
+  for (var i = 0; i < val.length; i++) {
+    var ch = val.charAt(i);
+    if (ch === "'" && !inDouble) inSingle = !inSingle;
+    else if (ch === '"' && !inSingle) inDouble = !inDouble;
+    else if (ch === '#' && !inSingle && !inDouble) {
+      return val.slice(0, i).trim();
+    }
+  }
+  return val.trim();
+}
+
 function setEnv(key, raw) {
   if (raw === undefined || raw === null || raw === '') return;
   env[key] = parseValue(String(raw).trim());
@@ -40,7 +55,7 @@ if (fs.existsSync(envPath)) {
     var eq = line.indexOf('=');
     if (eq === -1) return;
     var key = line.slice(0, eq).trim();
-    var val = line.slice(eq + 1).trim();
+    var val = stripInlineComment(line.slice(eq + 1));
     if ((val.charAt(0) === '"' && val.charAt(val.length - 1) === '"') ||
         (val.charAt(0) === "'" && val.charAt(val.length - 1) === "'")) {
       val = val.slice(1, -1);

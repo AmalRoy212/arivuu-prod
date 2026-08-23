@@ -151,6 +151,7 @@
               renderDesktopLinks(page, isHome) +
             '</div>' +
             '<div class="flex items-center gap-2 sm:gap-3">' +
+              (window.Arivuu.renderLayoutToggle ? window.Arivuu.renderLayoutToggle() : '') +
               '<a href="#/contact" class="pill-button pill-button-sm text-xs hidden sm:inline-flex">Get In Touch</a>' +
               '<button type="button" id="nav-toggle" class="nav-toggle lg:hidden" aria-expanded="false" aria-controls="nav-mobile-menu" aria-label="Open menu">' +
                 '<svg class="nav-toggle-icon nav-toggle-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>' +
@@ -171,6 +172,7 @@
     if (wrapper) {
       wrapper.innerHTML = html;
     }
+    if (window.Arivuu.bindLayoutToggle) window.Arivuu.bindLayoutToggle();
     if (window.Arivuu.bindNavbar) window.Arivuu.bindNavbar();
   };
 
