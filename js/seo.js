@@ -25,11 +25,10 @@
       keywords: DEFAULT_KEYWORDS
     },
     '/about': {
-      title: 'About Arivuu | Career Guidance Experts for Indian Students & Schools',
+      title: 'About Arivuu | Movement With Purpose in Career Guidance',
       description:
-        'Learn how Arivuu guides 55,000+ students across India with psychometric science, certified counsellors ' +
-        'and school partnerships — helping families make confident career decisions.',
-      keywords: 'about Arivuu, Arivuu company, career guidance company India, student career counselling, school career partner, Arivuu Bangalore'
+        'Arivuu is more than a service — a movement to transform career guidance. NEP-aligned, AI-powered counselling for schools, students, and parents across India.',
+      keywords: 'about Arivuu, Arivuu company, career guidance company India, NEP career counselling, school career partner, Arivuu Bangalore'
     },
     '/services': {
       title: 'Career Guidance Programs & Services | Arivuu India',

@@ -329,6 +329,10 @@
       initProgramFilters();
     }
 
+    if (page === 'about') {
+      initStats();
+    }
+
     if (page === 'home') {
       initCarousel();
     }
