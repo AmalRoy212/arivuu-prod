@@ -1246,19 +1246,7 @@
 
   html[data-layout="windows"] body[data-page="home"] #testimonials .mb-6,
   html[data-layout="windows"] body[data-page="home"] #testimonials .sm\:mb-8 {
-    margin-bottom: 1.25rem;
-  }
-
-  html[data-layout="windows"] body[data-page="home"] main h2,
-  html[data-layout="windows"] body[data-page="home"] #workshops-mount h2,
-  html[data-layout="windows"] body[data-page="home"] #pdf-sample-mount h2,
-  html[data-layout="windows"] body[data-page="home"] #career-ecosystem-mount h2,
-  html[data-layout="windows"] body[data-page="home"] #faq-mount h2 {
-    font-size: clamp(1.75rem, 1.2rem + 1.1vw, 2.35rem) !important;
-  }
-
-  html[data-layout="windows"] body[data-page="home"] #stats-bar [data-counter] {
-    font-size: clamp(1.5rem, 1.1rem + 0.9vw, 2rem);
+    margin-bottom: 1.75rem;
   }
 
   html[data-layout="windows"] body[data-page="home"] .glass-card.p-8 {
@@ -1293,8 +1281,10 @@
   }
 
   html[data-layout="windows"] body[data-page="home"] #testimonials .carousel-viewport {
-    padding-top: 1rem;
+    padding-top: 0.75rem;
     padding-bottom: 1rem;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
   }
 
   html[data-layout="windows"] body[data-page="home"] .flip-card-grid {
@@ -1318,13 +1308,87 @@
     padding-top: 2rem;
     padding-bottom: 2rem;
   }
+}
 
-  html[data-layout="windows"] body[data-page="home"] main h2,
-  html[data-layout="windows"] body[data-page="home"] #workshops-mount h2,
-  html[data-layout="windows"] body[data-page="home"] #pdf-sample-mount h2,
-  html[data-layout="windows"] body[data-page="home"] #career-ecosystem-mount h2,
-  html[data-layout="windows"] body[data-page="home"] #faq-mount h2 {
-    font-size: clamp(1.55rem, 1.05rem + 0.9vw, 2rem) !important;
+/* ========== Home typography scale (Mac + Windows) ========== */
+@media (min-width: 1024px) {
+  html:not([data-layout="windows"]) body[data-page="home"] {
+    --home-h2: clamp(1.85rem, 1.3rem + 0.95vw, 2.35rem);
+    --home-h2-sub: clamp(1.35rem, 1.1rem + 0.45vw, 1.65rem);
+    --home-h3: 1.25rem;
+    --home-stat: clamp(1.75rem, 1.3rem + 0.75vw, 2.15rem);
+  }
+
+  html[data-layout="windows"] body[data-page="home"] {
+    --home-h2: clamp(1.6rem, 1.15rem + 0.75vw, 2rem);
+    --home-h2-sub: clamp(1.2rem, 1.05rem + 0.3vw, 1.4rem);
+    --home-h3: 1.125rem;
+    --home-stat: clamp(1.45rem, 1.1rem + 0.55vw, 1.8rem);
+  }
+
+  /* Hero left copy keeps original Tailwind sizes (Mac).
+     Windows compact sizes are set in the Windows hero block above. */
+
+  body[data-page="home"] main > section h2,
+  body[data-page="home"] #workshops-mount h2,
+  body[data-page="home"] #pdf-sample-mount h2,
+  body[data-page="home"] #career-ecosystem-mount h2,
+  body[data-page="home"] #faq-mount h2,
+  body[data-page="home"] .service-workshops-title,
+  body[data-page="home"] .career-ecosystem-title,
+  body[data-page="home"] .faq-title {
+    font-size: var(--home-h2) !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em;
+  }
+
+  body[data-page="home"] .service-why-arivuu-heading {
+    font-size: var(--home-h2-sub) !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+    letter-spacing: -0.015em;
+  }
+
+  body[data-page="home"] main > section .glass-card > h3,
+  body[data-page="home"] main > section .glass-card h3.font-display {
+    font-size: var(--home-h3) !important;
+    line-height: 1.35;
+  }
+
+  body[data-page="home"] #stats-bar [data-counter] {
+    font-size: var(--home-stat) !important;
+    line-height: 1.15;
+  }
+
+  body[data-page="home"] #ace-journey .flip-card-title,
+  body[data-page="home"] #home-ace-cards .flip-card-title {
+    font-size: 1.05rem !important;
+    line-height: 1.3;
+  }
+
+  body[data-page="home"] #journey h3 {
+    font-size: 0.9375rem !important;
+    line-height: 1.45;
+  }
+
+  body[data-page="home"] main > section h2 + p,
+  body[data-page="home"] main > section .text-center > p.text-muted-text,
+  body[data-page="home"] #workshops-mount h2 + p,
+  body[data-page="home"] #pdf-sample-mount h2 + p,
+  body[data-page="home"] #career-ecosystem-mount .career-ecosystem-intro,
+  body[data-page="home"] #faq-mount .faq-intro,
+  body[data-page="home"] #ace-journey h2 + p {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 760px) {
+  html[data-layout="windows"] body[data-page="home"] {
+    --home-h2: clamp(1.45rem, 1.05rem + 0.6vw, 1.8rem);
+    --home-h2-sub: 1.2rem;
+    --home-stat: clamp(1.35rem, 1.05rem + 0.45vw, 1.6rem);
   }
 }
 
@@ -5238,9 +5302,28 @@ body[data-page="student"] #footer > .max-w-7xl {
   }
 }
 
-.workshop-view-all-btn {
+.pill-button.workshop-view-all-btn {
   min-width: 9rem;
   text-align: center;
+  color: #fff !important;
+  border-color: rgb(var(--nebula)) !important;
+  background: rgb(var(--nebula)) !important;
+  box-shadow: none !important;
+  transform: scale(1);
+  transition:
+    background-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    transform 300ms cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.pill-button.workshop-view-all-btn:hover {
+  color: #fff !important;
+  border-color: rgb(var(--nebula)) !important;
+  background: rgb(var(--nebula)) !important;
+  box-shadow: 0 4px 16px rgb(var(--nebula) / 0.28) !important;
+  transform: scale(1.04);
 }
 
 .workshop-card-full-grid {
