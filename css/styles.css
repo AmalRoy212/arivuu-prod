@@ -612,11 +612,13 @@
 
 /* ACE section: drop oversized bottom gap after brochure CTA */
 #ace-journey.ace-journey-section {
+  padding-top: 2rem;
   padding-bottom: 2rem;
 }
 
 @media (min-width: 640px) {
   #ace-journey.ace-journey-section {
+    padding-top: 2.5rem;
     padding-bottom: 2.5rem;
   }
 }
@@ -2917,11 +2919,13 @@
   overflow: hidden;
   background: rgb(var(--surface-deep));
   padding-top: 2.5rem;
+  padding-bottom: 1.25rem;
 }
 
 @media (min-width: 640px) {
   .service-ecosystem-section {
     padding-top: 3.5rem;
+    padding-bottom: 1.5rem;
   }
 }
 
@@ -3132,14 +3136,14 @@
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  margin: 3rem auto 1.25rem;
+  margin: 2rem auto 1rem;
   max-width: 56rem;
 }
 
 @media (min-width: 640px) {
   .service-ecosystem-bridge {
-    margin-top: 4rem;
-    margin-bottom: 1.5rem;
+    margin-top: 2.5rem;
+    margin-bottom: 1.25rem;
   }
 }
 
@@ -3173,14 +3177,14 @@
   font-weight: 500;
   line-height: 1.5;
   color: rgb(var(--biolume));
-  margin: 0 auto 2rem;
+  margin: 0 auto 1.25rem;
   max-width: 32rem;
 }
 
 @media (min-width: 640px) {
   .service-ecosystem-framework-subtitle {
     font-size: 1.0625rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
   }
 }
 
@@ -3222,41 +3226,30 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.875rem 1rem;
-  border-radius: 0.875rem;
-  background: rgb(186 230 253 / 0.45);
-  border: 1px solid rgb(125 211 252 / 0.5);
-  box-shadow: 0 4px 14px rgb(15 23 42 / 0.06);
-  backdrop-filter: none;
+  border-radius: 1rem;
+  background-color: rgb(255 255 255 / 0.92);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   height: auto;
+  overflow: visible;
 }
 
 .service-ecosystem-framework-card--compact::before {
   display: none;
 }
 
-.service-ecosystem-framework-card--compact .service-ecosystem-framework-body {
+.service-ecosystem-framework-card--compact .service-ecosystem-framework-title {
   flex: 1;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-.service-ecosystem-framework-card--compact .service-ecosystem-framework-title {
+  font-family: var(--font-display, "Space Grotesk", sans-serif);
   font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: rgb(var(--stardust));
   margin: 0;
-}
-
-.service-ecosystem-framework-card--compact .service-ecosystem-framework-text {
-  font-size: 0.75rem;
-  line-height: 1.45;
-  margin: 0;
-}
-
-.service-ecosystem-framework-card--compact .service-ecosystem-framework-num {
-  flex-shrink: 0;
-  font-size: 1.25rem;
-  color: rgb(var(--nebula) / 0.35);
+  transition: color 0.25s ease;
 }
 
 .service-ecosystem-framework-card--compact .service-ecosystem-framework-icon .service-feature-icon,
@@ -3285,34 +3278,10 @@
 }
 
 .service-ecosystem-framework-card--compact:hover {
-  background: rgb(186 230 253 / 0.7);
-  border-color: rgb(var(--nebula) / 0.45);
-  box-shadow: 0 8px 20px rgb(15 23 42 / 0.1);
-  transform: translateY(-2px);
-}
-
-.service-ecosystem-framework-card--compact:hover .service-ecosystem-framework-title {
-  color: rgb(var(--stardust));
-}
-
-.service-ecosystem-framework-card--compact:hover .service-ecosystem-framework-text {
-  color: rgb(var(--muted-text));
-}
-
-.service-ecosystem-framework-card--compact:hover .service-ecosystem-framework-num {
-  color: rgb(var(--nebula) / 0.35);
-}
-
-.service-ecosystem-framework-card--compact:hover .audience-icon::before {
-  background: var(--brand-icon-gradient);
-}
-
-.service-ecosystem-framework-card--compact:hover .audience-icon-svg {
-  stroke: currentColor;
-}
-
-.service-ecosystem-framework-card--compact:hover .audience-icon-svg-fill {
-  fill: currentColor;
+  background-color: rgb(255 255 255 / 0.98);
+  border-color: var(--glass-border-hover);
+  box-shadow: var(--card-shadow);
+  transform: translateY(-0.25rem);
 }
 
 .service-ecosystem-framework-card:hover::before {
@@ -3341,6 +3310,22 @@
 
 .service-ecosystem-framework-card:hover .audience-icon-svg-fill {
   fill: #fff;
+}
+
+.service-ecosystem-framework-card--compact:hover .service-ecosystem-framework-title {
+  color: rgb(var(--biolume));
+}
+
+.service-ecosystem-framework-card--compact:hover .audience-icon::before {
+  background: var(--brand-icon-gradient);
+}
+
+.service-ecosystem-framework-card--compact:hover .audience-icon-svg {
+  stroke: currentColor;
+}
+
+.service-ecosystem-framework-card--compact:hover .audience-icon-svg-fill {
+  fill: currentColor;
 }
 
 @media (min-width: 640px) {

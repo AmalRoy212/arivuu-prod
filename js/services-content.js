@@ -787,18 +787,16 @@
     );
   }
 
-  function renderEcosystemFrameworkCard(item, index) {
+  function renderEcosystemFrameworkCard(item) {
     var icon = ICONS[item.icon] || ICONS.compass;
-    var num = String(index + 1).padStart(2, '0');
+    var titleAttr = item.description
+      ? ' title="' + escapeHtml(item.description) + '"'
+      : '';
 
     return (
-      '<article class="service-ecosystem-framework-card service-ecosystem-framework-card--compact">' +
+      '<article class="service-ecosystem-framework-card service-ecosystem-framework-card--compact glass-card"' + titleAttr + '>' +
         '<div class="service-ecosystem-framework-icon audience-icon audience-icon-sm" aria-hidden="true">' + icon + '</div>' +
-        '<div class="service-ecosystem-framework-body">' +
-          '<h4 class="service-ecosystem-framework-title">' + escapeHtml(item.title) + '</h4>' +
-          '<p class="service-ecosystem-framework-text">' + escapeHtml(item.description) + '</p>' +
-        '</div>' +
-        '<span class="service-ecosystem-framework-num" aria-hidden="true">' + num + '</span>' +
+        '<h4 class="service-ecosystem-framework-title">' + escapeHtml(item.title) + '</h4>' +
       '</article>'
     );
   }
