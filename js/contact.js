@@ -189,9 +189,16 @@
   function closeContactModal() {
     var overlay = document.getElementById('content-modal');
     if (!overlay) return;
+    var panel = overlay.querySelector('.content-modal-panel');
+    if (panel) panel.classList.remove('content-modal-panel--workshop');
+    var active = document.activeElement;
+    if (active && overlay.contains(active) && typeof active.blur === 'function') {
+      active.blur();
+    }
+    if (window.Arivuu.unlockBodyScroll) window.Arivuu.unlockBodyScroll();
+    else document.body.style.overflow = '';
     overlay.classList.add('hidden');
     overlay.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
   }
 
   function resolvePublicAssetUrl(path) {
@@ -244,7 +251,8 @@
 
     overlay.classList.remove('hidden');
     overlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    if (window.Arivuu.lockBodyScroll) window.Arivuu.lockBodyScroll();
+    else document.body.style.overflow = 'hidden';
 
     var firstInput = form && form.querySelector('input, textarea, select');
     if (firstInput) firstInput.focus();

@@ -69,7 +69,9 @@
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">' +
           '<div class="pdf-sample-header">' +
             '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">' + escapeHtml(pdfMeta.eyebrow) + '</span>' +
-            '<h2 id="pdf-sample-title" class="font-display text-3xl sm:text-4xl font-medium text-stardust mt-3">' + escapeHtml(pdfMeta.title) + '</h2>' +
+            '<h2 id="pdf-sample-title" class="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-stardust mt-3">' +
+              (pdfMeta.titleHtml || escapeHtml(pdfMeta.title)) +
+            '</h2>' +
             '<p class="text-muted-text text-sm sm:text-base mt-4 max-w-2xl leading-relaxed">' + escapeHtml(pdfMeta.intro) + '</p>' +
           '</div>' +
           '<div class="pdf-sample-layout">' +
@@ -151,12 +153,11 @@
       '<section class="section-padding bg-surface-deep">' +
         '<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-16">' +
           '<div class="service-why-arivuu student-guide-why-block">' +
-            '<h2 class="service-why-arivuu-heading">Why Arivuu for Career Counselling?</h2>' +
+            '<h2 class="service-why-arivuu-heading">Why Arivuu for <span class="gradient-text">Career Counselling?</span></h2>' +
             '<div class="student-guide-why service-why-arivuu-desc mt-0 space-y-5">' +
               '<p><strong class="text-stardust font-semibold">Arivuu is a trusted and advanced career guidance platform designed to help students make confident academic and career decisions. Powered by our scientifically validated psychometric engine (93% accuracy and reliability) and technology-enabled insights, Arivuu ensures every student discovers their ideal career path with clarity.</strong></p>' +
               '<p>What sets us apart is our <strong class="text-stardust font-semibold">blend of science and human expertise</strong>. Our counsellors sit with both students and parents for <strong class="text-stardust font-semibold">personalised one-on-one sessions</strong>, explaining each option clearly and building a roadmap that feels achievable. With access to <strong class="text-stardust font-semibold">scholarship information</strong>, students can plan their future not just with clarity, but also with financial confidence.</p>' +
             '</div>' +
-            renderTakeTestButton() +
             renderWhyFeatureBoxes(data.featureBar) +
           '</div>' +
         '</div>' +
@@ -167,13 +168,15 @@
   function renderStudentGuideSectionHeader() {
     var renderSchoolIcon = window.Arivuu.renderSchoolIcon;
     var iconHtml = renderSchoolIcon
-      ? '<div class="service-workshops-school-icon">' + renderSchoolIcon() + '</div>'
+      ? '<span class="service-workshops-school-icon">' + renderSchoolIcon('sm') + '</span>'
       : '';
 
     return (
       '<div class="service-workshops-header service-workshops-header--school mb-10">' +
-        '<h2 class="service-workshops-title service-workshops-title--school">For Students</h2>' +
-        iconHtml +
+        '<div class="service-workshops-title-row">' +
+          '<h2 class="service-workshops-title service-workshops-title--school">For <span class="gradient-text">Students</span></h2>' +
+          iconHtml +
+        '</div>' +
       '</div>'
     );
   }
@@ -215,12 +218,15 @@
       renderPdfSection(pdfMeta) +
 
       (window.Arivuu.renderCareerEcosystemSection
-        ? window.Arivuu.renderCareerEcosystemSection({ variant: 'full' })
+        ? window.Arivuu.renderCareerEcosystemSection({
+            variant: 'full',
+            afterCardsHtml: renderTakeTestButton()
+          })
         : '') +
 
       (window.Arivuu.renderStudentTestimonialsSection ? window.Arivuu.renderStudentTestimonialsSection('students') : '') +
 
-      (window.Arivuu.renderFAQSection ? window.Arivuu.renderFAQSection() : '')
+      (window.Arivuu.renderFAQSection ? window.Arivuu.renderFAQSection({ showJourneyCta: true }) : '')
     );
   }
 
@@ -237,9 +243,19 @@
   }
 
   function scrollPageToTop() {
+    if (window.Arivuu.scrollPageToTop) {
+      window.Arivuu.scrollPageToTop();
+      return;
+    }
+    var root = document.documentElement;
+    var prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
     window.scrollTo(0, 0);
-    document.documentElement.scrollTop = 0;
+    root.scrollTop = 0;
     document.body.scrollTop = 0;
+    requestAnimationFrame(function () {
+      root.style.scrollBehavior = prev;
+    });
   }
 
   function lockPageScrollTop() {

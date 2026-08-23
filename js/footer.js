@@ -16,9 +16,42 @@
   var year = site.year || new Date().getFullYear();
   var description = site.description || 'Career guidance for students across India.';
   var statsStudents = (site.stats && site.stats.students) || '55,000+';
+
   function sectionLink(id) {
     return '#/?scroll=' + encodeURIComponent(id);
   }
+
+  var quickLinkClass = 'text-muted-text text-sm hover:text-stardust transition-colors duration-300';
+  var quickLinks = [
+    { label: 'About Us', href: '#/about' },
+    { label: 'Blog', href: '#/blog' },
+    { label: 'Career Library', href: sectionLink('career-library') },
+    { label: 'Contact', href: '#/contact' },
+    { label: 'FAQ', href: sectionLink('faq') },
+    { label: 'For Schools', href: '#/institution/guide' },
+    { label: 'For Students', href: '#/student/guide' },
+    { label: 'Framework (ACE Journey)', href: sectionLink('ace-journey') },
+    { label: 'Home', href: '#/' },
+    { label: 'Partnerships', button: true },
+    { label: 'Seminar', href: '#/workshops' },
+    { label: 'Services', href: sectionLink('workshops-section') },
+    { label: 'Success Stories', href: sectionLink('testimonials') }
+  ].sort(function (a, b) {
+    return a.label.localeCompare(b.label);
+  });
+
+  var quickLinksHtml = quickLinks
+    .map(function (item) {
+      if (item.button) {
+        return (
+          '<li><button type="button" data-open-contact data-contact-title="Partnerships" data-contact-subject="School partnership" class="' +
+          quickLinkClass +
+          ' text-left">Partnerships</button></li>'
+        );
+      }
+      return '<li><a href="' + item.href + '" class="' + quickLinkClass + '">' + item.label + '</a></li>';
+    })
+    .join('');
 
   mount.outerHTML =
     '<footer id="footer" class="bg-surface-deep border-t border-nebula/12">' +
@@ -26,7 +59,7 @@
         '<div class="max-w-7xl mx-auto">' +
           '<div class="glass-card p-6 sm:p-8 lg:p-12 flex flex-col lg:flex-row items-center justify-between gap-6 sm:gap-8 mb-12 sm:mb-16 text-center lg:text-left">' +
             '<div class="w-full lg:w-auto">' +
-              '<h3 class="font-display text-2xl sm:text-3xl font-medium text-stardust mb-2">Ready to Start Your Journey?</h3>' +
+              '<h3 class="font-display text-2xl sm:text-3xl font-medium text-stardust mb-2">Ready to Start Your <span class="gradient-text">Journey?</span></h3>' +
               '<p class="text-muted-text text-sm">Join ' + statsStudents + ' students who have found clarity with ' + brand + '.</p>' +
             '</div>' +
             '<div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto shrink-0">' +
@@ -77,20 +110,8 @@
           '</div>' +
           '<div class="sm:col-span-2 lg:col-span-3">' +
             '<h4 class="font-display font-medium text-stardust text-sm mb-4">Quick Links</h4>' +
-            '<ul class="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-2.5">' +
-              '<li><a href="#/" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Home</a></li>' +
-              '<li><a href="#/about" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">About Us</a></li>' +
-              '<li><a href="#/?scroll=workshops" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Services</a></li>' +
-              '<li><a href="#/workshops" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Seminar</a></li>' +
-              '<li><a href="#/student/guide" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">For Students</a></li>' +
-              '<li><a href="#/institution/guide" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">For Schools</a></li>' +
-              '<li><a href="' + sectionLink('career-library') + '" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Career Library</a></li>' +
-              '<li><a href="#/blog" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Blog</a></li>' +
-              '<li><a href="' + sectionLink('testimonials') + '" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Success Stories</a></li>' +
-              '<li><a href="' + sectionLink('ace-journey') + '" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Framework (ACE Journey)</a></li>' +
-              '<li><a href="#/contact" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">Contact</a></li>' +
-              '<li><a href="' + sectionLink('faq') + '" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300">FAQ</a></li>' +
-              '<li><button type="button" data-open-contact data-contact-title="Partnerships" data-contact-subject="School partnership" class="text-muted-text text-sm hover:text-stardust transition-colors duration-300 text-left">Partnerships</button></li>' +
+            '<ul class="footer-quick-links">' +
+              quickLinksHtml +
             '</ul>' +
           '</div>' +
         '</div>' +

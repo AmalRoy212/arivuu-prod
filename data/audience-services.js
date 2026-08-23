@@ -2,6 +2,7 @@ window.ARIVUU_AUDIENCE_SERVICES = {
   defaultAudience: 'school',
   careerEcosystemSection: {
     heading: 'What You Gain from Arivuu\u2019s Career Test',
+    headingHtml: 'What You Gain from Arivuu\u2019s <span class="gradient-text">Career Test</span>',
     intro:
       'Arivuu\u2019s scientifically validated test doesn\u2019t just measure \u2014 it guides students toward clarity, confidence, and future success.',
     cards: [

@@ -372,8 +372,8 @@
   }
 
   function canonicalForPath(path) {
-    var base = siteUrl();
-    if (path === '/') return base + '/';
+    var base = siteUrl().replace(/\/$/, '');
+    if (!path || path === '/') return base + '/';
     return base + '/#' + path;
   }
 

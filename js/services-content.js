@@ -304,7 +304,7 @@
     return (
       '<section id="service-ace-section" class="service-section service-ace-section bg-surface-deep">' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">' +
-          '<h2 class="service-section-title text-center">We power your ACE journey in 3 steps</h2>' +
+          '<h2 class="service-section-title text-center">We power your <span class="gradient-text">ACE journey</span> in 3 steps</h2>' +
           '<div class="service-ace-steps">' +
             data.aceSteps.map(renderAceStep).join('') +
           '</div>' +
@@ -495,25 +495,14 @@
   function renderWhyArivuuSection(section) {
     if (!section) return '';
 
-    var cta = section.cta || {};
-
     return (
       '<section class="service-section service-why-arivuu-section bg-void" aria-labelledby="service-why-arivuu-title">' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">' +
           '<div class="service-why-arivuu service-why-arivuu--standalone">' +
             '<h2 id="service-why-arivuu-title" class="service-why-arivuu-heading">' +
-              escapeHtml(section.heading || 'Why Arivuu for Career Counselling?') +
+              'Why Arivuu for <span class="gradient-text">Career Counselling?</span>' +
             '</h2>' +
             '<p class="service-why-arivuu-desc">' + renderWhyArivuuDescription(section) + '</p>' +
-            (cta.label
-              ? '<div class="service-why-arivuu-cta">' +
-                  '<button type="button" class="btn-premium btn-premium--biolume" data-open-contact ' +
-                    'data-contact-title="' + escapeHtml(cta.modalTitle || cta.label) + '" ' +
-                    'data-contact-subject="' + escapeHtml(cta.subject || 'School partnership') + '">' +
-                    '<span>' + escapeHtml(cta.label) + '</span>' +
-                  '</button>' +
-                '</div>'
-              : '') +
             renderWhyArivuuFeatureBoxes(section.features) +
           '</div>' +
         '</div>' +
@@ -536,15 +525,17 @@
   function renderSchoolWorkshopsHeader(meta) {
     var renderSchoolIcon = window.Arivuu.renderSchoolIcon;
     var iconHtml = renderSchoolIcon
-      ? '<div class="service-workshops-school-icon">' + renderSchoolIcon() + '</div>'
+      ? '<span class="service-workshops-school-icon">' + renderSchoolIcon('sm') + '</span>'
       : '';
 
     return (
       '<div class="service-workshops-header service-workshops-header--school">' +
-        '<h2 id="service-workshops-title" class="service-workshops-title service-workshops-title--school">' +
-          escapeHtml(meta.eyebrow || 'Why Schools Partner with Arivuu') +
-        '</h2>' +
-        iconHtml +
+        '<div class="service-workshops-title-row">' +
+          '<h2 id="service-workshops-title" class="service-workshops-title service-workshops-title--school">' +
+            'Why Schools Partner with <span class="gradient-text">Arivuu</span>' +
+          '</h2>' +
+          iconHtml +
+        '</div>' +
         '<p class="service-workshops-intro">' + renderSchoolWorkshopsIntro(meta) + '</p>' +
       '</div>'
     );
@@ -583,12 +574,26 @@
     var sectionClass = 'service-section service-workshops-section bg-void' +
       (isSchoolHeader ? ' service-workshops-section--school' : '');
 
+    var partnerCta = '';
+    var whyCta = audience && audience.whyArivuuSection && audience.whyArivuuSection.cta;
+    if (isSchoolHeader && whyCta && whyCta.label) {
+      partnerCta =
+        '<div class="service-workshops-partner-cta">' +
+          '<button type="button" class="btn-premium btn-premium--biolume" data-open-contact ' +
+            'data-contact-title="' + escapeHtml(whyCta.modalTitle || whyCta.label) + '" ' +
+            'data-contact-subject="' + escapeHtml(whyCta.subject || 'School partnership') + '">' +
+            '<span>' + escapeHtml(whyCta.label) + '</span>' +
+          '</button>' +
+        '</div>';
+    }
+
     return (
       '<section class="' + sectionClass + '" aria-labelledby="service-workshops-title">' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">' +
           headerHtml +
           (stats ? '<div class="service-workshops-stats">' + stats + '</div>' : '') +
           '<div class="service-workshops-grid">' + cards + '</div>' +
+          partnerCta +
           (meta.hideCta
             ? ''
             : '<div class="service-workshops-cta">' +
@@ -632,7 +637,7 @@
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">' +
           '<div class="service-gist-header">' +
             '<span class="service-gist-eyebrow">' + escapeHtml(gistMeta.eyebrow || 'Platform') + '</span>' +
-            '<h2 id="service-gist-title" class="service-gist-title">' + escapeHtml(gistMeta.title || 'Gist of our software') + '</h2>' +
+            '<h2 id="service-gist-title" class="service-gist-title">Gist of our <span class="gradient-text">software</span></h2>' +
             '<p class="service-gist-intro">' + escapeHtml(gistMeta.intro || '') + '</p>' +
           '</div>' +
           '<div class="service-gist-layout">' +
@@ -741,7 +746,7 @@
                 ? '<span class="service-approach-eyebrow">' + escapeHtml(section.subtitle) + '</span>'
                 : '') +
               '<h2 id="service-approach-title" class="service-approach-title">' +
-                escapeHtml(section.heading || 'Arivuu Approach') +
+                'Arivuu <span class="gradient-text">Approach</span>' +
               '</h2>' +
               '<p class="service-approach-lead">' +
                 escapeHtml(section.lead || '') +
@@ -787,13 +792,13 @@
     var num = String(index + 1).padStart(2, '0');
 
     return (
-      '<article class="service-ecosystem-framework-card">' +
-        '<div class="service-ecosystem-framework-top">' +
-          '<span class="service-ecosystem-framework-num" aria-hidden="true">' + num + '</span>' +
-          '<div class="service-ecosystem-framework-icon audience-icon audience-icon-sm" aria-hidden="true">' + icon + '</div>' +
+      '<article class="service-ecosystem-framework-card service-ecosystem-framework-card--compact">' +
+        '<div class="service-ecosystem-framework-icon audience-icon audience-icon-sm" aria-hidden="true">' + icon + '</div>' +
+        '<div class="service-ecosystem-framework-body">' +
+          '<h4 class="service-ecosystem-framework-title">' + escapeHtml(item.title) + '</h4>' +
+          '<p class="service-ecosystem-framework-text">' + escapeHtml(item.description) + '</p>' +
         '</div>' +
-        '<h4 class="service-ecosystem-framework-title">' + escapeHtml(item.title) + '</h4>' +
-        '<p class="service-ecosystem-framework-text">' + escapeHtml(item.description) + '</p>' +
+        '<span class="service-ecosystem-framework-num" aria-hidden="true">' + num + '</span>' +
       '</article>'
     );
   }
@@ -836,7 +841,7 @@
               ? '<span class="service-ecosystem-eyebrow">' + escapeHtml(section.subtitle) + '</span>'
               : '') +
             '<h2 id="service-ecosystem-title" class="service-ecosystem-title">' +
-              escapeHtml(section.heading || 'Career Ecosystem for Schools') +
+              'Career Ecosystem for <span class="gradient-text">Schools</span>' +
             '</h2>' +
           '</div>' +
           '<div class="service-ecosystem-compare">' +
@@ -897,7 +902,12 @@
     return (
       '<section class="service-partners-section bg-surface-deep !pt-10">' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-8 sm:py-10">' +
-          '<h2 class="service-partners-heading text-center">' + escapeHtml(audience.partnersHeading) + '</h2>' +
+          '<h2 class="service-partners-heading text-center">' +
+            escapeHtml(audience.partnersHeading || '').replace(
+              /(320\+ school|320\+ partner schools|250\+ certified counsellors in our network)$/i,
+              '<span class="gradient-text">$1</span>'
+            ) +
+          '</h2>' +
         '</div>' +
         contentHtml +
       '</section>'

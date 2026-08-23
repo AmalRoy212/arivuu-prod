@@ -55,19 +55,39 @@
     var titleEl = document.getElementById('content-modal-title');
     var bodyEl = document.getElementById('content-modal-body');
     if (!overlay || !titleEl || !bodyEl) return;
+    window.Arivuu = window.Arivuu || {};
+    window.Arivuu._modalTrigger = document.activeElement;
     titleEl.textContent = title;
     bodyEl.innerHTML = bodyHtml;
     overlay.classList.remove('hidden');
     overlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    if (window.Arivuu.lockBodyScroll) window.Arivuu.lockBodyScroll();
+    else document.body.style.overflow = 'hidden';
   }
 
   function closeModal() {
     var overlay = document.getElementById('content-modal');
     if (!overlay) return;
+    var panel = overlay.querySelector('.content-modal-panel');
+    if (panel) panel.classList.remove('content-modal-panel--workshop');
+    // Blur before hide so the browser doesn't focus-scroll the opener card into view.
+    var active = document.activeElement;
+    if (active && overlay.contains(active) && typeof active.blur === 'function') {
+      active.blur();
+    }
+    var trigger = window.Arivuu._modalTrigger;
+    window.Arivuu._modalTrigger = null;
+    if (window.Arivuu.unlockBodyScroll) window.Arivuu.unlockBodyScroll();
+    else document.body.style.overflow = '';
     overlay.classList.add('hidden');
     overlay.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    if (trigger && typeof trigger.focus === 'function') {
+      try {
+        trigger.focus({ preventScroll: true });
+      } catch (_) {
+        trigger.focus();
+      }
+    }
   }
 
   function initModal() {

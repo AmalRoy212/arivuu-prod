@@ -36,11 +36,70 @@
 
   function renderCompactCard(item) {
     return (
-      '<article class="workshop-card-compact glass-card glass-card-hover reveal group">' +
+      '<button type="button" class="workshop-card-compact glass-card glass-card-hover reveal group" data-workshop-id="' +
+        escapeHtml(item.id) +
+        '" aria-haspopup="dialog" aria-label="View details for ' + escapeHtml(item.title) + '">' +
         '<div class="audience-icon audience-icon-sm workshop-card-compact-icon">' + workshopIcon(item) + '</div>' +
         '<h3 class="workshop-card-compact-title">' + escapeHtml(item.title) + '</h3>' +
-      '</article>'
+      '</button>'
     );
+  }
+
+  function findWorkshopById(id) {
+    var items = getWorkshopsData().items || [];
+    for (var i = 0; i < items.length; i++) {
+      if (items[i].id === id) return items[i];
+    }
+    return null;
+  }
+
+  function renderWorkshopDetailBody(item) {
+    var accent = item.accent === 'biolume' ? 'biolume' : 'nebula';
+    return (
+      '<div class="workshop-detail-modal">' +
+        '<div class="workshop-detail-modal-top">' +
+          '<div class="audience-icon audience-icon-md">' + workshopIcon(item) + '</div>' +
+          (item.audience
+            ? '<span class="text-xs font-medium px-2.5 py-1.5 rounded-full ' + audienceClass(accent) + '">' +
+                escapeHtml(item.audience) +
+              '</span>'
+            : '') +
+        '</div>' +
+        '<p class="workshop-detail-modal-desc">' + escapeHtml(item.description || '') + '</p>' +
+      '</div>'
+    );
+  }
+
+  function openWorkshopDetail(item) {
+    if (!item) return;
+    var overlay = document.getElementById('content-modal');
+    var titleEl = document.getElementById('content-modal-title');
+    var bodyEl = document.getElementById('content-modal-body');
+    var panel = overlay && overlay.querySelector('.content-modal-panel');
+    if (!overlay || !titleEl || !bodyEl) return;
+
+    titleEl.textContent = item.title || 'Workshop details';
+    bodyEl.innerHTML = renderWorkshopDetailBody(item);
+    if (panel) panel.classList.add('content-modal-panel--workshop');
+
+    window.Arivuu = window.Arivuu || {};
+    window.Arivuu._modalTrigger = document.activeElement;
+    overlay.classList.remove('hidden');
+    overlay.setAttribute('aria-hidden', 'false');
+    if (window.Arivuu.lockBodyScroll) window.Arivuu.lockBodyScroll();
+    else document.body.style.overflow = 'hidden';
+  }
+
+  function bindWorkshopCardClicks(root) {
+    if (!root) return;
+    root.querySelectorAll('[data-workshop-id]').forEach(function (card) {
+      if (card.dataset.workshopBound === '1') return;
+      card.dataset.workshopBound = '1';
+      card.addEventListener('click', function () {
+        var item = findWorkshopById(card.getAttribute('data-workshop-id'));
+        openWorkshopDetail(item);
+      });
+    });
   }
 
   function renderFullCard(item) {
@@ -67,7 +126,7 @@
     var cards = items.map(renderCompactCard).join('');
 
     return (
-      '<section id="workshops" class="section-padding bg-surface-deep relative overflow-x-clip">' +
+      '<section id="workshops-section" class="section-padding bg-surface-deep relative overflow-x-clip">' +
         '<div class="max-w-7xl mx-auto">' +
           '<div class="text-center mb-14 reveal">' +
             '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">' +
@@ -109,9 +168,7 @@
       '<section class="section-padding !pt-4 bg-void" aria-labelledby="workshops-contact-title">' +
         '<div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-16">' +
           '<div class="text-center mb-8">' +
-            '<h2 id="workshops-contact-title" class="font-display text-2xl sm:text-3xl font-medium text-stardust">' +
-              escapeHtml(data.contactHeading || 'Enquire about a workshop') +
-            '</h2>' +
+            '<h2 id="workshops-contact-title" class="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-stardust">Enquire about a <span class="gradient-text">workshop</span></h2>' +
             '<p class="text-muted-text text-sm mt-3">' +
               escapeHtml(data.contactIntro || '') +
             '</p>' +
@@ -177,7 +234,7 @@
 
       '<section class="section-padding bg-void" aria-labelledby="workshops-list-title">' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">' +
-          '<h2 id="workshops-list-title" class="font-display text-2xl sm:text-3xl font-medium text-stardust text-center mb-10">Our Workshops</h2>' +
+          '<h2 id="workshops-list-title" class="font-display text-2xl sm:text-3xl lg:text-4xl font-medium text-stardust text-center mb-10">Our <span class="gradient-text">Workshops</span></h2>' +
           '<div class="workshop-card-full-grid">' + cards + '</div>' +
         '</div>' +
       '</section>' +
@@ -190,7 +247,8 @@
     var mount = document.getElementById('workshops-mount');
     if (!mount) return;
 
-    if (!(mount.dataset.mounted === '1' && mount.querySelector('#workshops'))) {
+    var hasInteractiveCards = !!mount.querySelector('[data-workshop-id]');
+    if (!(mount.dataset.mounted === '1' && mount.querySelector('#workshops-section') && hasInteractiveCards)) {
       mount.innerHTML = renderHomeWorkshopsSection();
       mount.dataset.mounted = '1';
     }
@@ -200,6 +258,8 @@
     mount.querySelectorAll('.reveal, .reveal-x-left, .reveal-x-right').forEach(function (el) {
       el.classList.add('show');
     });
+
+    bindWorkshopCardClicks(mount);
   }
 
   function renderWorkshopsPageIntoMount() {

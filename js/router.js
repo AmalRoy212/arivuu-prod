@@ -114,11 +114,35 @@
     if (!scrollId) return;
     function doScroll() {
       var el = document.getElementById(scrollId);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
+      if (!el) return;
+      // Instant jump — avoid smooth auto-scroll across the page
+      var root = document.documentElement;
+      var prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      el.scrollIntoView({ behavior: 'auto', block: 'start' });
+      requestAnimationFrame(function () {
+        root.style.scrollBehavior = prev;
+      });
     }
     requestAnimationFrame(function () {
       doScroll();
       setTimeout(doScroll, 150);
+    });
+  }
+
+  function scrollPageToTopInstant() {
+    if (window.Arivuu.scrollPageToTop) {
+      window.Arivuu.scrollPageToTop();
+      return;
+    }
+    var root = document.documentElement;
+    var prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    root.scrollTop = 0;
+    document.body.scrollTop = 0;
+    requestAnimationFrame(function () {
+      root.style.scrollBehavior = prev;
     });
   }
 
@@ -197,9 +221,7 @@
       if (window.Arivuu.initPage) window.Arivuu.initPage(route.page, params);
 
       function scrollTop() {
-        window.scrollTo(0, 0);
-        document.documentElement.scrollTop = 0;
-        document.body.scrollTop = 0;
+        scrollPageToTopInstant();
       }
 
       if (path === '/' && params.get('scroll')) {
@@ -207,13 +229,15 @@
         return;
       }
 
+      // Always land at the top / page hero after a route change (instant, no smooth scroll).
+      scrollTop();
       if (window.Arivuu.lockPageScrollTop) {
         window.Arivuu.lockPageScrollTop();
-        return;
+      } else {
+        requestAnimationFrame(scrollTop);
+        setTimeout(scrollTop, 100);
+        setTimeout(scrollTop, 300);
       }
-
-      scrollTop();
-      requestAnimationFrame(scrollTop);
     };
 
     if (path === '/') {
@@ -249,6 +273,7 @@
 
     if (href.startsWith('#/')) {
       e.preventDefault();
+      e.stopPropagation();
       var raw = href.slice(1);
       var q = raw.indexOf('?');
       var path = q === -1 ? raw : raw.slice(0, q);
@@ -259,6 +284,7 @@
 
     if (href === '#' || href === '#/') {
       e.preventDefault();
+      e.stopPropagation();
       navigate('/', new URLSearchParams(), false);
       return;
     }
@@ -267,9 +293,18 @@
       var sectionId = href.slice(1);
       if (!sectionId) return;
       e.preventDefault();
+      e.stopPropagation();
       if (isOnHome()) {
         var target = document.getElementById(sectionId);
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        if (target) {
+          var root = document.documentElement;
+          var prev = root.style.scrollBehavior;
+          root.style.scrollBehavior = 'auto';
+          target.scrollIntoView({ behavior: 'auto', block: 'start' });
+          requestAnimationFrame(function () {
+            root.style.scrollBehavior = prev;
+          });
+        }
         return;
       }
       navigate('/', new URLSearchParams('scroll=' + encodeURIComponent(sectionId)), false);
@@ -289,9 +324,15 @@
 
     cacheHome();
 
-    document.addEventListener('click', handleLinkClick);
+    // Capture phase so hash links never hit native #id scrolling first.
+    document.addEventListener('click', handleLinkClick, true);
     window.addEventListener('popstate', function () {
       var r = parseRoute();
+      render(r.path, r.params);
+    });
+    window.addEventListener('hashchange', function () {
+      var r = parseRoute();
+      if (currentPath === r.path) return;
       render(r.path, r.params);
     });
 

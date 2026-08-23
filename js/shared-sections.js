@@ -98,7 +98,7 @@
     );
   }
 
-  function openCareerEcosystemModal(card) {
+  function openCareerEcosystemModal(card, trigger) {
     var overlay = document.getElementById('content-modal');
     var titleEl = document.getElementById('content-modal-title');
     var bodyEl = document.getElementById('content-modal-body');
@@ -120,9 +120,11 @@
         '<p class="career-ecosystem-modal-text">' + body + '</p>' +
       '</div>';
 
+    window.Arivuu._modalTrigger = trigger || null;
     overlay.classList.remove('hidden');
     overlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    if (window.Arivuu.lockBodyScroll) window.Arivuu.lockBodyScroll();
+    else document.body.style.overflow = 'hidden';
   }
 
   function bindCareerEcosystemSection() {
@@ -142,7 +144,7 @@
           window.ARIVUU_AUDIENCE_SERVICES.careerEcosystemSection.cards) ||
         [];
       var index = parseInt(btn.getAttribute('data-ecosystem-card'), 10);
-      if (!isNaN(index) && cards[index]) openCareerEcosystemModal(cards[index]);
+      if (!isNaN(index) && cards[index]) openCareerEcosystemModal(cards[index], btn);
     });
   }
 
@@ -157,6 +159,7 @@
       ? section.cards.map(renderCareerEcosystemFullCard).join('')
       : section.cards.map(renderCareerEcosystemCard).join('');
     var gridClass = useFullCards ? 'service-features-grid' : 'career-ecosystem-grid';
+    var afterCardsHtml = options.afterCardsHtml || '';
 
     return (
       '<section id="career-ecosystem" class="service-section career-ecosystem-section bg-void" aria-labelledby="career-ecosystem-title"' +
@@ -164,12 +167,13 @@
         '<div class="career-ecosystem-glow" aria-hidden="true"></div>' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 relative">' +
           '<div class="career-ecosystem-header">' +
-            '<h2 id="career-ecosystem-title" class="career-ecosystem-title font-display text-3xl sm:text-4xl font-medium text-stardust">' +
-              escapeHtml(section.heading) +
+            '<h2 id="career-ecosystem-title" class="career-ecosystem-title font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-stardust">' +
+              (section.headingHtml || escapeHtml(section.heading)) +
             '</h2>' +
             '<p class="career-ecosystem-intro">' + escapeHtml(section.intro) + '</p>' +
           '</div>' +
           '<div class="' + gridClass + '">' + cards + '</div>' +
+          afterCardsHtml +
         '</div>' +
       '</section>'
     );
@@ -303,6 +307,13 @@
     );
   }
 
+  function renderHomeTestimonialSlides() {
+    var items = window.ARIVUU_HOME_TESTIMONIALS || [];
+    return items.map(function (item) {
+      return renderTestimonialSlide(item.quote, item.name, item.role, item.stars);
+    }).join('');
+  }
+
   function renderTestimonialsSection() {
     return (
       '<section id="testimonials" class="section-padding bg-void relative overflow-x-clip">' +
@@ -310,41 +321,12 @@
           '<div class="min-w-0">' +
             '<div class="text-center mb-6 sm:mb-8">' +
               '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">Success Stories</span>' +
-              '<h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-stardust mt-4 leading-tight">What Our <span class="gradient-text">Students Say</span></h2>' +
+              '<h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-stardust mt-4 leading-tight">What Our <span class="gradient-text">Community Says</span></h2>' +
             '</div>' +
             '<div class="relative min-w-0 px-9 sm:px-6 md:px-8 lg:px-0">' +
               '<div id="testimonial-carousel" class="carousel-viewport w-full py-6 sm:py-8 -my-4 sm:-my-6">' +
                 '<div id="carousel-track" class="carousel-track">' +
-                  renderTestimonialSlide(
-                    'Arivuu transformed my career path. The psychometric assessment mapped my strengths accurately and the counsellors helped me discover a passion for data science I never knew I had.',
-                    'images/avatar-1.jpg',
-                    'Aryan Sharma',
-                    'Grade 12 Student'
-                  ) +
-                  renderTestimonialSlide(
-                    'As a parent, I was worried about my child\'s future. Arivuu gave us clarity and a solid roadmap. The 32-page report was detailed and eye-opening.',
-                    'images/avatar-2.jpg',
-                    'Priya Patel',
-                    'Parent'
-                  ) +
-                  renderTestimonialSlide(
-                    'We integrated Arivuu into our school system and the results have been phenomenal. Our students are more confident about their career choices than ever before.',
-                    'images/avatar-3.jpg',
-                    'Dr. Rajesh Iyer',
-                    'Principal, DPS Bangalore'
-                  ) +
-                  renderTestimonialSlide(
-                    'The hands-on approach and the detailed career exploration helped me narrow down my options. I went from being completely confused to having a clear plan.',
-                    'images/avatar-4.jpg',
-                    'Ananya Krishnan',
-                    'Grade 11 Student'
-                  ) +
-                  renderTestimonialSlide(
-                    'Best decision I ever made! The career guidance workshop at our school was amazing. I discovered so many new-age career options I had never heard of.',
-                    'images/avatar-5.jpg',
-                    'Rohan Verma',
-                    'Grade 10 Student'
-                  ) +
+                  renderHomeTestimonialSlides() +
                 '</div>' +
               '</div>' +
               '<button id="carousel-prev" type="button" class="btn-outline-icon btn-outline-icon-sm btn-outline-icon-surface carousel-nav-btn carousel-nav-btn--prev" aria-label="Previous testimonial">' +
@@ -361,26 +343,45 @@
     );
   }
 
-  function starsHtml() {
-    return (
-      '<svg class="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
-    ).repeat(5);
+  function starSvg(filled) {
+    var cls = filled
+      ? 'w-3.5 h-3.5 text-yellow-400 fill-yellow-400'
+      : 'w-3.5 h-3.5 text-nebula/25 fill-nebula/25';
+    return '<svg class="' + cls + '" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>';
   }
 
-  function renderTestimonialSlide(quote, avatar, name, role) {
+  function starsHtml(count) {
+    var n = Math.max(1, Math.min(5, parseInt(count, 10) || 5));
+    var html = '';
+    for (var i = 0; i < 5; i++) html += starSvg(i < n);
+    return html;
+  }
+
+  function userAvatarHtml(name) {
+    return (
+      '<div class="home-testimonial-avatar" aria-hidden="true" title="' + escapeHtml(name) + '">' +
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>' +
+          '<circle cx="12" cy="7" r="4"/>' +
+        '</svg>' +
+      '</div>'
+    );
+  }
+
+  function renderTestimonialSlide(quote, name, role, stars) {
     return (
       '<div class="carousel-slide">' +
-        '<div class="review-card glass-card glass-card-hover p-5 sm:p-6 h-full min-h-[240px] sm:min-h-[260px] lg:min-h-[280px] flex flex-col relative z-0 hover:z-10">' +
+        '<div class="review-card glass-card glass-card-hover p-5 sm:p-6 h-full min-h-[280px] sm:min-h-[320px] lg:min-h-[340px] flex flex-col relative z-0 hover:z-10">' +
           '<div class="audience-icon audience-icon-sm audience-icon--round mb-5">' +
             '<svg class="icon audience-icon-svg-fill" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21zM15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>' +
           '</div>' +
           '<p class="text-stardust/90 text-sm leading-relaxed flex-1">' + escapeHtml(quote) + '</p>' +
           '<div class="flex items-center gap-3 mt-6 pt-5 border-t border-nebula/12">' +
-            '<img src="' + escapeHtml(avatar) + '" alt="' + escapeHtml(name) + '" class="w-11 h-11 rounded-full border-2 border-nebula/20 object-cover shrink-0" />' +
+            userAvatarHtml(name) +
             '<div>' +
               '<p class="text-sm font-medium text-stardust">' + escapeHtml(name) + '</p>' +
               '<p class="text-xs text-muted-text">' + escapeHtml(role) + '</p>' +
-              '<div class="flex gap-0.5 mt-1.5">' + starsHtml() + '</div>' +
+              '<div class="flex gap-0.5 mt-1.5" aria-label="' + (stars || 5) + ' out of 5 stars">' + starsHtml(stars) + '</div>' +
             '</div>' +
           '</div>' +
         '</div>' +
@@ -506,6 +507,7 @@
   window.Arivuu.bindCareerEcosystemSection = bindCareerEcosystemSection;
   window.Arivuu.renderFAQSection = renderFAQSection;
   window.Arivuu.renderTestimonialsSection = renderTestimonialsSection;
+  window.Arivuu.renderHomeTestimonialSlides = renderHomeTestimonialSlides;
   window.Arivuu.bindFAQ = bindFAQ;
   window.Arivuu.mountFAQ = mountFAQ;
   window.Arivuu.renderSchoolIcon = renderSchoolIcon;

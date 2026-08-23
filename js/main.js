@@ -10,6 +10,57 @@
   var statsAnimated = false;
   var navBound = false;
   var lockedScrollY = 0;
+  var bodyScrollLockY = 0;
+  var bodyScrollLocked = false;
+
+  function lockBodyScroll() {
+    if (bodyScrollLocked) return;
+    bodyScrollLocked = true;
+    // Keep native scroll position — no position:fixed / scrollTo restore
+    // (that combo + css scroll-behavior:smooth animates back to the section).
+    bodyScrollLockY = window.scrollY || window.pageYOffset || 0;
+    document.documentElement.classList.add('is-scroll-locked');
+    document.body.classList.add('is-scroll-locked');
+  }
+
+  function unlockBodyScroll() {
+    if (!bodyScrollLocked) {
+      document.documentElement.classList.remove('is-scroll-locked');
+      document.body.classList.remove('is-scroll-locked');
+      document.body.style.overflow = '';
+      return;
+    }
+    bodyScrollLocked = false;
+    var active = document.activeElement;
+    if (active && active !== document.body && typeof active.blur === 'function') {
+      active.blur();
+    }
+    document.documentElement.classList.remove('is-scroll-locked');
+    document.body.classList.remove('is-scroll-locked');
+  }
+
+  window.Arivuu.lockBodyScroll = lockBodyScroll;
+  window.Arivuu.unlockBodyScroll = unlockBodyScroll;
+
+  /** Instant window scroll — bypasses css `scroll-behavior: smooth`. */
+  function scrollWindowTo(y) {
+    var root = document.documentElement;
+    var prev = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, y);
+    root.scrollTop = y;
+    document.body.scrollTop = y;
+    requestAnimationFrame(function () {
+      root.style.scrollBehavior = prev;
+    });
+  }
+
+  function scrollPageToTop() {
+    scrollWindowTo(0);
+  }
+
+  window.Arivuu.scrollWindowTo = scrollWindowTo;
+  window.Arivuu.scrollPageToTop = scrollPageToTop;
 
   function getPage() {
     return document.body.getAttribute('data-page') || 'home';
@@ -64,7 +115,7 @@
       document.body.style.left = '';
       document.body.style.right = '';
       document.body.style.width = '';
-      window.scrollTo(0, lockedScrollY);
+      scrollWindowTo(lockedScrollY);
       updateNavbarScroll();
     }
   }
@@ -84,7 +135,19 @@
     navMobileMenu.querySelectorAll('a').forEach(function (link) {
       if (link.dataset.bound === '1') return;
       link.dataset.bound = '1';
-      link.addEventListener('click', function () { setMobileNavOpen(false); });
+      link.addEventListener('click', function () {
+        var href = link.getAttribute('href') || '';
+        // In-app routes should land at the page top, not the pre-menu offset.
+        if (
+          href.startsWith('#/') ||
+          href.startsWith('/') ||
+          href === '#' ||
+          href === '#/'
+        ) {
+          lockedScrollY = 0;
+        }
+        setMobileNavOpen(false);
+      });
     });
 
     var mobileServicesToggle = document.getElementById('nav-mobile-services-toggle');
@@ -237,8 +300,12 @@
   }
 
   function initCarousel() {
-    var carousel = document.getElementById('testimonial-carousel');
     var track = document.getElementById('carousel-track');
+    if (track && window.Arivuu.renderHomeTestimonialSlides) {
+      track.innerHTML = window.Arivuu.renderHomeTestimonialSlides();
+    }
+
+    var carousel = document.getElementById('testimonial-carousel');
     var prevBtn = document.getElementById('carousel-prev');
     var nextBtn = document.getElementById('carousel-next');
     var dotsContainer = document.getElementById('carousel-dots');
@@ -247,6 +314,7 @@
     var slides = track.querySelectorAll('.carousel-slide');
     var current = 0;
     var total = slides.length;
+    if (!total) return;
 
     function getSlideWidth() {
       return slides[0] ? slides[0].offsetWidth : 0;

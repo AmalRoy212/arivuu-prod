@@ -51,6 +51,7 @@ window.ARIVUU_STUDENT_GUIDE = {
   pdfSection: {
     eyebrow: 'Sample Reports',
     title: 'Download Sample Report',
+    titleHtml: 'Download Sample <span class="gradient-text">Report</span>',
     intro: 'Preview Arivuu\'s personalised student reports and see how our assessments translate into clear, actionable career guidance.',
     samples: [
       {

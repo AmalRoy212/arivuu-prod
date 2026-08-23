@@ -24,7 +24,8 @@
 
     modal.classList.add('hidden');
     modal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    if (window.Arivuu.unlockBodyScroll) window.Arivuu.unlockBodyScroll();
+    else document.body.style.overflow = '';
 
     if (frame) {
       frame.src = 'about:blank';
@@ -44,7 +45,8 @@
     frame.src = pdfViewUrl(url);
     modal.classList.remove('hidden');
     modal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    if (window.Arivuu.lockBodyScroll) window.Arivuu.lockBodyScroll();
+    else document.body.style.overflow = 'hidden';
     document.addEventListener('keydown', onModalKeydown, true);
   }
 
