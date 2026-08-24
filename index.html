@@ -64,7 +64,7 @@
       },
     };
   </script>
-  <link rel="stylesheet" href="css/styles.css?v=20260823-pages-layout" />
+  <link rel="stylesheet" href="css/styles.css?v=20260824-pdfjs" />
   <script src="js/env.js"></script>
   <script src="js/layout-profile.js"></script>
 </head>
@@ -462,7 +462,8 @@
         </button>
       </div>
       <div class="pdf-preview-body" id="pdf-preview-body">
-        <iframe id="pdf-preview-frame" class="pdf-preview-frame" title="Sample report preview" src="about:blank"></iframe>
+        <div id="pdf-preview-pages" class="pdf-preview-pages" aria-live="polite"></div>
+        <iframe id="pdf-preview-frame" class="pdf-preview-frame hidden" title="Sample report preview" src="about:blank"></iframe>
         <div id="pdf-preview-shield" class="pdf-preview-shield" aria-hidden="true"></div>
       </div>
       <p class="pdf-preview-footnote">Scroll to read the sample. Use Download below the preview to request the full PDF.</p>
@@ -496,7 +497,7 @@
   <script src="js/services-content.js?v=20260823-eco"></script>
   <script src="js/form-submit.js"></script>
   <script src="js/contact.js?v=20260823-nav"></script>
-  <script src="js/pdf-preview.js"></script>
+  <script src="js/pdf-preview.js?v=20260824-pdfjs"></script>
   <script src="js/router.js?v=20260823-nav"></script>
 </body>
 </html>
