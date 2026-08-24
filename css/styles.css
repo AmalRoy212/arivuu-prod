@@ -1392,6 +1392,201 @@
   }
 }
 
+/* ========== Site-wide Mac / Windows page sizing (all pages) ========== */
+@media (min-width: 1024px) {
+  html:not([data-layout="windows"]) body {
+    --page-h1: clamp(2.05rem, 1.4rem + 1.15vw, 2.75rem);
+    --page-h2: clamp(1.85rem, 1.3rem + 0.95vw, 2.35rem);
+    --page-h2-sub: clamp(1.35rem, 1.1rem + 0.45vw, 1.65rem);
+    --page-lead: 1rem;
+  }
+
+  html[data-layout="windows"] body {
+    --page-h1: clamp(1.75rem, 1.2rem + 0.9vw, 2.25rem);
+    --page-h2: clamp(1.6rem, 1.15rem + 0.75vw, 2rem);
+    --page-h2-sub: clamp(1.2rem, 1.05rem + 0.3vw, 1.4rem);
+    --page-lead: 0.9375rem;
+  }
+
+  /* Shared page heroes: about / blog / contact */
+  body:not([data-page="home"]) .page-hero h1 {
+    font-size: var(--page-h1) !important;
+    font-weight: 500 !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em;
+  }
+
+  body:not([data-page="home"]) .page-hero > .max-w-7xl > p,
+  body:not([data-page="home"]) .page-hero .text-muted-text {
+    font-size: var(--page-lead);
+    line-height: 1.65;
+  }
+
+  /* Section display titles only (not small card/contact h2s) */
+  body:not([data-page="home"]) .about-story-heading,
+  body:not([data-page="home"]) #about-gallery-heading,
+  body:not([data-page="home"]) .service-workshops-title,
+  body:not([data-page="home"]) .career-ecosystem-title,
+  body:not([data-page="home"]) .faq-title,
+  body:not([data-page="home"]) .service-section-title,
+  body:not([data-page="home"]) #ace-journey h2,
+  body:not([data-page="home"]) #workshops-mount h2,
+  body:not([data-page="home"]) #pdf-download-mount h2,
+  body:not([data-page="home"]) #career-ecosystem-mount h2 {
+    font-size: var(--page-h2) !important;
+    font-weight: 500 !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.02em;
+  }
+
+  body:not([data-page="home"]) .service-why-arivuu-heading {
+    font-size: var(--page-h2-sub) !important;
+    font-weight: 500 !important;
+    line-height: 1.3 !important;
+  }
+}
+
+/* Windows density — every page (home keeps its own hero/density rules above) */
+@media (min-width: 1024px) {
+  html[data-layout="windows"] body:not([data-page="home"]) .section-padding {
+    padding-top: clamp(2.5rem, 4.5vw, 3.75rem);
+    padding-bottom: clamp(2.5rem, 4.5vw, 3.75rem);
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .section-padding-lg {
+    padding-top: clamp(2.75rem, 5vw, 4.25rem);
+    padding-bottom: clamp(2.75rem, 5vw, 4.25rem);
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .page-hero > .max-w-7xl {
+    padding-top: 2.25rem !important;
+    padding-bottom: 2.25rem !important;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .page-breadcrumbs {
+    margin-bottom: 1rem;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .service-section {
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .glass-card.p-8 {
+    padding: 1.35rem;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .glass-card.p-6 {
+    padding: 1.15rem;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) #ace-journey.section-padding-lg,
+  html[data-layout="windows"] body:not([data-page="home"]) #ace-journey.ace-journey-section {
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) #ace-journey .mb-16,
+  html[data-layout="windows"] body:not([data-page="home"]) .mb-14,
+  html[data-layout="windows"] body:not([data-page="home"]) .mb-16 {
+    margin-bottom: 2rem;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .flip-card-grid {
+    gap: 1rem;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .workshop-card-compact-grid,
+  html[data-layout="windows"] body:not([data-page="home"]) .workshop-card-full-grid {
+    gap: 1rem;
+  }
+
+  /* Student / institution landing — fit short viewports */
+  html[data-layout="windows"] body[data-page="student"] .student-landing-hero,
+  html[data-layout="windows"] body[data-page="institution"] .student-landing-hero {
+    min-height: 0;
+    max-height: 100vh;
+    max-height: 100dvh;
+    padding-top: 5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  html[data-layout="windows"] body[data-page="student"] .student-landing-title,
+  html[data-layout="windows"] body[data-page="institution"] .student-landing-title {
+    font-size: var(--page-h1) !important;
+    font-weight: 700 !important;
+    line-height: 1.18 !important;
+  }
+
+  html[data-layout="windows"] body[data-page="student"] .student-landing-features,
+  html[data-layout="windows"] body[data-page="institution"] .student-landing-features {
+    margin-top: 1.25rem;
+    font-size: var(--page-lead);
+  }
+
+  html[data-layout="windows"] body[data-page="student"] .student-landing-cta,
+  html[data-layout="windows"] body[data-page="institution"] .student-landing-cta {
+    margin-top: 1.5rem;
+  }
+
+  /* About page */
+  html[data-layout="windows"] body[data-page="about"] .about-story-name {
+    font-size: clamp(2rem, 1.4rem + 1.2vw, 2.75rem) !important;
+  }
+
+  html[data-layout="windows"] body[data-page="about"] .about-story.section-padding {
+    padding-top: 2.5rem !important;
+  }
+
+  html[data-layout="windows"] body[data-page="about"] .about-focus {
+    gap: 1.25rem;
+  }
+
+  html[data-layout="windows"] body[data-page="about"] .about-focus-title {
+    font-size: clamp(1.25rem, 1.05rem + 0.35vw, 1.55rem) !important;
+  }
+
+  html[data-layout="windows"] body[data-page="blog"] .section-padding,
+  html[data-layout="windows"] body[data-page="contact"] .section-padding,
+  html[data-layout="windows"] body[data-page="blog-post"] .section-padding {
+    padding-top: 2rem;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 760px) {
+  html[data-layout="windows"] body {
+    --page-h1: clamp(1.55rem, 1.1rem + 0.7vw, 1.95rem);
+    --page-h2: clamp(1.45rem, 1.05rem + 0.6vw, 1.8rem);
+    --page-h2-sub: 1.2rem;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .section-padding {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .section-padding-lg {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .page-hero > .max-w-7xl {
+    padding-top: 1.75rem !important;
+    padding-bottom: 1.75rem !important;
+  }
+
+  html[data-layout="windows"] body:not([data-page="home"]) .service-section {
+    padding-top: 1.75rem;
+    padding-bottom: 1.75rem;
+  }
+
+  html[data-layout="windows"] body[data-page="student"] .student-landing-hero,
+  html[data-layout="windows"] body[data-page="institution"] .student-landing-hero {
+    padding-top: 4.25rem;
+    padding-bottom: 1.75rem;
+  }
+}
+
 @keyframes pulse-slow {
   0%, 100% { opacity: 1; transform: translateY(0); }
   50% { opacity: 0.9; transform: translateY(-2px); }
