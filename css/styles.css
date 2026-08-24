@@ -6946,9 +6946,18 @@ body[data-page="student"] #footer > .max-w-7xl {
   width: 2.5rem;
   height: 2.5rem;
   border-radius: 50%;
-  object-fit: cover;
   border: 2px solid rgb(var(--nebula) / 0.2);
+  background: rgb(var(--surface-deep));
+  display: flex;
+  align-items: center;
+  justify-content: center;
   flex-shrink: 0;
+  color: rgb(var(--nebula));
+}
+
+.student-testimonial-active-avatar svg {
+  width: 1.125rem;
+  height: 1.125rem;
 }
 
 .student-testimonial-active-name {

@@ -27,67 +27,58 @@ window.ARIVUU_STUDENT_TESTIMONIALS = {
   variants: {
     students: {
       eyebrow: 'Student Success Stories',
-      titleHtml: 'What Our <span class="gradient-text">Students Say</span>',
       subtitle: 'Real stories from students and parents who found clarity with Arivuu.'
     },
     schools: {
       eyebrow: 'Partner Schools',
-      titleHtml: '<span class="gradient-text">School Success Stories</span>',
       subtitle: 'Real stories from schools and educators who integrated Arivuu into their career guidance ecosystem.'
     }
   },
   items: [
     {
-      id: 'aryan',
+      id: 'tulasi',
       audience: 'students',
-      quote:
-        'Arivuu transformed my career path. The psychometric assessment mapped my strengths accurately and the counsellors helped me discover a passion for data science I never knew I had.',
-      name: 'Aryan Sharma',
-      role: 'Grade 12 Student',
-      avatar: 'images/avatar-1.jpg',
-      videoUrl: 'https://www.instagram.com/reel/DXjaYvEEdpG/',
-      videoSrc: 'videos/Video-824.mp4',
-      instagramHandle: 'arivuu_careers'
+      name: 'Tulasi Krishnan',
+      role: 'Citizens School, Hoskote',
+      videoSrc: 'videos/reviews/Tulasi_Krishnan.mp4',
+      stars: 5,
+      titleHtml: 'What Our <span class="gradient-text">Students Say</span>'
     },
     {
-      id: 'priya',
+      id: 'rahul',
       audience: 'students',
-      quote:
-        'As a parent, I was worried about my child\'s future. Arivuu gave us clarity and a solid roadmap. The 32-page report was detailed and eye-opening.',
-      name: 'Priya Patel',
-      role: 'Parent',
-      avatar: 'images/avatar-2.jpg',
-      videoUrl: ''
+      name: 'Rahul',
+      role: 'Basaveshwara English High School & Presidency PU College',
+      videoSrc: 'videos/reviews/Rahul.mp4',
+      stars: 4,
+      titleHtml: 'What Our <span class="gradient-text">Students Say</span>'
     },
     {
-      id: 'ananya',
-      audience: 'students',
-      quote:
-        'The hands-on approach and the detailed career exploration helped me narrow down my options. I went from being completely confused to having a clear plan.',
-      name: 'Ananya Krishnan',
-      role: 'Grade 11 Student',
-      avatar: 'images/avatar-4.jpg',
-      videoUrl: ''
+      id: 'santosh',
+      audience: 'parents',
+      name: 'Santosh',
+      role: 'Parent of Niharika and Nakshatra, Chitrakoota School',
+      videoSrc: 'videos/reviews/Santosh.mp4',
+      stars: 5,
+      titleHtml: 'What Our <span class="gradient-text">Parents Say</span>'
     },
     {
-      id: 'rohan',
-      audience: 'students',
-      quote:
-        'Best decision I ever made! The career guidance workshop at our school was amazing. I discovered so many new-age career options I had never heard of.',
-      name: 'Rohan Verma',
-      role: 'Grade 10 Student',
-      avatar: 'images/avatar-5.jpg',
-      videoUrl: ''
-    },
-    {
-      id: 'rajesh',
+      id: 'geetha',
       audience: 'schools',
-      quote:
-        'We integrated Arivuu into our school system and the results have been phenomenal. Our students are more confident about their career choices than ever before.',
-      name: 'Dr. Rajesh Iyer',
-      role: 'Principal, DPS Bangalore',
-      avatar: 'images/avatar-3.jpg',
-      videoUrl: ''
+      name: 'Geetha',
+      role: 'Director, Basaveshwara English High School',
+      videoSrc: 'videos/reviews/Geetha.mp4',
+      stars: 4,
+      titleHtml: 'What Our <span class="gradient-text">School Director Says</span>'
+    },
+    {
+      id: 'bharathi',
+      audience: 'schools',
+      name: 'Bharathi Paramesh',
+      role: 'Vice Principal, R V Public School (R V University)',
+      videoSrc: 'videos/reviews/Bharathi_Paramesh.mp4',
+      stars: 5,
+      titleHtml: 'What Our <span class="gradient-text">Principal Says</span>'
     }
   ]
 };

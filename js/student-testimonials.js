@@ -36,24 +36,53 @@
     return div.innerHTML;
   }
 
-  function carouselStarsHtml() {
+  function starCount(item) {
+    var n = item && item.stars != null ? Number(item.stars) : 5;
+    if (!isFinite(n) || n < 1) n = 5;
+    if (n > 5) n = 5;
+    return Math.round(n);
+  }
+
+  function carouselStarsHtml(count) {
+    var n = count == null ? 5 : count;
     return (
       '<svg class="student-testimonial-carousel-star" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>'
-    ).repeat(5);
+    ).repeat(n);
+  }
+
+  function itemTitleHtml(item, audience) {
+    if (item && item.titleHtml) return item.titleHtml;
+    var meta = getVariantMeta(audience);
+    return meta.titleHtml || 'What Our <span class="gradient-text">Community Says</span>';
+  }
+
+  function userIconHtml(name) {
+    return (
+      '<div id="student-testimonial-avatar" class="student-testimonial-active-avatar" aria-hidden="true" title="' +
+        escapeHtml(name || '') +
+      '">' +
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/>' +
+          '<circle cx="12" cy="7" r="4"/>' +
+        '</svg>' +
+      '</div>'
+    );
   }
 
   function renderActiveDetail(item) {
+    var stars = starCount(item);
     return (
       '<div class="student-testimonial-active" id="student-testimonial-active">' +
         '<div class="student-testimonial-active-head">' +
-          '<img id="student-testimonial-avatar" src="' + escapeHtml(item.avatar) + '" alt="' + escapeHtml(item.name) + '" class="student-testimonial-active-avatar" />' +
+          userIconHtml(item.name) +
           '<div>' +
             '<p id="student-testimonial-name" class="student-testimonial-active-name">' + escapeHtml(item.name) + '</p>' +
             '<p id="student-testimonial-role" class="student-testimonial-active-role">' + escapeHtml(item.role) + '</p>' +
           '</div>' +
         '</div>' +
-        '<blockquote id="student-testimonial-quote" class="student-testimonial-active-quote">' + escapeHtml(item.quote) + '</blockquote>' +
-        '<div class="student-testimonial-active-stars" aria-label="5 out of 5 stars">' + carouselStarsHtml() + '</div>' +
+        '<div id="student-testimonial-stars" class="student-testimonial-active-stars" aria-label="' + stars + ' out of 5 stars">' +
+          carouselStarsHtml(stars) +
+        '</div>' +
       '</div>'
     );
   }
@@ -261,7 +290,7 @@
       video.addEventListener(
         'error',
         function () {
-          var fallback = { videoUrl: item.videoUrl, avatar: item.avatar, poster: item.poster };
+          var fallback = { videoUrl: item.videoUrl, poster: item.poster };
           mediaEl.innerHTML = renderMedia(fallback);
           playMedia(mediaEl, options);
         },
@@ -280,7 +309,9 @@
     var first = items[0];
 
     return (
-      '<section id="student-testimonials" class="student-testimonials-section section-padding bg-void" aria-labelledby="student-testimonials-title">' +
+      '<section id="student-testimonials" class="student-testimonials-section section-padding bg-void" aria-labelledby="student-testimonials-title" data-audience="' +
+        escapeHtml(normalizeAudience(audience)) +
+      '">' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16">' +
           '<div class="student-testimonials-layout">' +
             '<div class="student-testimonials-video-col">' +
@@ -292,7 +323,7 @@
               '<div class="student-testimonials-header text-center lg:text-left">' +
                 '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">' + escapeHtml(meta.eyebrow) + '</span>' +
                 '<h2 id="student-testimonials-title" class="font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-stardust mt-4 leading-tight">' +
-                  meta.titleHtml +
+                  itemTitleHtml(first, audience) +
                 '</h2>' +
                 (meta.subtitle ? '<p class="text-muted-text text-sm sm:text-base mt-4 max-w-2xl mx-auto lg:mx-0">' + escapeHtml(meta.subtitle) + '</p>' : '') +
               '</div>' +
@@ -306,28 +337,31 @@
     );
   }
 
-  function updateActiveDetail(item) {
-    var quoteEl = document.getElementById('student-testimonial-quote');
+  function updateActiveDetail(item, audience) {
     var nameEl = document.getElementById('student-testimonial-name');
     var roleEl = document.getElementById('student-testimonial-role');
     var avatarEl = document.getElementById('student-testimonial-avatar');
+    var starsEl = document.getElementById('student-testimonial-stars');
+    var titleEl = document.getElementById('student-testimonials-title');
     if (!item) return;
 
-    if (quoteEl) quoteEl.textContent = item.quote;
     if (nameEl) nameEl.textContent = item.name;
     if (roleEl) roleEl.textContent = item.role || '';
-    if (avatarEl) {
-      avatarEl.src = item.avatar;
-      avatarEl.alt = item.name;
+    if (avatarEl) avatarEl.setAttribute('title', item.name || '');
+    if (starsEl) {
+      var stars = starCount(item);
+      starsEl.setAttribute('aria-label', stars + ' out of 5 stars');
+      starsEl.innerHTML = carouselStarsHtml(stars);
     }
+    if (titleEl) titleEl.innerHTML = itemTitleHtml(item, audience);
   }
 
-  function applyTestimonial(item, options) {
+  function applyTestimonial(item, options, audience) {
     var mediaEl = document.getElementById('student-testimonial-media');
     if (!item || !mediaEl) return;
 
     mountMedia(mediaEl, item, options || { reload: true });
-    updateActiveDetail(item);
+    updateActiveDetail(item, audience);
   }
 
   function updateTestimonialCounter(current, total) {
@@ -411,11 +445,12 @@
     if (!section || section.dataset.bound === '1' || !data || !data.items) return;
     section.dataset.bound = '1';
 
-    var items = sortItemsByAudience(data.items, audience);
+    var pageAudience = audience || section.getAttribute('data-audience') || 'students';
+    var items = sortItemsByAudience(data.items, pageAudience);
 
     initStudentTestimonialCarousel(function (index, options) {
       var item = items[index];
-      if (item) applyTestimonial(item, options);
+      if (item) applyTestimonial(item, options, pageAudience);
     }, items.length);
 
     var mediaEl = document.getElementById('student-testimonial-media');
