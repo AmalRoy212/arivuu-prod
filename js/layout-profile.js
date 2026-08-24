@@ -17,8 +17,14 @@
     return v === true || v === 'true';
   }
 
+  function isLocalHost() {
+    var host = window.location.hostname || '';
+    return host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
+  }
+
+  /** Toggle / overrides only on local + DEV_MODE — never on Vercel/production. */
   function isDevMode() {
-    return envFlag('DEV_MODE');
+    return envFlag('DEV_MODE') && isLocalHost();
   }
 
   function readOverride() {
