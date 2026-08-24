@@ -3,8 +3,8 @@
 
   window.Arivuu = window.Arivuu || {};
 
-  var PDFJS_VERSION = '3.11.174';
-  var PDFJS_CDN = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@' + PDFJS_VERSION + '/build/';
+  var PDFJS_LOCAL = 'vendor/pdfjs/';
+  var PDFJS_CDN = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/';
   var pdfJsLoadPromise = null;
   var activeRenderToken = 0;
   var activePdfDoc = null;
@@ -25,28 +25,60 @@
     return document.getElementById('pdf-preview-body');
   }
 
+  function resolveUrl(url) {
+    if (!url) return '';
+    try {
+      return new URL(url, window.location.href).href;
+    } catch (err) {
+      return url;
+    }
+  }
+
+  function pdfViewUrl(url) {
+    var resolved = resolveUrl(url);
+    if (!resolved) return 'about:blank';
+    var hash = 'toolbar=0&navpanes=0&scrollbar=1&view=FitH';
+    return resolved.indexOf('#') === -1 ? resolved + '#' + hash : resolved + '&' + hash;
+  }
+
+  function loadScript(src) {
+    return new Promise(function (resolve, reject) {
+      var script = document.createElement('script');
+      script.src = src;
+      script.async = true;
+      script.onload = function () {
+        resolve();
+      };
+      script.onerror = function () {
+        reject(new Error('Failed to load ' + src));
+      };
+      document.head.appendChild(script);
+    });
+  }
+
+  function configurePdfJs(base) {
+    if (!window.pdfjsLib) throw new Error('pdf.js failed to initialize');
+    window.pdfjsLib.GlobalWorkerOptions.workerSrc = base + 'pdf.worker.min.js';
+    return window.pdfjsLib;
+  }
+
   function loadPdfJs() {
     if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
     if (pdfJsLoadPromise) return pdfJsLoadPromise;
 
-    pdfJsLoadPromise = new Promise(function (resolve, reject) {
-      var script = document.createElement('script');
-      script.src = PDFJS_CDN + 'pdf.min.js';
-      script.async = true;
-      script.onload = function () {
-        if (!window.pdfjsLib) {
-          reject(new Error('pdf.js failed to initialize'));
-          return;
-        }
-        window.pdfjsLib.GlobalWorkerOptions.workerSrc = PDFJS_CDN + 'pdf.worker.min.js';
-        resolve(window.pdfjsLib);
-      };
-      script.onerror = function () {
+    pdfJsLoadPromise = loadScript(PDFJS_LOCAL + 'pdf.min.js')
+      .then(function () {
+        return configurePdfJs(PDFJS_LOCAL);
+      })
+      .catch(function () {
+        return loadScript(PDFJS_CDN + 'pdf.min.js').then(function () {
+          return configurePdfJs(PDFJS_CDN);
+        });
+      })
+      .catch(function (err) {
         pdfJsLoadPromise = null;
-        reject(new Error('Failed to load pdf.js'));
-      };
-      document.head.appendChild(script);
-    });
+        throw err;
+      });
 
     return pdfJsLoadPromise;
   }
@@ -67,6 +99,29 @@
       '<div class="pdf-preview-status pdf-preview-status-error" role="alert">' +
       (message || 'Unable to load this preview on your device.') +
       '</div>';
+  }
+
+  function showPagesMode() {
+    var frame = getFrame();
+    var pages = getPages();
+    if (frame) {
+      frame.src = 'about:blank';
+      frame.classList.add('hidden');
+    }
+    if (pages) pages.classList.remove('hidden');
+  }
+
+  function showIframeMode(url) {
+    var frame = getFrame();
+    var pages = getPages();
+    if (pages) {
+      pages.innerHTML = '';
+      pages.classList.add('hidden');
+    }
+    if (frame) {
+      frame.classList.remove('hidden');
+      frame.src = pdfViewUrl(url);
+    }
   }
 
   function destroyActivePdf() {
@@ -156,17 +211,32 @@
     });
   }
 
+  function openPdfDocument(pdfjsLib, url, useWorker) {
+    var options = {
+      url: url,
+      withCredentials: false,
+      // Hostinger / some CDNs break byte-range streaming for large PDFs
+      disableRange: true,
+      disableStream: true,
+      isEvalSupported: false
+    };
+    if (!useWorker) options.disableWorker = true;
+    return pdfjsLib.getDocument(options).promise;
+  }
+
   function renderPdfIntoPages(url, token) {
     var pages = getPages();
     var body = getBody();
-    if (!pages || !body) return Promise.resolve();
+    if (!pages || !body) return Promise.reject(new Error('Missing preview container'));
 
+    var absoluteUrl = resolveUrl(url);
     setLoadingState('Loading preview…');
+    showPagesMode();
 
     return loadPdfJs().then(function (pdfjsLib) {
       if (token !== activeRenderToken) return null;
 
-      return pdfjsLib.getDocument({ url: url, withCredentials: false }).promise.then(function (pdf) {
+      function renderAll(pdf) {
         if (token !== activeRenderToken) {
           pdf.destroy();
           return null;
@@ -188,14 +258,21 @@
         }
 
         return chain;
-      });
+      }
+
+      return openPdfDocument(pdfjsLib, absoluteUrl, true)
+        .then(renderAll)
+        .catch(function () {
+          if (token !== activeRenderToken) return null;
+          setLoadingState('Loading preview…');
+          return openPdfDocument(pdfjsLib, absoluteUrl, false).then(renderAll);
+        });
     });
   }
 
   function openPdfPreview(url, title) {
     var modal = getModal();
     var frame = getFrame();
-    var pages = getPages();
     var body = getBody();
     var titleEl = document.getElementById('pdf-preview-title');
     if (!modal || !url) return;
@@ -206,12 +283,7 @@
     if (titleEl) titleEl.textContent = title || 'Sample report';
     if (body) body.scrollTop = 0;
 
-    /* Always canvas-render in the modal — native PDF iframes blank after page 1 on phones */
-    if (frame) {
-      frame.src = 'about:blank';
-      frame.classList.add('hidden');
-    }
-    if (pages) pages.classList.remove('hidden');
+    showPagesMode();
 
     modal.classList.remove('hidden');
     modal.setAttribute('aria-hidden', 'false');
@@ -223,7 +295,11 @@
 
     renderPdfIntoPages(url, token).catch(function () {
       if (token !== activeRenderToken) return;
-      setErrorState('Unable to load this preview. Try again, or use Download for the full PDF.');
+      // Last resort: native viewer (works on desktop; may blank after p1 on some phones)
+      showIframeMode(url);
+      if (!getFrame()) {
+        setErrorState('Unable to load this preview. Try again, or use Download for the full PDF.');
+      }
     });
   }
 
