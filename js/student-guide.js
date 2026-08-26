@@ -186,23 +186,15 @@
 
     var cards = (data.cards || []).map(renderFlipCard).join('');
     var pdfMeta = data.pdfSection || { samples: [] };
-    var heroDecor = window.Arivuu.renderPageHeroDecor ? window.Arivuu.renderPageHeroDecor() : '';
+    var studentAudience = window.ARIVUU_AUDIENCE_SERVICES && window.ARIVUU_AUDIENCE_SERVICES.audiences
+      ? window.ARIVUU_AUDIENCE_SERVICES.audiences.student
+      : null;
+    var heroHtml = studentAudience && window.Arivuu.renderServicePageHero
+      ? window.Arivuu.renderServicePageHero(studentAudience)
+      : '';
 
     return (
-      '<header class="page-hero bg-surface-deep border-b border-nebula/10" data-hero-decor="1">' +
-        heroDecor +
-        '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-10 sm:py-16 relative">' +
-          '<nav class="page-breadcrumbs mb-6" aria-label="Breadcrumb">' +
-            '<a href="#/">Home</a><span>/</span>' +
-            '<a href="#/student">Students</a><span>/</span>' +
-            '<span class="page-breadcrumbs-current">For Students</span>' +
-          '</nav>' +
-          '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">For Students</span>' +
-          '<h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-stardust mt-3 leading-tight uppercase">Are you a student?</h1>' +
-          '<p class="text-lg sm:text-xl font-semibold text-biolume mt-4">Your career clarity starts here.</p>' +
-          '<p class="text-muted-text text-sm sm:text-base mt-4 max-w-3xl leading-relaxed">An integrated, intelligent, and data driven platform that blends AI precision (93% accuracy) with expert human guidance to help students discover their ideal career path. From psychometric assessments to personalised reports, scholarship insights, and 1:1 counselling, Arivuu transforms career confusion into clarity.</p>' +
-        '</div>' +
-      '</header>' +
+      heroHtml +
 
       renderWhyArivuuSection() +
 

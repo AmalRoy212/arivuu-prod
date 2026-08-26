@@ -7,6 +7,7 @@
   var site = window.ARIVUU_SITE || {};
   var brand = site.name || 'Arivuu';
   var email = site.email || 'info@arivuu.com';
+  var mailtoHref = 'mailto:' + encodeURIComponent(email);
   var phone = site.phone || '+91 90710 12312';
   var phoneHref = site.phoneHref || phone.replace(/\s+/g, '');
   var address = site.address || 'Bangalore, Karnataka, India';
@@ -87,8 +88,10 @@
                 '<svg class="w-3.5 h-3.5 flex-shrink-0 text-nebula" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' +
                 '<a href="tel:' + phoneHref + '" class="hover:text-stardust transition-colors duration-300">' + phone + '</a>' +
                 '<span class="text-stardust/25" aria-hidden="true">|</span>' +
-                '<svg class="w-3.5 h-3.5 flex-shrink-0 text-nebula" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>' +
-                '<a href="mailto:' + email + '" class="hover:text-stardust transition-colors duration-300">' + email + '</a>' +
+                '<a href="' + mailtoHref + '" class="inline-flex items-center gap-2 hover:text-stardust transition-colors duration-300" aria-label="Email ' + email + '">' +
+                  '<svg class="w-3.5 h-3.5 flex-shrink-0 text-nebula" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>' +
+                  '<span>' + email + '</span>' +
+                '</a>' +
               '</li>' +
             '</ul>' +
             '<p class="font-display font-medium text-stardust text-sm mb-3">You can also find us</p>' +
@@ -103,7 +106,7 @@
                     '<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>' +
                   '</a>'
                 : '') +
-              '<a href="mailto:' + email + '" class="footer-social-btn" aria-label="Email">' +
+              '<a href="' + mailtoHref + '" class="footer-social-btn" aria-label="Email">' +
                 '<svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>' +
               '</a>' +
             '</div>' +

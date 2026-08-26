@@ -6757,10 +6757,20 @@ body[data-page="student"] #footer > .max-w-7xl {
   height: 1.75rem;
 }
 
+.about-focus-icon-letter {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
 @media (min-width: 768px) {
   .about-focus-icon-svg {
     width: 3.25rem;
     height: 3.25rem;
+  }
+
+  .about-focus-icon-letter {
+    font-size: 3.25rem;
   }
 }
 
@@ -6768,6 +6778,10 @@ body[data-page="student"] #footer > .max-w-7xl {
   .about-focus-icon-svg {
     width: 3.75rem;
     height: 3.75rem;
+  }
+
+  .about-focus-icon-letter {
+    font-size: 3.75rem;
   }
 }
 
@@ -7076,6 +7090,7 @@ body[data-page="about"] #footer > .max-w-7xl {
 }
 
 /* Section headings: keep base text dark, allow gradient accent spans */
+body[data-page="home"] .glass-card h3 .gradient-text,
 .service-why-arivuu-heading .gradient-text,
 .service-approach-title .gradient-text,
 .service-ecosystem-title .gradient-text,

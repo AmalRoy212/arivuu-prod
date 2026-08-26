@@ -691,6 +691,15 @@
     var eyebrow = audience.pageEyebrow || 'Our Programs';
     var breadcrumb = audience.pageBreadcrumb || 'Services';
     var heroDecor = window.Arivuu.renderPageHeroDecor ? window.Arivuu.renderPageHeroDecor() : '';
+    var breadcrumbTrail = '';
+
+    if (audience.id === 'student') {
+      breadcrumbTrail = '<a href="#/student">Students</a><span>/</span>';
+    } else if (audience.id === 'educator') {
+      breadcrumbTrail = '<a href="#/services?audience=educator">Educators</a><span>/</span>';
+    } else {
+      breadcrumbTrail = '<a href="#/institution/guide">Institutions</a><span>/</span>';
+    }
 
     return (
       '<header class="page-hero bg-surface-deep border-b border-nebula/10" data-hero-decor="1">' +
@@ -698,7 +707,7 @@
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-10 sm:py-16 relative">' +
           '<nav class="page-breadcrumbs mb-6" aria-label="Breadcrumb">' +
             '<a href="#/">Home</a><span>/</span>' +
-            '<a href="#/institution/guide">Institutions</a><span>/</span>' +
+            breadcrumbTrail +
             '<span class="page-breadcrumbs-current">' + escapeHtml(breadcrumb) + '</span>' +
           '</nav>' +
           '<span class="text-biolume text-xs font-medium tracking-[0.15em] uppercase">' + escapeHtml(eyebrow) + '</span>' +
@@ -1310,4 +1319,5 @@
   };
 
   window.Arivuu.serviceUrl = serviceUrl;
+  window.Arivuu.renderServicePageHero = renderServicePageHero;
 })();
