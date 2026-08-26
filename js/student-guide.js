@@ -104,22 +104,6 @@
     );
   }
 
-  function renderTakeTestButton() {
-    return (
-      '<div class="student-guide-cta-wrap">' +
-        '<a href="https://growthpath.arivuu.com/" target="_blank" rel="noopener noreferrer" class="btn-premium btn-premium--test">' +
-          '<span>Take a test</span>' +
-          '<span class="btn-premium-icon btn-premium-icon--test" aria-hidden="true">' +
-            '<svg class="btn-premium-clipboard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
-              '<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>' +
-              '<path class="btn-premium-check" d="m9 14 2 2 4-4"/>' +
-            '</svg>' +
-          '</span>' +
-        '</a>' +
-      '</div>'
-    );
-  }
-
   function renderWhyFeatureBoxes(items) {
     items = items || [];
     if (!items.length) return '';
@@ -150,12 +134,16 @@
 
   function renderWhyArivuuSection() {
     return (
-      '<section class="section-padding bg-surface-deep">' +
+      '<section class="section-padding bg-void">' +
         '<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-16">' +
-          '<div class="service-why-arivuu student-guide-why-block">' +
-            '<h2 class="service-why-arivuu-heading">Why Arivuu for <span class="gradient-text">Career Counselling?</span></h2>' +
-            '<div class="student-guide-why service-why-arivuu-desc mt-0 space-y-5">' +
-              '<p><strong class="text-stardust font-semibold">Arivuu is a trusted and advanced career guidance platform designed to help students make confident academic and career decisions. Powered by our scientifically validated psychometric engine (93% accuracy and reliability) and technology-enabled insights, Arivuu ensures every student discovers their ideal career path with clarity.</strong></p>' +
+          '<div class="glass-card p-6 sm:p-8 mb-10 reveal max-w-4xl mx-auto text-center">' +
+            '<h2 class="service-why-arivuu-heading mb-3">Why Arivuu for <span class="gradient-text">Career Counselling?</span></h2>' +
+            '<p class="text-muted-text text-sm sm:text-base leading-relaxed">' +
+              '<strong class="text-stardust font-semibold">Arivuu is a trusted and advanced career guidance platform designed to help students make confident academic and career decisions. Powered by our scientifically validated psychometric engine (93% accuracy and reliability) and technology-enabled insights, Arivuu ensures every student discovers their ideal career path with clarity.</strong>' +
+            '</p>' +
+          '</div>' +
+          '<div class="service-why-arivuu student-guide-why-block reveal">' +
+            '<div class="student-guide-why service-why-arivuu-desc mt-0 space-y-5 text-center">' +
               '<p>What sets us apart is our <strong class="text-stardust font-semibold">blend of science and human expertise</strong>. Our counsellors sit with both students and parents for <strong class="text-stardust font-semibold">personalised one-on-one sessions</strong>, explaining each option clearly and building a roadmap that feels achievable. With access to <strong class="text-stardust font-semibold">scholarship information</strong>, students can plan their future not just with clarity, but also with financial confidence.</p>' +
             '</div>' +
             renderWhyFeatureBoxes(data.featureBar) +
@@ -212,7 +200,7 @@
       (window.Arivuu.renderCareerEcosystemSection
         ? window.Arivuu.renderCareerEcosystemSection({
             variant: 'full',
-            afterCardsHtml: renderTakeTestButton()
+            afterCardsHtml: window.Arivuu.renderTakeTestButton ? window.Arivuu.renderTakeTestButton() : ''
           })
         : '') +
 

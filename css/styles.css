@@ -5548,10 +5548,10 @@ body[data-page="student"] #footer > .max-w-7xl {
   margin-top: 0;
 }
 
-.student-guide-why-block .student-guide-why.service-why-arivuu-desc {
-  margin-top: 1.5rem;
+  .student-guide-why-block .student-guide-why.service-why-arivuu-desc {
+  margin-top: 0;
   max-width: none;
-  text-align: left;
+  text-align: center;
 }
 
 .student-guide-why-features {

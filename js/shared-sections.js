@@ -127,6 +127,22 @@
     else document.body.style.overflow = 'hidden';
   }
 
+  function renderTakeTestButton() {
+    return (
+      '<div class="student-guide-cta-wrap">' +
+        '<a href="https://growthpath.arivuu.com/" target="_blank" rel="noopener noreferrer" class="btn-premium btn-premium--test">' +
+          '<span>Take a test</span>' +
+          '<span class="btn-premium-icon btn-premium-icon--test" aria-hidden="true">' +
+            '<svg class="btn-premium-clipboard" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">' +
+              '<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/>' +
+              '<path class="btn-premium-check" d="m9 14 2 2 4-4"/>' +
+            '</svg>' +
+          '</span>' +
+        '</a>' +
+      '</div>'
+    );
+  }
+
   function bindCareerEcosystemSection() {
     if (document.documentElement.dataset.ecosystemClickBound === '1') return;
     document.documentElement.dataset.ecosystemClickBound = '1';
@@ -193,7 +209,9 @@
     var ecoMount = document.getElementById('career-ecosystem-mount');
     if (ecoMount) {
       if (!ecoMount.dataset.mounted || !ecoMount.querySelector('#career-ecosystem')) {
-        ecoMount.innerHTML = renderCareerEcosystemSection();
+        ecoMount.innerHTML = renderCareerEcosystemSection({
+          afterCardsHtml: renderTakeTestButton()
+        });
         ecoMount.dataset.mounted = '1';
       }
       bindCareerEcosystemSection();
@@ -502,6 +520,7 @@
     }
   }
 
+  window.Arivuu.renderTakeTestButton = renderTakeTestButton;
   window.Arivuu.renderFeatureBar = renderFeatureBar;
   window.Arivuu.renderCareerEcosystemSection = renderCareerEcosystemSection;
   window.Arivuu.bindCareerEcosystemSection = bindCareerEcosystemSection;

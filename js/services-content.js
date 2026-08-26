@@ -943,7 +943,11 @@
 
       renderSchoolPdfSection(audience) +
 
-      (window.Arivuu.renderCareerEcosystemSection ? window.Arivuu.renderCareerEcosystemSection() : '') +
+      (window.Arivuu.renderCareerEcosystemSection
+        ? window.Arivuu.renderCareerEcosystemSection({
+            afterCardsHtml: window.Arivuu.renderTakeTestButton ? window.Arivuu.renderTakeTestButton() : ''
+          })
+        : '') +
 
       renderSchoolTestimonials(audience) +
 
