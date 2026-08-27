@@ -7,7 +7,7 @@
   var site = window.ARIVUU_SITE || {};
   var brand = site.name || 'Arivuu';
   var email = site.email || 'info@arivuu.com';
-  var mailtoHref = 'mailto:' + encodeURIComponent(email);
+  var mailtoHref = 'mailto:' + email;
   var phone = site.phone || '+91 90710 12312';
   var phoneHref = site.phoneHref || phone.replace(/\s+/g, '');
   var address = site.address || 'Bangalore, Karnataka, India';
