@@ -20,6 +20,35 @@ window.ARIVUU_HOME_TESTIMONIALS = [
     name: 'Himmagna',
     role: '2nd Year B.Arch, SPA New Delhi',
     stars: 4
+  },
+  {
+    id: 'ganesh',
+    quote:
+      'I\'m Ganesh and I\'m really grateful for the counselling I received through Arivuu with Shyam Sir. ' +
+      'Before the counselling, I was about to choose engineering without really thinking about my actual interests or passion. ' +
+      'However, my counselling session with Shyam Sir completely changed my perspective and helped me to understand what I truly want for my future. ' +
+      'I really appreciate the way Sir explains things and gives genuine guidance without forcing any decision. ' +
+      'After understanding my interests and passion, I decided to pursue AME instead of choosing engineering blindly. ' +
+      'I\'m genuinely thankful to Shyam Sir and Arivuu for giving me the clarity to make a better decision for my future.',
+    name: 'Ganesh',
+    role: '2nd PU 2026 passed out — pursuing AME',
+    stars: 5
+  },
+  {
+    id: 'dakshit',
+    quote:
+      'I had my career counselling with Shyam anna from Arivuu and honestly it helped me a lot. ' +
+      'I got a much better idea about how to study smart instead of just studying for long hours. ' +
+      'He explained how to manage time with daily life, which subjects to focus on at what time, and even some good ways to remember formulas and concepts. ' +
+      'One thing I really appreciate is that whenever I had any doubts, Shyam anna was always there to help me out. ' +
+      'Even if I texted or reached out late at night, he never hesitated and would take the time to clear my doubts and guide me. ' +
+      'The session was really practical and easy to understand, and I actually started using many of the strategies after the counselling. ' +
+      'It gave me a better direction and made me feel more confident about my studies. ' +
+      'Really thankful to Shyam anna and Arivuu for all the guidance and support. Definitely recommend it to students who are confused about their studies or career. ' +
+      'Now, I am studying BSc with Aviation in Mechanical Engineering.',
+    name: 'Dakshit',
+    role: '2nd PU — BSc Aviation in Mechanical Engineering',
+    stars: 5
   }
 ];
 

@@ -546,7 +546,7 @@ window.ARIVUU_AUDIENCE_SERVICES = {
     },
     student: {
       id: 'student',
-      heroTitle: 'a student?',
+      heroTitle: 'A Student?',
       heroLead: 'Are you',
       pageEyebrow: 'For Students',
       pageBreadcrumb: 'For Students',
