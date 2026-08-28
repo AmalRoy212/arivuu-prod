@@ -3932,13 +3932,19 @@
 
 body[data-page="home"] .footer-journey-cta,
 body[data-page="student-guide"] .footer-journey-cta,
-body[data-page="student"] .footer-journey-cta {
+body[data-page="student"] .footer-journey-cta,
+body[data-page="service"] .footer-journey-cta,
+body[data-page="services"] .footer-journey-cta,
+body[data-page="contact"] .footer-journey-cta {
   display: none;
 }
 
 body[data-page="home"] #footer > .max-w-7xl,
 body[data-page="student-guide"] #footer > .max-w-7xl,
-body[data-page="student"] #footer > .max-w-7xl {
+body[data-page="student"] #footer > .max-w-7xl,
+body[data-page="service"] #footer > .max-w-7xl,
+body[data-page="services"] #footer > .max-w-7xl,
+body[data-page="contact"] #footer > .max-w-7xl {
   padding-top: 3.5rem;
   margin-top: 0;
 }
@@ -3946,7 +3952,10 @@ body[data-page="student"] #footer > .max-w-7xl {
 @media (min-width: 640px) {
   body[data-page="home"] #footer > .max-w-7xl,
   body[data-page="student-guide"] #footer > .max-w-7xl,
-  body[data-page="student"] #footer > .max-w-7xl {
+  body[data-page="student"] #footer > .max-w-7xl,
+  body[data-page="service"] #footer > .max-w-7xl,
+  body[data-page="services"] #footer > .max-w-7xl,
+  body[data-page="contact"] #footer > .max-w-7xl {
     padding-top: 4.5rem;
   }
 }

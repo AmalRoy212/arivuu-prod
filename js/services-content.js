@@ -951,7 +951,11 @@
 
       renderSchoolTestimonials(audience) +
 
-      (window.Arivuu.renderFAQSection ? window.Arivuu.renderFAQSection() : '')
+      (window.Arivuu.renderFAQSection
+        ? window.Arivuu.renderFAQSection({
+            showJourneyCta: audience.id === 'school'
+          })
+        : '')
     );
   }
 
