@@ -148,9 +148,6 @@
             throw new Error('Google Sheets query failed');
           }
           var logos = logosFromSheetTable(payload.table);
-          if (!logos.length) {
-            throw new Error('No school logos found in Google Sheet');
-          }
           finish(null, logos);
         } catch (error) {
           finish(error);

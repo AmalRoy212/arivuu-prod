@@ -63,6 +63,7 @@
   }
 
   function renderLogoMarquee(logos) {
+    if (!logos || !Array.isArray(logos) || !logos.length) return '';
     var seen = {};
     var uniqueLogos = logos.filter(function (entry) {
       var logo = normalizeLogoEntry(entry);
@@ -906,6 +907,7 @@
   }
 
   function renderPartnersSection(audience, contentHtml) {
+    if (!contentHtml || !contentHtml.trim()) return '';
     return (
       '<section class="service-partners-section bg-surface-deep !pt-10">' +
         '<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 py-8 sm:py-10">' +
@@ -928,10 +930,11 @@
   }
 
   function renderAudiencePage(audience, partnersContentHtml) {
+    var partnersHtml = partnersContentHtml ? renderPartnersSection(audience, partnersContentHtml) : '';
     return (
       renderServicePageHero(audience) +
 
-      renderPartnersSection(audience, partnersContentHtml) +
+      '<div id="service-partners-mount">' + partnersHtml + '</div>' +
 
       renderContactSection(audience) +
 
@@ -1266,30 +1269,29 @@
     var audience = getAudience();
     var loader = window.Arivuu.loadSchoolLogos;
 
-    mount.innerHTML = renderAudiencePage(
-      audience,
-      '<p class="text-center text-muted-text text-sm py-8">Loading partner schools…</p>'
-    );
+    mount.innerHTML = renderAudiencePage(audience, '');
+    finishServicePageRender(mount, audience);
 
-    if (!loader) {
-      mount.innerHTML = renderAudiencePage(audience, renderSchoolLogosError());
-      finishServicePageRender(mount, audience);
-      bindSchoolLogosRetry(audience);
-      return;
-    }
+    if (!loader) return;
 
     loader().then(function (logos) {
-      if (!document.getElementById('service-page-mount')) return;
-      if (!logos || !logos.length) {
-        throw new Error('No school logos found');
+      var partnersMount = document.getElementById('service-partners-mount');
+      if (!partnersMount) return;
+      var hasLogos = Array.isArray(logos) && logos.length > 0;
+      if (hasLogos) {
+        var marqueeHtml = renderLogoMarquee(logos);
+        if (marqueeHtml) {
+          partnersMount.innerHTML = renderPartnersSection(audience, marqueeHtml);
+          bindLogoMarquee(partnersMount);
+          return;
+        }
       }
-      mount.innerHTML = renderAudiencePage(audience, renderLogoMarquee(logos));
-      finishServicePageRender(mount, audience);
+      partnersMount.innerHTML = '';
     }).catch(function () {
-      if (!document.getElementById('service-page-mount')) return;
-      mount.innerHTML = renderAudiencePage(audience, renderSchoolLogosError());
-      finishServicePageRender(mount, audience);
-      bindSchoolLogosRetry(audience);
+      var partnersMount = document.getElementById('service-partners-mount');
+      if (partnersMount) {
+        partnersMount.innerHTML = '';
+      }
     });
   }
 
