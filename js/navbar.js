@@ -161,16 +161,26 @@
         '</div>' +
       '</nav>' +
       '<div id="nav-mobile-menu" class="nav-mobile-menu lg:hidden" hidden>' +
+        '<button type="button" class="nav-mobile-menu-backdrop" data-close-nav aria-label="Close menu"></button>' +
         '<div class="nav-mobile-menu-inner">' +
           renderMobileLinks(page, isHome) +
           '<a href="#/contact" class="nav-mobile-cta">Get In Touch</a>' +
         '</div>' +
       '</div>';
 
+    var existingMenu = document.getElementById('nav-mobile-menu');
+    if (existingMenu) existingMenu.remove();
+
     var wrapper = document.getElementById('site-navbar');
     if (wrapper) {
       wrapper.innerHTML = html;
     }
+
+    // Keep the overlay on <body> so iOS can't treat #site-navbar as its containing block.
+    var menu = document.getElementById('nav-mobile-menu');
+    if (menu) document.body.appendChild(menu);
+
+    if (window.Arivuu.setMobileNavOpen) window.Arivuu.setMobileNavOpen(false);
     if (window.Arivuu.bindNavbar) window.Arivuu.bindNavbar();
   };
 

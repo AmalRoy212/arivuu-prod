@@ -9,9 +9,11 @@
   var revealObserver = null;
   var statsAnimated = false;
   var navBound = false;
-  var lockedScrollY = 0;
   var bodyScrollLockY = 0;
   var bodyScrollLocked = false;
+  var navScrollLocked = false;
+  var navTouchMoveBound = false;
+  var lockedScrollY = 0;
 
   function lockBodyScroll() {
     if (bodyScrollLocked) return;
@@ -89,6 +91,64 @@
     }
   }
 
+  function clearBodyFixedLock() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+  }
+
+  function preventNavBackgroundScroll(e) {
+    var menu = document.getElementById('nav-mobile-menu');
+    if (!menu || menu.hidden) return;
+    var inner = menu.querySelector('.nav-mobile-menu-inner');
+    if (inner && inner.contains(e.target)) {
+      if (inner.scrollHeight > inner.clientHeight) return;
+    }
+    e.preventDefault();
+  }
+
+  function bindNavTouchLock(enable) {
+    if (enable) {
+      if (navTouchMoveBound) return;
+      document.addEventListener('touchmove', preventNavBackgroundScroll, { passive: false });
+      navTouchMoveBound = true;
+    } else if (navTouchMoveBound) {
+      document.removeEventListener('touchmove', preventNavBackgroundScroll);
+      navTouchMoveBound = false;
+    }
+  }
+
+  function pinPageBehindNav(enable) {
+    var ids = ['app-outlet', 'site-footer'];
+    var i;
+    var el;
+    if (enable) {
+      lockedScrollY = window.scrollY || window.pageYOffset || 0;
+      for (i = 0; i < ids.length; i++) {
+        el = document.getElementById(ids[i]);
+        if (!el) continue;
+        el.style.position = 'fixed';
+        el.style.top = '-' + lockedScrollY + 'px';
+        el.style.left = '0';
+        el.style.right = '0';
+        el.style.width = '100%';
+      }
+      return;
+    }
+    for (i = 0; i < ids.length; i++) {
+      el = document.getElementById(ids[i]);
+      if (!el) continue;
+      el.style.position = '';
+      el.style.top = '';
+      el.style.left = '';
+      el.style.right = '';
+      el.style.width = '';
+    }
+    scrollWindowTo(lockedScrollY);
+  }
+
   function setMobileNavOpen(open) {
     var navbar = document.getElementById('navbar');
     var navToggle = document.getElementById('nav-toggle');
@@ -101,21 +161,23 @@
     navMobileMenu.hidden = !open;
     document.body.classList.toggle('nav-menu-open', open);
 
+    // Never pin <body> — on real iOS/Android that becomes the containing
+    // block for position:fixed nav/menu, so both slide off-screen.
+    clearBodyFixedLock();
+
     if (open) {
-      lockedScrollY = window.scrollY || window.pageYOffset || 0;
-      document.body.style.position = 'fixed';
-      document.body.style.top = '-' + lockedScrollY + 'px';
-      document.body.style.left = '0';
-      document.body.style.right = '0';
-      document.body.style.width = '100%';
+      if (!navScrollLocked) {
+        navScrollLocked = true;
+        pinPageBehindNav(true);
+        bindNavTouchLock(true);
+      }
       navbar.classList.remove('bg-surface-deep/80', 'backdrop-blur-xl', 'border-b', 'border-nebula/12', 'bg-transparent');
     } else {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.left = '';
-      document.body.style.right = '';
-      document.body.style.width = '';
-      scrollWindowTo(lockedScrollY);
+      bindNavTouchLock(false);
+      if (navScrollLocked) {
+        navScrollLocked = false;
+        pinPageBehindNav(false);
+      }
       updateNavbarScroll();
     }
   }
@@ -132,20 +194,19 @@
       });
     }
 
+    if (navMobileMenu.dataset.bound !== '1') {
+      navMobileMenu.dataset.bound = '1';
+      navMobileMenu.addEventListener('click', function (e) {
+        if (e.target && e.target.getAttribute('data-close-nav') !== null) {
+          setMobileNavOpen(false);
+        }
+      });
+    }
+
     navMobileMenu.querySelectorAll('a').forEach(function (link) {
       if (link.dataset.bound === '1') return;
       link.dataset.bound = '1';
       link.addEventListener('click', function () {
-        var href = link.getAttribute('href') || '';
-        // In-app routes should land at the page top, not the pre-menu offset.
-        if (
-          href.startsWith('#/') ||
-          href.startsWith('/') ||
-          href === '#' ||
-          href === '#/'
-        ) {
-          lockedScrollY = 0;
-        }
         setMobileNavOpen(false);
       });
     });
@@ -162,7 +223,16 @@
         mobileServicesToggle.closest('.nav-mobile-group').classList.toggle('is-expanded', nextOpen);
       });
     }
+
+    if (window.Arivuu._navResizeBound !== '1') {
+      window.Arivuu._navResizeBound = '1';
+      window.addEventListener('resize', function () {
+        if (window.innerWidth >= 1024) setMobileNavOpen(false);
+      });
+    }
   };
+
+  window.Arivuu.setMobileNavOpen = setMobileNavOpen;
 
   function initScrollReveal() {
     if (revealObserver) revealObserver.disconnect();
